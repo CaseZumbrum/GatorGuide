@@ -1,0 +1,18 @@
+
+[build-system]
+requires = ["setuptools"]  # REQUIRED if [build-system] table is used
+
+build-backend = "setuptools.build_meta"  # If not defined, then legacy behavior can happen.
+
+
+[project]
+
+name = "GatorGuide" 
+
+version = "0.0.0" 
+description = "CEN3031 Final Project"
+
+dynamic = ["dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
