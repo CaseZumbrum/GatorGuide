@@ -32,5 +32,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    with Session(engine) as session:
+        statement = select(models.Major).where(models.Major.name == "Computer Engineering")
+        x = session.exec(statement).one()
+        print(x.critical_tracking)
 
