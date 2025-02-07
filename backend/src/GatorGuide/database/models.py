@@ -8,6 +8,15 @@ class MajorCriticalTrackingLink(SQLModel, table=True):
     major_id: int | None = Field(default=None, foreign_key="major.id", primary_key=True)
 
 
+class CoursePrequisiteLink(SQLModel, table=True):
+    course_id: int | None = Field(
+        default=None, foreign_key="course.id", primary_key=True
+    )
+    prereq_id: int | None = Field(
+        default=None, foreign_key="course.id", primary_key=True
+    )
+
+
 class MajorRequiredLink(SQLModel, table=True):
     course_id: int | None = Field(
         default=None, foreign_key="course.id", primary_key=True
@@ -37,6 +46,14 @@ class Course(SQLModel, table=True):
     name: str
     description: str
     credits: int
+    prerequisites: list["Course"] = Relationship(
+        sa_relationship_kwargs=dict(
+            secondary="courseprequisitelink",
+            primaryjoin="Course.id == courseprequisitelink.c.course_id",
+            secondaryjoin="Course.id == courseprequisitelink.c.prereq_id",
+        ),
+    )
+
     # critical_tracking_for: list["Major"] = Relationship(back_populates="critical_tracking", link_model=MajorCriticalTrackingLink)
 
 
