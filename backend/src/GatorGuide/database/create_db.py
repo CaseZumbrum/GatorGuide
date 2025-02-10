@@ -4,9 +4,7 @@ import pathlib
 import os
 
 
-sqlite_file_name = (
-    pathlib.Path(__file__).parent.resolve().joinpath("./testing_database.db")
-)
+sqlite_file_name = pathlib.Path(__file__).parent.resolve().joinpath("./database.db")
 
 if os.path.isfile(sqlite_file_name):
     os.remove(sqlite_file_name)
@@ -64,7 +62,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    create_db_and_tables()
+    # main()
     # with Session(engine) as session:
     #     statement = select(models.Major).where(
     #         models.Major.name == "Computer Engineering"
@@ -72,7 +71,7 @@ if __name__ == "__main__":
     #     x = session.exec(statement).one()
     #     x.print()
 
-    with Session(engine) as session:
-        statement = select(models.Course).where(models.Course.code == "COP3530")
-        x = session.exec(statement).one()
-        print(x.prerequisites[0].courses)
+    # with Session(engine) as session:
+    #     statement = select(models.Course).where(models.Course.code == "COP3530")
+    #     x = session.exec(statement).one()
+    #     print(x.prerequisites[0].courses)

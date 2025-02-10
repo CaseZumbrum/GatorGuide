@@ -5,7 +5,7 @@ from GatorGuide.database.models import Course
 from sqlmodel import Field, Relationship, Session, SQLModel, create_engine, select
 import GatorGuide.database.models as models
 import pathlib
-
+from GatorGuide.database.parse_prereqs import parse
 
 sqlite_file_name = pathlib.Path(__file__).parent.resolve().joinpath("./database.db")
 sqlite_url = f"sqlite:///{sqlite_file_name}"
@@ -16,7 +16,7 @@ engine = create_engine(sqlite_url)
 last_num = 0  # used by the one.uf api to get the next page of courses
 
 courses: list[Course] = []
-
+course_json = []
 count = 0  # used to keep track of how many courses have been registered
 with Session(engine) as session:
     while True:
@@ -39,15 +39,8 @@ with Session(engine) as session:
             count += len(c["sections"])  # increment course counter
 
             # create new Course object, add to the database
+            course_json.append(c)
             courses.append(
-                Course(
-                    code=c["code"],
-                    name=c["name"],
-                    description=c["description"],
-                    credits=c["sections"][0]["credits"],
-                )
-            )
-            session.add(
                 Course(
                     code=c["code"],
                     name=c["name"],
@@ -58,6 +51,31 @@ with Session(engine) as session:
 
         last_num = data[0]["LASTCONTROLNUMBER"]
         print(f"COUNT: {count}")
+
+    for c in course_json:
+        prereqs: list[models.PrequisiteGroup] = []
+
+        if c["prerequisites"] != "":
+            p = parse(c["prerequisites"])
+            for group in p:
+                prereqs.append(models.PrequisiteGroup(courses=[]))
+                for code in group:
+                    course: models.Course | None = next(
+                        (x for x in courses if x.code == code), None
+                    )
+                    if course is not None:
+                        prereqs[-1].courses.append(course)
+        if(c["code"] == "COP3503")
+        session.add(
+            Course(
+                code=c["code"],
+                name=c["name"],
+                description=c["description"],
+                credits=c["sections"][0]["credits"],
+                prerequisites=prereqs,
+            )
+        )
+
     session.commit()
 # with open("courses.json", "w") as f:
 #     json.dump(courses, f, default=pydantic_encoder)
