@@ -1,9 +1,16 @@
 from sqlmodel import Field, Relationship, Session, SQLModel, create_engine, select
 import GatorGuide.database.models as models
 import pathlib
+import os
 
 
-sqlite_file_name = pathlib.Path(__file__).parent.resolve().joinpath("./database.db")
+sqlite_file_name = (
+    pathlib.Path(__file__).parent.resolve().joinpath("./testing_database.db")
+)
+
+if os.path.isfile(sqlite_file_name):
+    os.remove(sqlite_file_name)
+
 sqlite_url = f"sqlite:///{sqlite_file_name}"
 
 engine = create_engine(sqlite_url)
@@ -33,10 +40,11 @@ def create_courses():
             description="don't do it",
             credits=1,
         )
-
         tech_electives = models.RequiredGroup(
             name="Tech Electives", credits=16, courses=[CIS]
         )
+
+        DSA.prerequisites.append(models.PrequisiteGroup(courses=[DISCRETE]))
 
         CPE = models.Major(name="Computer Engineering")
         CPE.critical_tracking.append(DSA)
@@ -63,3 +71,8 @@ if __name__ == "__main__":
     #     )
     #     x = session.exec(statement).one()
     #     x.print()
+
+    with Session(engine) as session:
+        statement = select(models.Course).where(models.Course.code == "COP3530")
+        x = session.exec(statement).one()
+        print(x.prerequisites[0].courses)
