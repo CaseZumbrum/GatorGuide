@@ -1,8 +1,7 @@
 from sqlmodel import Field, Relationship, Session, SQLModel, create_engine, select
-import GatorGuide.database.models as models
 import pathlib
 import os
-from GatorGuide.database import populate_courses
+from GatorGuide.database.gather_courses import populate_courses
 
 
 sqlite_file_name = pathlib.Path(__file__).parent.resolve().joinpath("./database.db")

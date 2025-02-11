@@ -1,7 +1,3 @@
-pre = "Prereq: ACG 3101 with mi…rade of C and FIN 3403"
-pre = "COT 3100 or COP 3503 or DSA 3123 and COT 2122"
-
-
 def parse(pre: str):
     pre = pre.replace("(", "").replace(")", "").replace(".", "").replace("/", " ")
     words = pre.split()
