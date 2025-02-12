@@ -1,4 +1,4 @@
-from sqlmodel import Field, Relationship, Session, SQLModel, create_engine, select
+from sqlmodel import Field, Relationship, SQLModel
 
 
 class MajorCriticalTrackingLink(SQLModel, table=True):

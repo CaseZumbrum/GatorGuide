@@ -1,9 +1,8 @@
 # ^(?!.*(COP3520)).*^(COP3|MHF4) useful regex
 from GatorGuide.database.models import Major, Course, RequiredGroup
 from pathlib import Path
-from sqlmodel import Field, Relationship, Session, SQLModel, create_engine, select
+from sqlmodel import Session, SQLModel, create_engine, select
 import os
-from typing import Type
 import re
 
 

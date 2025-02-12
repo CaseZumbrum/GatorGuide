@@ -1,8 +1,7 @@
 import requests
-from pydantic.json import pydantic_encoder
 from GatorGuide.database.models import Course
 
-from sqlmodel import Field, Relationship, Session, SQLModel, create_engine, select
+from sqlmodel import Session, create_engine
 import GatorGuide.database.models as models
 import pathlib
 from GatorGuide.database.parse_prereqs import parse

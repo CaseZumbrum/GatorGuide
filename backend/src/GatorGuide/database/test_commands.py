@@ -1,7 +1,6 @@
-from sqlmodel import Field, Relationship, Session, SQLModel, create_engine, select
+from sqlmodel import Session, create_engine, select
 import GatorGuide.database.models as models
 import pathlib
-import os
 
 sqlite_file_name = (
     pathlib.Path(__file__).parent.resolve().joinpath("./testing_database.db")

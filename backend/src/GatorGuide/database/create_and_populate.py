@@ -1,4 +1,4 @@
-from sqlmodel import Field, Relationship, Session, SQLModel, create_engine, select
+from sqlmodel import Session, SQLModel, create_engine
 import pathlib
 import os
 from GatorGuide.database.gather_courses import populate_courses
