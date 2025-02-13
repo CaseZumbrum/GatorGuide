@@ -1,3 +1,5 @@
 mypy
 ruff
 types-requests
+sphinx
+sphinx-rtd-theme
