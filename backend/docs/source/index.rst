@@ -6,15 +6,41 @@
 GatorGuide documentation
 ========================
 
-:meth:`.Major.print`
-:class:`.Major`
+An app for building your UF Schedule!
 
-.. autoclass:: GatorGuide.database.models.Course
+Quickstart
+==========
 
-.. automodule:: GatorGuide.database.models
-   :members:
-   :exclude-members: Course
+Build Instructions
+
+.. code-block:: bash
+
+   cd backend
+   python -m venv .venv
+   ./.venv/Scipts/Activate
+   pip install -e .
+
+Intro
+=====
+
+This project heavily utilizes SQLModel and SQL in general, but ideally (through the :class:`.DB_Engine` class) you should have all of that fully obfuscated!!
+
+Users of this (which should primarily be the backend of the project) should instantiate one (1) object of the class :class:`.DB_Engine` class (having several within one program may lead to concurrency issues).
+
+If there are things you would like from this object that do not yet exist, add a git issue (or solve it yourself if you want to join as a maintainer).
+
+This project is very much open source, and we support, appreciate, and ask for anyone to provide their skills on this project!!!
 
 .. toctree::
-   test
+   :maxdepth: 2
+   :caption: Classes
+
+   models
+   db_engine
+
+.. toctree::
+   :caption: Libraries
+
+   SQLModel <https://sqlmodel.tiangolo.com/>
+
 

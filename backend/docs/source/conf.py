@@ -31,6 +31,7 @@ extensions = [
 ]
 autosummary_generate = True  # Turn on sphinx.ext.autosummary
 add_module_names = False
+pygments_style = "sphinx"
 # Add any paths that contain templates here, relative to this directory.
 
 
