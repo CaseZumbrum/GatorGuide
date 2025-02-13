@@ -16,6 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install ./backend
+          pip install -r ./backend/requirements.dev.txt
       - name: Sphinx build
         run: |
           sphinx-build backend/docs/source _build
