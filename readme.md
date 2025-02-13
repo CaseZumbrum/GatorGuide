@@ -1,5 +1,9 @@
 # GatorGuide
 
+A web app for building your schedule as an UF Engineer!
+
+[Docs](https://casezumbrum.github.io/GatorGuide/)
+
 ## Build
 
 - Backend
@@ -14,3 +18,12 @@
       cd frontend
       npm install .
     ```
+
+## Build the docs
+  - Be in the python virtual environment created during build
+  - ```
+      cd backend
+      pip install -r requirements.dev.txt
+      ./docs/make.bat html
+    ```
+  - Open (or serve) docs/build/index.html
