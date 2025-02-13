@@ -9,9 +9,11 @@ GatorGuide documentation
 :meth:`.Major.print`
 :class:`.Major`
 
-.. automodule:: GatorGuide.database.models
-    :members:
+.. autoclass:: GatorGuide.database.models.Course
 
+.. automodule:: GatorGuide.database.models
+   :members:
+   :exclude-members: Course
 
 .. toctree::
    test
