@@ -1,5 +1,9 @@
 # GatorGuide
 
+A web app for building your schedule as an UF Engineer!
+
+[Docs](https://casezumbrum.github.io/GatorGuide/)
+
 ## Build
 
 - Backend
