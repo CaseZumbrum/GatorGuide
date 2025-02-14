@@ -144,7 +144,7 @@ class Course(SQLModel, table=True):
     """
 
     id: int | None = Field(default=None, primary_key=True)
-    code: str = Field(index=True)
+    code: str = Field(index=True, unique=True)
     name: str
     description: str
     credits: int
