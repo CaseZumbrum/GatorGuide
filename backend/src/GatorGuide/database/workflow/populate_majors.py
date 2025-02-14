@@ -15,6 +15,8 @@ def populate(engine: DB_Engine):
 
     # COMPUTER ENGINEERING
     # https://catalog.ufl.edu/UGRD/colleges-schools/UGENG/CPE_BSCO/#criticaltrackingtext
+    print("-----------------------")
+    print("Adding Computer Engineering...")
     CPE = Major(
         name="Computer Engineering",
     )
@@ -73,6 +75,7 @@ def populate(engine: DB_Engine):
     CPE.groups.append(CPE_ENRICHMENT_ELECTIVES)
 
     engine.write(CPE)
+    print("Done!")
 
 
 if __name__ == "__main__":

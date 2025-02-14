@@ -64,53 +64,68 @@ def populate(engine: DB_Engine):
     Args:
         engine (DB_Engine): Database API
     """
-    last_num = 0  # used by the one.uf api to get the next page of courses
+
+    print("-----------------------")
+    print("Deleting current Courses...")
+    # wipe the database of all courses!
+    courses_to_delete: list[Course] = engine.read_all_courses()
+    for d in courses_to_delete:
+        engine.delete(d)
+
+    print("Done!")
 
     courses: list[Course] = []  # list of course objects
-    courses_with_prereqs: list[Course] = []  # list of courses with preqreqs matched
     course_json = []  # list of courses as dictionary, used for prequisite matching
     count = 0  # used to keep track of how many courses have been registered
 
-    while True:
-        # pull data from one.uf
-        URL = f"https://one.uf.edu/apix/soc/schedule?ai=false&auf=false&category=CWSP&class-num=&course-code=&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&dept=&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number={last_num}&level-max=&level-min=&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=&qst-1=&qst-2=&qst-3=&quest=false&term=2251&wr-2000=&wr-4000=&wr-6000=&writing=false&var-cred=&hons=false"
-        r = requests.get(url=URL)
-        data = r.json()
+    codes: set[str] = set()
 
-        # if we have gotten to all of the courses
-        if data[0]["RETRIEVEDROWS"] == 0:
-            break
+    print("-----------------------")
+    print("Finding courses...")
+    terms = ["2248", "2251"]
+    for term in terms:
+        last_num = 0  # used by the one.uf api to get the next page of courses
+        while True:
+            # pull data from one.uf
+            URL = f"https://one.uf.edu/apix/soc/schedule?ai=false&auf=false&category=CWSP&class-num=&course-code=&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&dept=&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number={last_num}&level-max=&level-min=&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=&qst-1=&qst-2=&qst-3=&quest=false&term={term}&wr-2000=&wr-4000=&wr-6000=&writing=false&var-cred=&hons=false"
+            r = requests.get(url=URL)
+            data = r.json()
 
-        # iterate through course JSONs
-        for c in data[0]["COURSES"]:
-            # filter out graduate level courses
-            if c["sections"][0]["credits"] == "VAR" or int(c["code"][3]) >= 5:
-                continue
+            # if we have gotten to all of the courses
+            if data[0]["RETRIEVEDROWS"] == 0:
+                break
 
-            count += 1  # increment course counter
+            # iterate through course JSONs
+            for c in data[0]["COURSES"]:
+                # filter out graduate level courses
+                if c["sections"][0]["credits"] == "VAR" or int(c["code"][3]) >= 5:
+                    continue
+                elif c["code"] in codes:
+                    continue
+                else:
+                    # create new Course object, add to the list
+                    course_json.append(c)
+                    courses.append(
+                        Course(
+                            code=c["code"],
+                            name=c["name"],
+                            description=c["description"],
+                            credits=c["sections"][0]["credits"],
+                        )
+                    )
+                    codes.add(c["code"])
 
-            # create new Course object, add to the list
-            course_json.append(c)
-            courses.append(
-                Course(
-                    code=c["code"],
-                    name=c["name"],
-                    description=c["description"],
-                    credits=c["sections"][0]["credits"],
-                )
-            )
+            last_num = data[0]["LASTCONTROLNUMBER"]
 
-        last_num = data[0]["LASTCONTROLNUMBER"]
-        print(f"COUNT: {count}")
-
+    print("Adding prerequisites...")
     # add prerequisits to each course
-    for c in course_json:
+    for i in range(len(course_json)):
         prereqs: list[models.PrequisiteGroup] = []
 
         # if a course has prequisits
-        if c["prerequisites"] != "":
+        if course_json[i]["prerequisites"] != "":
             # get the codes for each prereq
-            p = parse(c["prerequisites"])
+            p = parse(course_json[i]["prerequisites"])
             # for each group of prereqs
             for group in p:
                 # create a new PrerequisiteGroup object
@@ -124,22 +139,18 @@ def populate(engine: DB_Engine):
                     # if the course is found, add it to the PrerequisiteGroup object
                     if course is not None:
                         prereqs[-1].courses.append(course)
-        # add the course + prereqs to the DB
-        courses_with_prereqs.append(
-            Course(
-                code=c["code"],
-                name=c["name"],
-                description=c["description"],
-                credits=c["sections"][0]["credits"],
-                prerequisites=prereqs,
-            )
-        )
+        courses[i].prerequisites = prereqs
 
-    for c in courses_with_prereqs:
-        try:
-            engine.write(c)
-        except IntegrityError as e:
-            print(e)
+    # add the course + prereqs to the DB
+    print("Writing to Database...")
+    for c in courses:
+        engine.write(c)
+        count += 1
+        # except IntegrityError as e:
+        #     if c.code == "EEL4744C":
+        #         print(e)
+    print(f"Courses added: {count}")
+    print("Done!")
 
 
 if __name__ == "__main__":
