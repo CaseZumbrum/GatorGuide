@@ -8,17 +8,6 @@ GatorGuide documentation
 
 An app for building your UF Schedule!
 
-Quickstart
-==========
-
-Build Instructions
-
-.. code-block:: bash
-
-   cd backend
-   python -m venv .venv
-   ./.venv/Scipts/Activate
-   pip install -e .
 
 Intro
 =====
@@ -30,6 +19,61 @@ Users of this (which should primarily be the backend of the project) should inst
 If there are things you would like from this object that do not yet exist, add a git issue (or solve it yourself if you want to join as a maintainer).
 
 This project is very much open source, and we support, appreciate, and ask for anyone to provide their skills on this project!!!
+
+Building
+========
+
+Install dependencies
+
+.. code-block:: bash
+
+   cd backend
+   python -m venv .venv
+   ./.venv/Scipts/Activate
+   pip install -e .
+
+.. important::
+
+   If you are building the docs, don't forget to ``pip install -r requirements.dev.txt``!!!!
+
+Build the DB
+
+.. code-block:: bash
+
+   cd backend/src/GatorGuide/database
+   python build_db.py
+
+
+Build the docs
+
+.. code-block:: bash
+
+   cd backend/docs
+   ./make.bat html
+
+.. important::
+
+   This will create an ``index.html`` file in the ``docs/build`` directory, serve this!!
+
+
+Usage
+=====
+
+The items in this database are pydantic models, this provides a lot of functionality but most will not be needed.
+
+- Use the :class:`.DB_Engine` to read the Courses/Major
+
+   - Or create your own the same way you would a normal object
+
+- Use these objects as you would normally
+
+- When done working with them, save them with :meth:`.DB_Engine.write()`
+
+   - Or delete them with :meth:`.DB_Engine.delete()`
+
+.. note::
+
+   You can use the ``.model_dump()`` method provided by pydantic to convert any of these DB objects to JSON
 
 .. toctree::
    :maxdepth: 2
