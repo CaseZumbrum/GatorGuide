@@ -1,10 +1,12 @@
-from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel import SQLModel, create_engine
 import pathlib
 import os
-from GatorGuide.database.gather_courses import populate_courses
+
+# this import is necessary to create the database
+from GatorGuide.database import models
 
 # path of the DB
-sqlite_file_name = pathlib.Path(__file__).parent.resolve().joinpath("./database.db")
+sqlite_file_name = pathlib.Path(__file__).parent.resolve().joinpath("../database.db")
 
 # If the DB already exists, delete it
 if os.path.isfile(sqlite_file_name):
@@ -21,5 +23,3 @@ def create_db_and_tables():
 
 if __name__ == "__main__":
     create_db_and_tables()
-    with Session(engine) as session:
-        populate_courses(session)
