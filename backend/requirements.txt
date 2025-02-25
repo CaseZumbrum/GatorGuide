@@ -1,3 +1,9 @@
 sqlmodel
 pathlib
 requests
+fastapi
+uvicorn
+sqlmodel
+python-multipart
+email-validator
+requests
