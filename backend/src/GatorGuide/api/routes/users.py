@@ -1,3 +1,5 @@
+# Code for after user functions are implemented in db_engine API, DOES NOT CURRENTLY WORK
+
 from fastapi import APIRouter, Depends
 from GatorGuide.api.db_dependency import get_db
 from GatorGuide.database.models import User
