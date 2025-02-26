@@ -27,10 +27,9 @@ Install dependencies
 
 .. code-block:: bash
 
-   cd backend
    python -m venv .venv
    ./.venv/Scipts/Activate
-   pip install -e .
+   pip install -e ./backend
 
 .. important::
 
