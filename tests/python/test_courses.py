@@ -1,6 +1,6 @@
 from GatorGuide.database.workflow.create import create_db_and_tables
 from GatorGuide.database.db_engine import DB_Engine
-from GatorGuide.database.models import Course, Major, PrequisiteGroup
+from GatorGuide.database.models import Course, PrequisiteGroup
 import os
 from pathlib import Path
 import pytest
