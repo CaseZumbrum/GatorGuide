@@ -1,10 +1,12 @@
 name: Python tests
 on:
-  pull_request:
+  push:
     branches: [create_unit_tests]
 
 jobs:
   pytest:
+    permissions:
+      checks: write
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
