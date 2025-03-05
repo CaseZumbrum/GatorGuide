@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from GatorGuide.api.db_dependency import db_engine
 from GatorGuide.database.models import Course
 
-router = APIRouter(prefix="/courses", tags=["courses"])
+router = APIRouter()
 
 
 @router.get("/", response_model=list[Course])
