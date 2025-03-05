@@ -173,6 +173,9 @@ class PrequisiteGroup(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     courses: list[Course] = Relationship(link_model=PrerequisiteGroupCourseLink)
 
+    def __eq__(self, other):
+        return self.courses == other.courses
+
 
 class Major(SQLModel, table=True):
     """Object representing a single major
