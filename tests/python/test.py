@@ -29,14 +29,6 @@ def test_course_insertion():
     assert c1 == c2
 
 
-def pytest_sessionfinish(session, exitstatus):
-    global e
-    """
-    Called after whole test run finished, right before
-    returning the exit status to the system.
-    """
-
-
 @pytest.fixture(scope="session", autouse=True)
 def run_before_and_after_tests():
     global e
