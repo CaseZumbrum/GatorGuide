@@ -1,7 +1,7 @@
 name: Python tests
 on:
-  push:
-    branches: [create_unit_tests]
+  pull_request:
+    branches: [master]
 
 jobs:
   pytest:
