@@ -46,8 +46,7 @@ def run_before_and_after_tests():
     yield  # tests happen here
 
     # everything that happens after all test
-    with open("./test.txt", "w") as f:
-        f.write("hi")
+
     del e
     os.remove(sqlite_file_name)
 
