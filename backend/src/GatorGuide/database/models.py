@@ -152,6 +152,15 @@ class Course(SQLModel, table=True):
         link_model=CoursePrerequisiteGroupLink
     )
 
+    def __eq__(self, other):
+        return (
+            self.code == other.code
+            and self.name == other.name
+            and self.description == other.description
+            and self.credits == other.credits
+            and self.prerequisites == other.prerequisites
+        )
+
 
 class PrequisiteGroup(SQLModel, table=True):
     """Group used to store prerequisits for courses
