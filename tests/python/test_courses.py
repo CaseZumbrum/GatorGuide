@@ -40,6 +40,10 @@ def test_accessing_nonexistant_course():
         e.read_course("COP3503")
 
 
+def test_reading_empty_course_list():
+    assert e.read_all_courses() == []
+
+
 def test_course_prerequisites():
     c1 = Course(
         code="COP3530",
