@@ -194,6 +194,14 @@ class Major(SQLModel, table=True):
     required: list[Course] = Relationship(link_model=MajorRequiredLink)
     groups: list["RequiredGroup"] = Relationship(link_model=MajorRequiredGroupLink)
 
+    def __eq__(self, other):
+        return (
+            self.name == other.name
+            and self.critical_tracking == other.critical_tracking
+            and self.required == other.required
+            and self.groups == other.groups
+        )
+
     def print(self):
         """print data on the major"""
         print("-------------------")
@@ -228,6 +236,13 @@ class RequiredGroup(SQLModel, table=True):
     name: str
     credits: int
     courses: list[Course] = Relationship(link_model=RequirementGroupsCourseLink)
+
+    def __eq__(self, other):
+        return (
+            self.name == other.name
+            and self.credits == other.credits
+            and self.courses == other.courses
+        )
 
 
 class Semester(SQLModel, table=True):
