@@ -11,6 +11,10 @@ def test_db_exists():
     assert os.path.exists(sqlite_file_name)
 
 
+def test_fail():
+    assert False
+
+
 @pytest.fixture(autouse=True)
 def run_before_and_after_tests():
     global e
