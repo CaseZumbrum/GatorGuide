@@ -4,7 +4,7 @@ on:
     branches: [create_unit_tests]
 
 jobs:
-  Publish:
+  pytest:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
