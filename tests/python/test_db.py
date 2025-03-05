@@ -1,10 +1,8 @@
 from GatorGuide.database.workflow.create import create_db_and_tables
 from GatorGuide.database.db_engine import DB_Engine
-from GatorGuide.database.models import Course, Major
 import os
 from pathlib import Path
 import pytest
-from sqlalchemy.exc import NoResultFound
 
 sqlite_file_name = Path(__file__).parent.resolve().joinpath("./database.db")
 
