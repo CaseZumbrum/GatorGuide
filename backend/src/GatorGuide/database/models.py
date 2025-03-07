@@ -285,7 +285,7 @@ class User(SQLModel, table=True):
     """
 
     id: int | None = Field(default=None, primary_key=True)
-    name: str = Field(index=True, unique=True)
-    email: str = Field(index=True, unique=True)
+    name: str
+    email: str
     hashed_password: str
     plans: list[FourYearPlan] = Relationship(link_model=UserFourYearPlanLink)
