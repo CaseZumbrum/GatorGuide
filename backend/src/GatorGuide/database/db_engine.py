@@ -1,5 +1,5 @@
 # ^(?!.*(COP3520)).*^(COP3|MHF4) useful regex
-from GatorGuide.database.models import Major, Course, RequiredGroup
+from GatorGuide.database.models import Major, Course, RequiredGroup, User
 from pathlib import Path
 from sqlmodel import Session, SQLModel, create_engine, select
 import os
@@ -33,6 +33,7 @@ class DB_Engine:
         """
         self.session.add(object)
         self.session.commit()
+        self.session.refresh(object)
 
     def delete(self, object: SQLModel):
         """Delete a SQLModel object from the database
@@ -102,6 +103,10 @@ class DB_Engine:
         """
         statement = select(Course)
         return list(self.session.exec(statement).all())
+
+    def read_user(self, username: str) -> User:
+        statement = select(User).where(User.name == username)
+        return self.session.exec(statement).one()
 
 
 if __name__ == "__main__":

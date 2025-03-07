@@ -3,12 +3,24 @@ from fastapi.staticfiles import StaticFiles
 import pathlib
 from GatorGuide.api.routes import courses, majors, users
 from fastapi.openapi.utils import get_openapi
+import logging
+
+
+# do not log user password data
+class EndpointFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        return record.getMessage().find("/users/") == -1
+
+
+# Filter out /endpoint
+logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
 
 app = FastAPI(title="GatorGuide API", version="1.0")
 
 app.include_router(courses.router, prefix="/courses", tags=["Courses"])
 app.include_router(majors.router, prefix="/majors", tags=["Majors"])
 app.include_router(users.router, prefix="/users", tags=["Users"])
+
 
 def custom_openapi():
     if app.openapi_schema:
@@ -21,7 +33,8 @@ def custom_openapi():
     )
     return app.openapi_schema
 
-app.openapi = custom_openapi
+
+app.openapi_schema = custom_openapi()
 
 # mount frontend
 app.mount(
