@@ -19,6 +19,11 @@ class DB_Engine:
         """
         sqlite_url = f"sqlite:///{path}"
         self.engine = create_engine(sqlite_url)
+        self.session = Session(self.engine)
+
+    def __del__(self):
+        self.session.close()
+        self.engine.dispose()
 
     def write(self, object: SQLModel):
         """Write a SQLModel object to the database. Updates existing objects and adds new ones
@@ -26,9 +31,8 @@ class DB_Engine:
         Args:
             object (SQLModel): Object to be written
         """
-        with Session(self.engine) as session:
-            session.add(object)
-            session.commit()
+        self.session.add(object)
+        self.session.commit()
 
     def delete(self, object: SQLModel):
         """Delete a SQLModel object from the database
@@ -36,9 +40,8 @@ class DB_Engine:
         Args:
             object (SQLModel): Object to be deleted, should exist in the database
         """
-        with Session(self.engine) as session:
-            session.delete(object)
-            session.commit()
+        self.session.delete(object)
+        self.session.commit()
 
     def add_to_group(self, group: RequiredGroup, regex: str) -> None:
         """Function to add courses to a RequiredGroup object via regex parsing on course codes
@@ -51,12 +54,11 @@ class DB_Engine:
             regex (str): compleable regex that matches to course codes
         """
         pattern = re.compile(regex)
-        with Session(self.engine) as session:
-            statement = select(Course)
-            x = session.exec(statement)
-            for c in x:
-                if pattern.match(c.code):
-                    group.courses.append(c)
+        statement = select(Course)
+        x = self.session.exec(statement)
+        for c in x:
+            if pattern.match(c.code):
+                group.courses.append(c)
         self.write(group)
 
     def read_major(self, name: str) -> Major:
@@ -68,9 +70,8 @@ class DB_Engine:
         Returns:
             Major: Major object matching the name
         """
-        with Session(self.engine) as session:
-            statement = select(Major).where(Major.name == name)
-            return session.exec(statement).one()
+        statement = select(Major).where(Major.name == name)
+        return self.session.exec(statement).one()
 
     def read_all_majors(self) -> list[Major]:
         """Read all majors from the database
@@ -78,9 +79,8 @@ class DB_Engine:
         Returns:
             list[Major]: All majors from the database
         """
-        with Session(self.engine) as session:
-            statement = select(Major)
-            return list(session.exec(statement).all())
+        statement = select(Major)
+        return list(self.session.exec(statement).all())
 
     def read_course(self, code: str) -> Course:
         """Read a single course from the database by code
@@ -91,9 +91,8 @@ class DB_Engine:
         Returns:
             Course: Course with matching code
         """
-        with Session(self.engine) as session:
-            statement = select(Course).where(Course.code == code)
-            return session.exec(statement).one()
+        statement = select(Course).where(Course.code == code)
+        return self.session.exec(statement).one()
 
     def read_all_courses(self) -> list[Course]:
         """Retrieve all courses from the database
@@ -101,9 +100,8 @@ class DB_Engine:
         Returns:
             list[Course]: All courses from the database
         """
-        with Session(self.engine) as session:
-            statement = select(Course)
-            return list(session.exec(statement).all())
+        statement = select(Course)
+        return list(self.session.exec(statement).all())
 
 
 if __name__ == "__main__":

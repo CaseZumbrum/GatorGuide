@@ -152,6 +152,15 @@ class Course(SQLModel, table=True):
         link_model=CoursePrerequisiteGroupLink
     )
 
+    def __eq__(self, other):
+        return (
+            self.code == other.code
+            and self.name == other.name
+            and self.description == other.description
+            and self.credits == other.credits
+            and self.prerequisites == other.prerequisites
+        )
+
 
 class PrequisiteGroup(SQLModel, table=True):
     """Group used to store prerequisits for courses
@@ -163,6 +172,9 @@ class PrequisiteGroup(SQLModel, table=True):
 
     id: int | None = Field(default=None, primary_key=True)
     courses: list[Course] = Relationship(link_model=PrerequisiteGroupCourseLink)
+
+    def __eq__(self, other):
+        return self.courses == other.courses
 
 
 class Major(SQLModel, table=True):
@@ -181,6 +193,14 @@ class Major(SQLModel, table=True):
     critical_tracking: list[Course] = Relationship(link_model=MajorCriticalTrackingLink)
     required: list[Course] = Relationship(link_model=MajorRequiredLink)
     groups: list["RequiredGroup"] = Relationship(link_model=MajorRequiredGroupLink)
+
+    def __eq__(self, other):
+        return (
+            self.name == other.name
+            and self.critical_tracking == other.critical_tracking
+            and self.required == other.required
+            and self.groups == other.groups
+        )
 
     def print(self):
         """print data on the major"""
@@ -216,6 +236,13 @@ class RequiredGroup(SQLModel, table=True):
     name: str
     credits: int
     courses: list[Course] = Relationship(link_model=RequirementGroupsCourseLink)
+
+    def __eq__(self, other):
+        return (
+            self.name == other.name
+            and self.credits == other.credits
+            and self.courses == other.courses
+        )
 
 
 class Semester(SQLModel, table=True):
