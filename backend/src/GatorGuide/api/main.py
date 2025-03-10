@@ -6,14 +6,14 @@ from fastapi.openapi.utils import get_openapi
 import logging
 
 
-# do not log user password data
-class EndpointFilter(logging.Filter):
-    def filter(self, record: logging.LogRecord) -> bool:
-        return record.getMessage().find("/users/") == -1
+# # do not log user password data
+# class EndpointFilter(logging.Filter):
+#     def filter(self, record: logging.LogRecord) -> bool:
+#         return record.getMessage().find("/users/") == -1
 
 
-# Filter out /endpoint
-logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
+# # Filter out /endpoint
+# logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
 
 app = FastAPI(title="GatorGuide API", version="1.0")
 

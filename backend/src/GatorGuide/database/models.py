@@ -294,3 +294,10 @@ class UserAuth(SQLModel, table=True):
     user_id: int | None = Field(default=None, foreign_key="user.id")
     salt: str
     hashed: str
+
+
+class UserSession(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    user_id: int | None = Field(default=None, foreign_key="user.id")
+    session_id: int
+    time: int
