@@ -80,6 +80,7 @@ The items in this database are pydantic models, this provides a lot of functiona
 
    models
    db_engine
+   exceptions
 
 .. toctree::
    :caption: Libraries
