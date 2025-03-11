@@ -75,12 +75,26 @@ The items in this database are pydantic models, this provides a lot of functiona
    You can use the ``.model_dump()`` method provided by pydantic to convert any of these DB objects to JSON
 
 .. toctree::
+   :maxdepth: 1
+   :caption: Guides
+
+   api_usage
+
+.. toctree::
    :maxdepth: 2
    :caption: Classes
 
    models
    db_engine
    exceptions
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Endpoints
+
+   user_endpoints
+   major_endpoints
+   course_endpoints
 
 .. toctree::
    :caption: Libraries
