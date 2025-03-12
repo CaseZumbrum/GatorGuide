@@ -280,12 +280,24 @@ class User(SQLModel, table=True):
         id (int, optional): Primary key of the table, do NOT pass this parameter in unless you are aware of the affect it will have. Defaults to None.
         name (str): Username
         email (str): user's email
-        password (str): HASHED user password
         plans (list[FourYearPlan]): list of all 4 year plans that this user has created
     """
 
     id: int | None = Field(default=None, primary_key=True)
     name: str
     email: str
-    password: str
     plans: list[FourYearPlan] = Relationship(link_model=UserFourYearPlanLink)
+
+
+class UserAuth(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    user_id: int | None = Field(default=None, foreign_key="user.id")
+    salt: str
+    hashed: str
+
+
+class UserSession(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    user_id: int | None = Field(default=None, foreign_key="user.id")
+    session_id: int
+    time: int
