@@ -11,25 +11,25 @@
     border: 3px solid var(--coursecard-border-color);
     border-radius: 10px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.151);
-    padding: 5px;
-    margin: 5px;
+    padding: 5%;
+    margin: 5%;
     max-width: 80%;
     min-width: 80%;
     min-height: 5%;
     justify-self: center;
-    justify-content: space-between;
-    justify-content: left;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex: flex;
+    flex-direction: column;
   }
   
   .CourseCard .CourseCard-Title {
     text-align: left;
+    flex: 4;
+    max-width: 60%;
     font: "McKinley";
     text-decoration-color: var(--coursecard-text-color);
     font-size: medium;
     display: inline-block;
+    word-wrap: break-word;
   }
 
   .CourseCard .CourseCard-Requirement {
@@ -38,14 +38,18 @@
     text-decoration-color: var(--coursecard-text-color);
     font-size: small;
     display: inline-block;
+    flex: 1;
+    max-width: 15%;
+    padding-right: 5%;
   }
 
 
   .CourseCard .CourseCard-Text {
-    padding: 10px;
     text-align: left;
     font: "McKinley";
     text-decoration-color: var(--coursecard-text-color);
     font-size: small;
+    display: inline-block;
+
   }
   

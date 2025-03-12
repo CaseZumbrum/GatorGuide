@@ -6,9 +6,8 @@ import CourseCard from '../CourseCard/CourseCard.js';
 import Tooltip from "../ToolTip/ToolTip.tsx";
 
 
-function Search() {
+export function Search() {
   const [items, setItems] = useState<string[]>([])
-  const [courses, setCourses] = useState([])
   const [query, setQuery] = useState<string>("")
   const inputRef = useRef()
 
@@ -20,21 +19,14 @@ function Search() {
   function onSubmit(e) {
     e.preventDefault()
 
-    setCourses(currentCourses => {
-      return [
-        ...currentCourses,
-        { courseName: newName, }
-      ]
+    const value = inputRef.current.value 
+    if (value === "") return
+
+    setItems(prev => {
+      return [...prev, value]
     })
 
-    // const value = inputRef.current.value 
-    // if (value === "") return
-
-    // setItems(prev => {
-    //   return [...prev, value]
-    // })
-
-    // inputRef.current.value = ""
+    inputRef.current.value = ""
   }
 
   return (
@@ -47,9 +39,9 @@ function Search() {
         NewItem: <input ref={inputRef} type="text"/>
         <button type="submit">Add</button>
       </form>
-      <h3>Course Cards</h3>
-      {filteredItems.map(CourseCard => (
-        <div>{CourseCard}</div>
+      <h3>Items</h3>
+      {filteredItems.map(item => (
+        <div>{item}</div>
       ))}
     </div>
   );
