@@ -219,7 +219,6 @@ def populate(engine: DB_Engine):
     BE.required.append(engine.read_course("ABE3652C"))  # Physical and Rheological Properties of Biological Materials
     BE.required.append(engine.read_course("ABE4042C"))  # Biological Engineering Design 1
     BE.required.append(engine.read_course("ABE4043C"))  # Biological Engineering Design 2
-    BE.required.append(engine.read_course("ABE4931"))   # Professional Issues in Agricultural and Biological Engineering
     BE.required.append(engine.read_course("CHM2200"))   # Organic Chemistry
     BE.required.append(engine.read_course("STA3032"))   # Engineering Statistics
     BE.required.append(engine.read_course("EGM2511"))   # Engineering Mechanics - Statics
@@ -237,7 +236,6 @@ def populate(engine: DB_Engine):
                 engine.read_course("ABE4033"),  # Fundamentals and Applications of Biosensors
                 engine.read_course("ABE4662"),  # Quantification of Biological Processes
                 engine.read_course("ABE4812"),  # Food and Bioprocess Engineering Unit Operations
-                engine.read_course("ABE4905"),  # Independent Study
             ],
         )
     )
@@ -304,7 +302,6 @@ def populate(engine: DB_Engine):
 
     # Required Courses
     CIV.required.append(engine.read_course("CGN2328"))  # Technical Drawing and Visualization
-    CIV.required.append(engine.read_course("CGN3710"))  # Experimentation and Instrumentation in Civil Engineering
     CIV.required.append(engine.read_course("CGN3421"))  # Computer Methods in Civil Engineering
     CIV.required.append(engine.read_course("CGN4160"))  # Civil Engineering Practice
     CIV.required.append(engine.read_course("CGN3501C"))  # Civil Engineering Materials
@@ -331,47 +328,12 @@ def populate(engine: DB_Engine):
 
     engine.add_to_group(
         CIV_TECH_ELECTIVES,
-        "^(?!.*(CGN2328|CGN3710|CGN3421|CGN4160|CGN3501C|CEG4011|CES3102|CWR3201|TTE4004C|EGM2511|EGM3400|EGM3520|EEL3003|CHM2045|MAC2311|MAC2312|MAC2313|MAP2302|PHY2048|PHY2049)).*^(CEG4|CES4|CGN4|CWR4|TTE4|ENV4|SUR4|EGN4|EMA4|EEL4|EGS4|EGM4|EML4|COT3|COT4|COP3|COP4|MAP4|MAC4|STA4|PHY3|PHY4|PHZ3|PHZ4)",
+        "^(?!.*(CGN2328|CGN3421|CGN4160|CGN3501C|CEG4011|CES3102|CWR3201|TTE4004C|EGM2511|EGM3400|EGM3520|EEL3003|CHM2045|MAC2311|MAC2312|MAC2313|MAP2302|PHY2048|PHY2049)).*^(CEG4|CES4|CGN4|CWR4|TTE4|ENV4|SUR4|EGN4|EMA4|EEL4|EGS4|EGM4|EML4|COT3|COT4|COP3|COP4|MAP4|MAC4|STA4|PHY3|PHY4|PHZ3|PHZ4)",
     )
 
     CIV.groups.append(CIV_TECH_ELECTIVES)
 
     engine.write(CIV)
-    print("Done!")
-
-    print("Adding Coastal and Oceanographic Engineering...")
-    COE = Major(
-        name="Coastal and Oceanographic Engineering",
-    )
-
-    # Required Courses
-    COE.required.append(engine.read_course("EGM5816"))  # Intermediate Fluid Dynamics
-    COE.required.append(engine.read_course("EOC6196"))  # Littoral Processes
-    COE.required.append(engine.read_course("EOC6430"))  # Coastal Structures
-    COE.required.append(engine.read_course("OCP6050"))  # Physical Oceanography
-    COE.required.append(engine.read_course("OCP6165"))  # Ocean Waves I: Linear Theory
-    COE.required.append(engine.read_course("OCP6168"))  # Data Analysis Techniques for Coastal and Ocean Engineers
-
-    # Critical Tracking Courses
-    COE.critical_tracking.append(engine.read_course("CHM2045"))  # General Chemistry 1
-    COE.critical_tracking.append(engine.read_course("MAC2311"))  # Analytic Geometry and Calculus 1
-    COE.critical_tracking.append(engine.read_course("MAC2312"))  # Analytic Geometry and Calculus 2
-    COE.critical_tracking.append(engine.read_course("MAC2313"))  # Analytic Geometry and Calculus 3
-    COE.critical_tracking.append(engine.read_course("MAP2302"))  # Elementary Differential Equations
-    COE.critical_tracking.append(engine.read_course("PHY2048"))  # Physics with Calculus 1
-    COE.critical_tracking.append(engine.read_course("PHY2049"))  # Physics with Calculus 2
-
-    # Technical Electives
-    COE_TECH_ELECTIVES = RequiredGroup(name="Technical Electives", credits=12)
-
-    engine.add_to_group(
-        COE_TECH_ELECTIVES,
-        "^(?!.*(EGM5816|EOC6196|EOC6430|OCP6050|OCP6165|OCP6168|CHM2045|MAC2311|MAC2312|MAC2313|MAP2302|PHY2048|PHY2049)).*^(EOC6|OCP6|EGM6|CGN6|CEG6|CES6|CWR6|TTE6|ENV6|SUR6|EGN6|EMA6|EEL6|EGS6|EGM6|EML6|COT6|COP6|MAP6|MAC6|STA6|PHY6|PHZ6)",
-    )
-
-    COE.groups.append(COE_TECH_ELECTIVES)
-
-    engine.write(COE)
     print("Done!")
 
     print("Adding Digital Arts and Sciences...")
@@ -380,28 +342,20 @@ def populate(engine: DB_Engine):
     )
 
     # Required Courses
-    DAS.required.append(engine.read_course("DIG3713C"))  # Game Design Practices
     DAS.required.append(engine.read_course("DIG3873"))  # Game Systems Development
-    DAS.required.append(engine.read_course("DIG4151C"))  # Digital Audio
-    DAS.required.append(engine.read_course("DIG4293"))  # Applied Digital Media Protocols
     DAS.required.append(engine.read_course("DIG4527C"))  # Game Design and Production
-    DAS.required.append(engine.read_course("DIG4715C"))  # Game Development
-    DAS.required.append(engine.read_course("DIG4932"))  # Colloquium in Digital Arts and Sciences
-    DAS.required.append(engine.read_course("DIG4940"))  # Internship
 
     # Critical Tracking Courses
     DAS.critical_tracking.append(engine.read_course("DIG2005"))  # Introduction to Digital Technologies
     DAS.critical_tracking.append(engine.read_course("DIG2021"))  # Foundations of Digital Culture
     DAS.critical_tracking.append(engine.read_course("DIG2121"))  # Principles of Digital Visualization
-    DAS.critical_tracking.append(engine.read_course("DIG3020"))  # Foundations of Digital Arts and Sciences
-    DAS.critical_tracking.append(engine.read_course("DIG3171"))  # Interdisciplinary Design Methods for Digital Arts and Sciences
 
     # Technical Electives
     DAS_TECH_ELECTIVES = RequiredGroup(name="Technical Electives", credits=12)
 
     engine.add_to_group(
         DAS_TECH_ELECTIVES,
-        "^(?!.*(DIG3713C|DIG3873|DIG4151C|DIG4293|DIG4527C|DIG4715C|DIG4932|DIG4940|DIG2005|DIG2021|DIG2121|DIG3020|DIG3171)).*^(DIG3|DIG4)",
+        "^(?!.*(DIG3873|DIG4527C|DIG2005|DIG2021|DIG2121)).*^(DIG3|DIG4)",
     )
 
     DAS.groups.append(DAS_TECH_ELECTIVES)
@@ -420,14 +374,11 @@ def populate(engine: DB_Engine):
     EE.required.append(engine.read_course("EEL3112"))  # Circuits 2
     EE.required.append(engine.read_course("EEL3135"))  # Signals and Systems
     EE.required.append(engine.read_course("EEL3701C"))  # Digital Logic and Computer Systems
-    EE.required.append(engine.read_course("EEL3744C"))  # Microprocessor Applications
     EE.required.append(engine.read_course("EEL3923C"))  # Electrical Engineering Design 1
     EE.required.append(engine.read_course("EEL4924C"))  # Electrical Engineering Design 2
-    EE.required.append(engine.read_course("EEL3472C"))  # Electromagnetic Fields and Applications 1
     EE.required.append(engine.read_course("EEL4514C"))  # Communication Systems and Components
     EE.required.append(engine.read_course("EEL4657C"))  # Linear Control Systems
     EE.required.append(engine.read_course("EEL3211C"))  # Basic Electric Energy Engineering
-    EE.required.append(engine.read_course("EEL3308C"))  # Electronic Circuits 1
 
     # Critical Tracking Courses
     EE.critical_tracking.append(engine.read_course("CHM2045"))  # General Chemistry 1
@@ -443,7 +394,7 @@ def populate(engine: DB_Engine):
 
     engine.add_to_group(
         EE_TECH_ELECTIVES,
-        "^(?!.*(EEL3000|EEL3111C|EEL3112|EEL3135|EEL3701C|EEL3744C|EEL3923C|EEL4924C|EEL3472C|EEL4514C|EEL4657C|EEL3211C|EEL3308C|CHM2045|MAC2311|MAC2312|MAC2313|MAP2302|PHY2048|PHY2049)).*^(EEL4|EEL5|EEL6|EEL7|EEL8|EEL9|EEL10|EEL11|EEL12|EEL13|EEL14|EEL15|EEL16|EEL17|EEL18|EEL19|EEL20|EEL21|EEL22|EEL23|EEL24|EEL25|EEL26|EEL27|EEL28|EEL29|EEL30|EEL31|EEL32|EEL33|EEL34|EEL35|EEL36|EEL37|EEL38|EEL39|EEL40|EEL41|EEL42|EEL43|EEL44|EEL45|EEL46|EEL47|EEL48|EEL49|EEL50|EEL51|EEL52|EEL53|EEL54|EEL55|EEL56|EEL57|EEL58|EEL59|EEL60|EEL61|EEL62|EEL63|EEL64|EEL65|EEL66|EEL67|EEL68|EEL69|EEL70|EEL71|EEL72|EEL73|EEL74|EEL75|EEL76|EEL77|EEL78|EEL79|EEL80|EEL81|EEL82|EEL83|EEL84|EEL85|EEL86|EEL87|EEL88|EEL89|EEL90|EEL91|EEL92|EEL93|EEL94|EEL95|EEL96|EEL97|EEL98|EEL99)",
+        "^(?!.*(EEL3000|EEL3111C|EEL3112|EEL3135|EEL3701C|EEL3923C|EEL4924C|EEL4514C|EEL4657C|EEL3211C|CHM2045|MAC2311|MAC2312|MAC2313|MAP2302|PHY2048|PHY2049)).*^(EEL4|EEL5|EEL6|EEL7|EEL8|EEL9|EEL10|EEL11|EEL12|EEL13|EEL14|EEL15|EEL16|EEL17|EEL18|EEL19|EEL20|EEL21|EEL22|EEL23|EEL24|EEL25|EEL26|EEL27|EEL28|EEL29|EEL30|EEL31|EEL32|EEL33|EEL34|EEL35|EEL36|EEL37|EEL38|EEL39|EEL40|EEL41|EEL42|EEL43|EEL44|EEL45|EEL46|EEL47|EEL48|EEL49|EEL50|EEL51|EEL52|EEL53|EEL54|EEL55|EEL56|EEL57|EEL58|EEL59|EEL60|EEL61|EEL62|EEL63|EEL64|EEL65|EEL66|EEL67|EEL68|EEL69|EEL70|EEL71|EEL72|EEL73|EEL74|EEL75|EEL76|EEL77|EEL78|EEL79|EEL80|EEL81|EEL82|EEL83|EEL84|EEL85|EEL86|EEL87|EEL88|EEL89|EEL90|EEL91|EEL92|EEL93|EEL94|EEL95|EEL96|EEL97|EEL98|EEL99)",
     )
 
     EE.groups.append(EE_TECH_ELECTIVES)
@@ -458,15 +409,9 @@ def populate(engine: DB_Engine):
 
     # Required Courses
     ENV.required.append(engine.read_course("ENV3040C"))  # Environmental Engineering
-    ENV.required.append(engine.read_course("ENV3040L"))  # Environmental Engineering Lab
     ENV.required.append(engine.read_course("ENV3930"))   # Environmental Engineering Seminar
-    ENV.required.append(engine.read_course("ENV4101"))   # Elements of Atmospheric Pollution
-    ENV.required.append(engine.read_course("ENV4120"))   # Air Pollution Control Design
-    ENV.required.append(engine.read_course("ENV4351"))   # Solid and Hazardous Waste Management
-    ENV.required.append(engine.read_course("ENV4430"))   # Water Treatment Process Design
     ENV.required.append(engine.read_course("ENV4514C"))  # Water and Wastewater Treatment
     ENV.required.append(engine.read_course("ENV4601"))   # Environmental Resources Management
-    ENV.required.append(engine.read_course("ENV4612"))   # Sustainability and Environmental Restoration
 
     # Critical Tracking Courses
     ENV.critical_tracking.append(engine.read_course("CHM2045"))  # General Chemistry 1
@@ -483,7 +428,7 @@ def populate(engine: DB_Engine):
 
     engine.add_to_group(
         ENV_TECH_ELECTIVES,
-        "^(?!.*(ENV3040C|ENV3040L|ENV3930|ENV4101|ENV4120|ENV4351|ENV4430|ENV4514C|ENV4601|ENV4612|CHM2045|CHM2046|MAC2311|MAC2312|MAC2313|MAP2302|PHY2048|PHY2049)).*^(ENV4|ENV5|ENV6|ENV7|ENV8|ENV9|ENV10|ENV11|ENV12|ENV13|ENV14|ENV15|ENV16|ENV17|ENV18|ENV19|ENV20|ENV21|ENV22|ENV23|ENV24|ENV25|ENV26|ENV27|ENV28|ENV29|ENV30|ENV31|ENV32|ENV33|ENV34|ENV35|ENV36|ENV37|ENV38|ENV39|ENV40|ENV41|ENV42|ENV43|ENV44|ENV45|ENV46|ENV47|ENV48|ENV49|ENV50|ENV51|ENV52|ENV53|ENV54|ENV55|ENV56|ENV57|ENV58|ENV59|ENV60|ENV61|ENV62|ENV63|ENV64|ENV65|ENV66|ENV67|ENV68|ENV69|ENV70|ENV71|ENV72|ENV73|ENV74|ENV75|ENV76|ENV77|ENV78|ENV79|ENV80|ENV81|ENV82|ENV83|ENV84|ENV85|ENV86|ENV87|ENV88|ENV89|ENV90|ENV91|ENV92|ENV93|ENV94|ENV95|ENV96|ENV97|ENV98|ENV99)",
+        "^(?!.*(ENV3040C|ENV3930|ENV4514C|ENV4601|CHM2045|CHM2046|MAC2311|MAC2312|MAC2313|MAP2302|PHY2048|PHY2049)).*^(ENV4|ENV5|ENV6|ENV7|ENV8|ENV9|ENV10|ENV11|ENV12|ENV13|ENV14|ENV15|ENV16|ENV17|ENV18|ENV19|ENV20|ENV21|ENV22|ENV23|ENV24|ENV25|ENV26|ENV27|ENV28|ENV29|ENV30|ENV31|ENV32|ENV33|ENV34|ENV35|ENV36|ENV37|ENV38|ENV39|ENV40|ENV41|ENV42|ENV43|ENV44|ENV45|ENV46|ENV47|ENV48|ENV49|ENV50|ENV51|ENV52|ENV53|ENV54|ENV55|ENV56|ENV57|ENV58|ENV59|ENV60|ENV61|ENV62|ENV63|ENV64|ENV65|ENV66|ENV67|ENV68|ENV69|ENV70|ENV71|ENV72|ENV73|ENV74|ENV75|ENV76|ENV77|ENV78|ENV79|ENV80|ENV81|ENV82|ENV83|ENV84|ENV85|ENV86|ENV87|ENV88|ENV89|ENV90|ENV91|ENV92|ENV93|ENV94|ENV95|ENV96|ENV97|ENV98|ENV99)",
     )
 
     ENV.groups.append(ENV_TECH_ELECTIVES)
@@ -499,11 +444,7 @@ def populate(engine: DB_Engine):
     # Required Courses
     ISE.required.append(engine.read_course("EIN2002"))   # Introduction to Industrial and Systems Engineering
     ISE.required.append(engine.read_course("EIN3354"))   # Engineering Economy
-    ISE.required.append(engine.read_course("EIN3451"))   # Industrial Quality Control
-    ISE.required.append(engine.read_course("EIN4243"))   # Human Factors and Ergonomics
     ISE.required.append(engine.read_course("EIN4335"))   # Systems Engineering
-    ISE.required.append(engine.read_course("EIN4360C"))  # Facilities Planning and Work Design
-    ISE.required.append(engine.read_course("EIN4453"))   # Manufacturing Systems Engineering
     ISE.required.append(engine.read_course("ESI3327C"))  # Matrix and Numerical Methods in Systems Engineering
     ISE.required.append(engine.read_course("ESI4313"))   # Operations Research 2
     ISE.required.append(engine.read_course("ESI4356"))   # Decision Support Systems for ISEs
@@ -529,7 +470,7 @@ def populate(engine: DB_Engine):
 
     engine.add_to_group(
         ISE_TECH_ELECTIVES,
-        "^(?!.*(EIN2002|EIN3354|EIN3451|EIN4243|EIN4335|EIN4360C|EIN4453|ESI3327C|ESI4313|ESI4356|ESI4610|ESI4611|ESI4523|EEL3003|EGM2511|EML2023|EML3100|CHM2045|MAC2311|MAC2312|MAC2313|MAP2302|PHY2048|PHY2049)).*^(EIN4|ESI4|EGM4|EML4|EEL4|COP4|STA4|MAP4|MAC4|PHY4)",
+        "^(?!.*(EIN2002|EIN3354|EIN4335|ESI3327C|ESI4313|ESI4356|ESI4610|ESI4611|ESI4523|EEL3003|EGM2511|EML2023|EML3100|CHM2045|MAC2311|MAC2312|MAC2313|MAP2302|PHY2048|PHY2049)).*^(EIN4|ESI4|EGM4|EML4|EEL4|COP4|STA4|MAP4|MAC4|PHY4)",
     )
 
     ISE.groups.append(ISE_TECH_ELECTIVES)
@@ -645,10 +586,8 @@ def populate(engine: DB_Engine):
     NE.required.append(engine.read_course("ENU4001"))    # Nuclear Engineering Analysis 1
     NE.required.append(engine.read_course("ENU4003"))    # Nuclear Engineering Analysis 2
     NE.required.append(engine.read_course("ENU4103"))    # Reactor Analysis and Computation 1
-    NE.required.append(engine.read_course("ENU4104"))    # Reactor Analysis and Computation 2
     NE.required.append(engine.read_course("ENU4134"))    # Reactor Thermal Hydraulics
     NE.required.append(engine.read_course("ENU4145"))    # Risk Assessment and Economic Analysis of Nuclear Systems
-    NE.required.append(engine.read_course("ENU4180"))    # Introduction to the Nuclear Fuel Cycle
     NE.required.append(engine.read_course("ENU4191"))    # Elements of Nuclear and Radiological Engineering Design
     NE.required.append(engine.read_course("ENU4192"))    # Nuclear and Radiological Engineering Design
     NE.required.append(engine.read_course("ENU4505L"))   # Nuclear and Radiological Engineering Laboratory 1
@@ -674,7 +613,7 @@ def populate(engine: DB_Engine):
 
     engine.add_to_group(
         NE_TECH_ELECTIVES,
-        "^(?!.*(ENU4001|ENU4003|ENU4103|ENU4104|ENU4134|ENU4145|ENU4180|ENU4191|ENU4192|ENU4505L|ENU4612|ENU4612L|ENU4630|CHM2045|CHM2045L|CHM2046|MAC2311|MAC2312|MAC2313|MAP2302|PHY2048|PHY2048L|PHY2049|PHY2049L)).*^(ENU4|ENU5|ENU6|ENU7|ENU8|ENU9|ENU10|ENU11|ENU12|ENU13|ENU14|ENU15|ENU16|ENU17|ENU18|ENU19|ENU20|ENU21|ENU22|ENU23|ENU24|ENU25|ENU26|ENU27|ENU28|ENU29|ENU30|ENU31|ENU32|ENU33|ENU34|ENU35|ENU36|ENU37|ENU38|ENU39|ENU40|ENU41|ENU42|ENU43|ENU44|ENU45|ENU46|ENU47|ENU48|ENU49|ENU50|ENU51|ENU52|ENU53|ENU54|ENU55|ENU56|ENU57|ENU58|ENU59|ENU60|ENU61|ENU62|ENU63|ENU64|ENU65|ENU66|ENU67|ENU68|ENU69|ENU70|ENU71|ENU72|ENU73|ENU74|ENU75|ENU76|ENU77|ENU78|ENU79|ENU80|ENU81|ENU82|ENU83|ENU84|ENU85|ENU86|ENU87|ENU88|ENU89|ENU90|ENU91|ENU92|ENU93|ENU94|ENU95|ENU96|ENU97|ENU98|ENU99)",
+        "^(?!.*(ENU4001|ENU4003|ENU4103|ENU4134|ENU4145|ENU4191|ENU4192|ENU4505L|ENU4612|ENU4612L|ENU4630|CHM2045|CHM2045L|CHM2046|MAC2311|MAC2312|MAC2313|MAP2302|PHY2048|PHY2048L|PHY2049|PHY2049L)).*^(ENU4|ENU5|ENU6|ENU7|ENU8|ENU9|ENU10|ENU11|ENU12|ENU13|ENU14|ENU15|ENU16|ENU17|ENU18|ENU19|ENU20|ENU21|ENU22|ENU23|ENU24|ENU25|ENU26|ENU27|ENU28|ENU29|ENU30|ENU31|ENU32|ENU33|ENU34|ENU35|ENU36|ENU37|ENU38|ENU39|ENU40|ENU41|ENU42|ENU43|ENU44|ENU45|ENU46|ENU47|ENU48|ENU49|ENU50|ENU51|ENU52|ENU53|ENU54|ENU55|ENU56|ENU57|ENU58|ENU59|ENU60|ENU61|ENU62|ENU63|ENU64|ENU65|ENU66|ENU67|ENU68|ENU69|ENU70|ENU71|ENU72|ENU73|ENU74|ENU75|ENU76|ENU77|ENU78|ENU79|ENU80|ENU81|ENU82|ENU83|ENU84|ENU85|ENU86|ENU87|ENU88|ENU89|ENU90|ENU91|ENU92|ENU93|ENU94|ENU95|ENU96|ENU97|ENU98|ENU99)",
     )
 
     NE.groups.append(NE_TECH_ELECTIVES)
