@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Tooltip from "../ToolTip/ToolTip.js";
-import '../CourseCard/CourseCard.tsx';
+import '../CourseCard/CourseCard';
 
 interface CourseAdderProps {
     onSubmit: (course: {
@@ -28,7 +28,7 @@ const CourseAdder: React.FC<CourseAdderProps> = ({ onSubmit }) => {
         credits,
         majorRequirement,
       });
-      // Reset form fields
+
       setCourseName('');
       setCourseDescription('Default Description');
       setCourseCode('ABC123');
