@@ -1,9 +1,22 @@
 # ^(?!.*(COP3520)).*^(COP3|MHF4) useful regex
-from GatorGuide.database.models import Major, Course, RequiredGroup
+from GatorGuide.database.models import (
+    Major,
+    Course,
+    RequiredGroup,
+    User,
+    UserAuth,
+    UserSession,
+)
+from GatorGuide.database.exceptions import SessionExpiredError
 from pathlib import Path
 from sqlmodel import Session, SQLModel, create_engine, select
+from hashlib import sha256
 import os
 import re
+import string
+import secrets
+from time import time
+from uuid import uuid4
 
 
 class DB_Engine:
@@ -19,6 +32,11 @@ class DB_Engine:
         """
         sqlite_url = f"sqlite:///{path}"
         self.engine = create_engine(sqlite_url)
+        self.session = Session(self.engine)
+
+    def __del__(self):
+        self.session.close()
+        self.engine.dispose()
 
     def write(self, object: SQLModel):
         """Write a SQLModel object to the database. Updates existing objects and adds new ones
@@ -26,9 +44,9 @@ class DB_Engine:
         Args:
             object (SQLModel): Object to be written
         """
-        with Session(self.engine) as session:
-            session.add(object)
-            session.commit()
+        self.session.add(object)
+        self.session.commit()
+        self.session.refresh(object)
 
     def delete(self, object: SQLModel):
         """Delete a SQLModel object from the database
@@ -36,9 +54,8 @@ class DB_Engine:
         Args:
             object (SQLModel): Object to be deleted, should exist in the database
         """
-        with Session(self.engine) as session:
-            session.delete(object)
-            session.commit()
+        self.session.delete(object)
+        self.session.commit()
 
     def add_to_group(self, group: RequiredGroup, regex: str) -> None:
         """Function to add courses to a RequiredGroup object via regex parsing on course codes
@@ -51,12 +68,11 @@ class DB_Engine:
             regex (str): compleable regex that matches to course codes
         """
         pattern = re.compile(regex)
-        with Session(self.engine) as session:
-            statement = select(Course)
-            x = session.exec(statement)
-            for c in x:
-                if pattern.match(c.code):
-                    group.courses.append(c)
+        statement = select(Course)
+        x = self.session.exec(statement)
+        for c in x:
+            if pattern.match(c.code):
+                group.courses.append(c)
         self.write(group)
 
     def read_major(self, name: str) -> Major:
@@ -68,9 +84,8 @@ class DB_Engine:
         Returns:
             Major: Major object matching the name
         """
-        with Session(self.engine) as session:
-            statement = select(Major).where(Major.name == name)
-            return session.exec(statement).one()
+        statement = select(Major).where(Major.name == name)
+        return self.session.exec(statement).one()
 
     def read_all_majors(self) -> list[Major]:
         """Read all majors from the database
@@ -78,9 +93,8 @@ class DB_Engine:
         Returns:
             list[Major]: All majors from the database
         """
-        with Session(self.engine) as session:
-            statement = select(Major)
-            return list(session.exec(statement).all())
+        statement = select(Major)
+        return list(self.session.exec(statement).all())
 
     def read_course(self, code: str) -> Course:
         """Read a single course from the database by code
@@ -91,9 +105,8 @@ class DB_Engine:
         Returns:
             Course: Course with matching code
         """
-        with Session(self.engine) as session:
-            statement = select(Course).where(Course.code == code)
-            return session.exec(statement).one()
+        statement = select(Course).where(Course.code == code)
+        return self.session.exec(statement).one()
 
     def read_all_courses(self) -> list[Course]:
         """Retrieve all courses from the database
@@ -101,9 +114,90 @@ class DB_Engine:
         Returns:
             list[Course]: All courses from the database
         """
-        with Session(self.engine) as session:
-            statement = select(Course)
-            return list(session.exec(statement).all())
+        statement = select(Course)
+        return list(self.session.exec(statement).all())
+
+    def read_user(self, username: str) -> User:
+        """read a single user from the database by username
+
+        Args:
+            username (str): user name of the user
+
+        Returns:
+            User: User object
+        """
+        statement = select(User).where(User.name == username)
+        return self.session.exec(statement).one()
+
+    def authenticate_user(self, user: User, password: str) -> bool:
+        """Authenticates a user by password
+
+        Args:
+            user (User): User object
+            password (str): un-hashed password
+
+        Returns:
+            bool: whether authenication was successful
+        """
+        statement = select(UserAuth).where(UserAuth.user_id == user.id)
+        a = self.session.exec(statement).one()
+        print(password, a.salt, sha256((a.salt + password).encode("utf-8")).hexdigest())
+        return sha256((a.salt + password).encode("utf-8")).hexdigest() == a.hashed
+
+    def create_user_authentication(self, user: User, password: str) -> None:
+        """Initialize the user authentication for a user, needs to be used when creating new user
+
+        Args:
+            user (User): User object
+            password (str): un-hashed password
+        """
+        alphabet = string.ascii_letters + string.digits
+        salt = "".join(secrets.choice(alphabet) for i in range(8))
+
+        a = UserAuth(
+            user_id=user.id,
+            salt=salt,
+            hashed=sha256((salt + password).encode("utf-8")).hexdigest(),
+        )
+        self.write(a)
+
+    def create_user_session(self, user: User) -> str:
+        """Create a user session in the database, return the session_id
+
+        Args:
+            user (User): User object
+
+        Returns:
+            str: session_id for the session
+        """
+        uuid = str(uuid4())
+        s = UserSession(user_id=user.id, session_id=uuid, time=int(time()))
+        self.write(s)
+        return uuid
+
+    def load_user_session(self, session_id: str) -> User:
+        """Load the User associated with a session_id
+
+        Args:
+            session_id (str): session_id, likely from the browser cookie
+
+        Raises:
+            SessionExpiredError: Session has expired, cookie should be deleted
+
+        Returns:
+            User: User object associated with the session
+        """
+        statement = select(UserSession).where(UserSession.session_id == session_id)
+        s = self.session.exec(statement).one()
+        # one day timeout
+        if int(time()) - s.time > (60 * 60 * 24):
+            self.delete(s)
+            raise SessionExpiredError
+        else:
+            s.time = int(time())
+            user_statement = select(User).where(User.id == s.user_id)
+            self.write(s)
+            return self.session.exec(user_statement).one()
 
 
 if __name__ == "__main__":
