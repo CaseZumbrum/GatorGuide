@@ -23,14 +23,16 @@ def custom_openapi():
 
 app.openapi = custom_openapi
 
+# Commented this out because API Docs weren't starting, I dont think frontend/dist is a valid path? I will try to remember to uncomment
+# this before commit, but in case I forget I am leaving this comment here. - Louis
 # mount frontend
-app.mount(
-    "/",
-    StaticFiles(
-        directory=pathlib.Path(__file__)
-        .parent.resolve()
-        .joinpath("../../../../frontend/dist"),
-        html=True,
-    ),
-    name="site",
-)
+# app.mount(
+#     "/",
+#     StaticFiles(
+#         directory=pathlib.Path(__file__)
+#         .parent.resolve()
+#         .joinpath("../../../../frontend/dist"),
+#         html=True,
+#     ),
+#     name="site",
+# )
