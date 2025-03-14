@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Tooltip from "../ToolTip/ToolTip.js";
+import Tooltip from "../ToolTip/ToolTip";
 import './CourseCard.css';
 
 
@@ -20,7 +20,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
 
     return (
     <div className="CourseCard" style={{backgroundColor: majorRequirement?"red" : "inherit"}}>
-        <div style={{display: "flex", alignItems: "center", gap: "2%", maxWidth: "80%"}}>
+        <div style={{display: "flex", alignItems: "center", gap: "2%", maxWidth: "80%", overflow: "wrap"}}>
             <h2 className="CourseCard-Title" style={{flex: 4}}> 
                 {courseCode}: {courseName}                  
             </h2>

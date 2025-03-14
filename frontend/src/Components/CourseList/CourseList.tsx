@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import CourseForm from '../CourseAdder/CourseAdder.tsx';
-import CourseCard from '../CourseCard/CourseCard.tsx';
+import CourseForm from '../CourseAdder/CourseAdder';
+import CourseCard from '../CourseCard/CourseCard';
 
 const CourseList: React.FC = () => {
     const [courses, setCourses] = useState<

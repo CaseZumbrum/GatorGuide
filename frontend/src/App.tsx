@@ -3,11 +3,10 @@ import { useRef, useState } from 'react'
 import logo from './logo.svg';
 import './App.css';
 
-import CourseCard from './Components/CourseCard/CourseCard.js';
-import Tooltip from "./Components/ToolTip/ToolTip.tsx";
-import Search from "./Components/Search/search.tsx";
-import CourseList from "./Components/CourseList/CourseList.tsx";
-import CourseAdder from "./Components/CourseAdder/CourseAdder.tsx"
+import CourseCard from './Components/CourseCard/CourseCard';
+import Tooltip from "./Components/ToolTip/ToolTip";
+import CourseList from "./Components/CourseList/CourseList";
+import CourseAdder from "./Components/CourseAdder/CourseAdder"
 
 
 export function App() {
