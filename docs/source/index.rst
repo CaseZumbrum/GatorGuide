@@ -20,10 +20,14 @@ If there are things you would like from this object that do not yet exist, add a
 
 This project is very much open source, and we support, appreciate, and ask for anyone to provide their skills on this project!!!
 
-Building
-========
 
-Install dependencies
+Environment
+===========
+
+.. important::
+   Must have Python and Node/NPM installed!!!
+
+Install python dependencies
 
 .. code-block:: bash
 
@@ -35,6 +39,20 @@ Install dependencies
 
    If you are building the docs, don't forget to ``pip install -r requirements.dev.txt``!!!!
 
+Install Node dependencies
+
+.. code-block:: bash
+
+   cd frontend
+   npm install .
+
+Environment files
+   - Create a .env file in ``/frontend``
+      - VITE_API_HOST={full_url_to_backend}
+
+Building
+========
+
 Build the DB
 
 .. code-block:: bash
@@ -42,6 +60,12 @@ Build the DB
    cd backend/src/GatorGuide/database
    python build_db.py
 
+Build the frontend
+
+.. code-block:: bash
+
+   cd frontend
+   npm run build
 
 Build the docs
 
@@ -54,6 +78,37 @@ Build the docs
 
    This will create an ``index.html`` file in the ``docs/build`` directory, serve this!!
 
+Running
+=======
+
+++++++++
+Dev Mode
+++++++++
+
+Start frontend server
+
+.. code-block:: bash
+
+   cd frontend
+   npm run start
+
+Start backend server
+
+.. code-block:: bash
+
+   ./.venv/scripts/Activate
+   cd backend/src/GatorGuide/api
+   fastapi dev --port {port} main.py
+
++++++++++++++++
+Production Mode
++++++++++++++++
+
+.. code-block:: bash
+
+   ./.venv/scripts/Activate
+   cd backend/src/GatorGuide/api
+   fastapi run --port {port} main.py
 
 Usage
 =====
@@ -88,7 +143,6 @@ The items in this database are pydantic models, this provides a lot of functiona
    db_engine
    exceptions
    todo
-
 
 .. toctree::
    :maxdepth: 2
