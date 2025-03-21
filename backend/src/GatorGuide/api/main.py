@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 import pathlib
 from GatorGuide.api.routes import courses, majors, users
 from fastapi.openapi.utils import get_openapi
+from fastapi.middleware.cors import CORSMiddleware
 import logging
 
 
@@ -36,8 +37,18 @@ def custom_openapi():
 
 app.openapi_schema = custom_openapi()
 
-# Commented this out because API Docs weren't starting, I dont think frontend/dist is a valid path? I will try to remember to uncomment
-# this before commit, but in case I forget I am leaving this comment here. - Louis
+# Add CORS handling, allow all origins
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 # mount frontend
 app.mount(
     "/",
