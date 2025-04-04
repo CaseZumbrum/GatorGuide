@@ -7,3 +7,4 @@ sqlmodel
 python-multipart
 email-validator
 requests
+rapidfuzz
