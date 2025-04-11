@@ -9,7 +9,7 @@ interface CourseCardProps {
     majorRequirement: boolean,
     inPlan: boolean,
     problematic: boolean,
-    addToSemester?: (addCourseName: Course) => void;
+    addToActiveSemester?: (addCourseName: Course) => void;
 }
 
 const CourseCard: React.FC<CourseCardProps> = ({
@@ -17,7 +17,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
     majorRequirement = false,
     inPlan = false,
     problematic = false,
-    addToSemester}) => {
+    addToActiveSemester}) => {
 
     const addCourse = () => {
         inPlan = !inPlan;
@@ -25,7 +25,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
     }
 
     const handleAddToSemester = () => {
-        addToSemester(course);
+        addToActiveSemester!(course);
       };
 
     return (

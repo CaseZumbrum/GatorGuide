@@ -5,19 +5,26 @@ import App from 'C:/Users/Jack/Documents/GitHub/GatorGuide/frontend/src/App';
 import Course from '../../Types/Course';
 
 interface CourseListProps {
-  addToSemester: (course: Course) => void;
+  addToActiveSemester: (course: Course) => void;
 }
 
-const CourseList: React.FC<CourseListProps> = ({addToSemester}) => {
+const CourseList: React.FC<CourseListProps> = ({addToActiveSemester}) => {
     const [courses, setCourses] = useState<Course[]>([]);
   
     const handleAddCourse = (newCourse: Course) => {
       setCourses([...courses, newCourse]);
     };
+
+    const clearList = () => {
+      setCourses(() => (
+        []
+      ));
+    }
   
     return (
       <div>
         <h1>Course Tray</h1>
+        <button onClick={clearList}>Clear</button>
         <CourseAdder onSubmit={handleAddCourse}/>
         <div>
           <h2>Course List</h2>
@@ -25,7 +32,7 @@ const CourseList: React.FC<CourseListProps> = ({addToSemester}) => {
             <CourseCard
               key={index}
               course={course}
-              addToSemester={addToSemester}
+              addToActiveSemester={addToActiveSemester}
               majorRequirement={false}
               inPlan={false}
               problematic={false}
