@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
-import CourseForm from '../CourseAdder/CourseAdder';
+import React, { useEffect, useState, useCallback } from 'react';
+import CourseAdder from '../CourseAdder/CourseAdder';
 import CourseCard from '../CourseCard/CourseCard';
+import App from 'C:/Users/Jack/Documents/GitHub/GatorGuide/frontend/src/App';
 
-const CourseList: React.FC = () => {
+interface CourseListProps {
+  addToSemester: () => void;
+}
+
+const CourseList: React.FC<CourseListProps> = ({addToSemester}) => {
     const [courses, setCourses] = useState<
       {
         courseName: string;
@@ -26,7 +31,7 @@ const CourseList: React.FC = () => {
     return (
       <div>
         <h1>Course Tray</h1>
-        <CourseForm onSubmit={handleAddCourse} />
+        <CourseAdder onSubmit={handleAddCourse}/>
         <div>
           <h2>Course List</h2>
           {courses.map((course, index) => (
@@ -37,6 +42,7 @@ const CourseList: React.FC = () => {
               courseCode={course.courseCode}
               credits={course.credits}
               majorRequirement={course.majorRequirement}
+              addToSemester={addToSemester}
             />
           ))}
         </div>
@@ -44,4 +50,5 @@ const CourseList: React.FC = () => {
     );
   };
   
+
   export default CourseList;

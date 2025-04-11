@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Tooltip from "../ToolTip/ToolTip";
 import './CourseCard.css';
 
@@ -8,7 +8,10 @@ interface CourseCardProps {
     courseDescription: string,
     courseCode: string,
     credits: number,
-    majorRequirement: boolean
+    majorRequirement: boolean,
+    inPlan: boolean,
+    problematic: boolean,
+    addToSemester: (addCourseName: string) => void;
 }
 
 const CourseCard: React.FC<CourseCardProps> = ({
@@ -16,7 +19,19 @@ const CourseCard: React.FC<CourseCardProps> = ({
     courseDescription = 'N/a',
     courseCode = "NA001",
     credits = 0,
-    majorRequirement = false }) => {
+    majorRequirement = false,
+    inPlan = false,
+    problematic = false,
+    addToSemester}) => {
+
+    const addCourse = () => {
+        inPlan = !inPlan;
+        console.log(inPlan);
+    }
+
+    const handleAddToSemester = () => {
+        addToSemester(courseName);
+      };
 
     return (
     <div className="CourseCard" style={{backgroundColor: majorRequirement?"red" : "inherit"}}>
@@ -28,7 +43,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
                 Major Required?
             </p>
             <div style={{flex: 1}}>
-                <button>Add Course</button> 
+                <button onClick={handleAddToSemester} id="addCourse">Add Course</button> 
             </div>
         </div>
         
