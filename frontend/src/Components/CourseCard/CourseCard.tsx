@@ -1,24 +1,19 @@
 import React, { useState, useCallback } from 'react';
 import Tooltip from "../ToolTip/ToolTip";
+import Course from "../../Types/Course"
 import './CourseCard.css';
 
 
 interface CourseCardProps {
-    courseName: string,
-    courseDescription: string,
-    courseCode: string,
-    credits: number,
+    course: Course,
     majorRequirement: boolean,
     inPlan: boolean,
     problematic: boolean,
-    addToSemester: (addCourseName: string) => void;
+    addToSemester?: (addCourseName: Course) => void;
 }
 
 const CourseCard: React.FC<CourseCardProps> = ({
-    courseName = 'Default Name',
-    courseDescription = 'N/a',
-    courseCode = "NA001",
-    credits = 0,
+    course ={name:"Default Name", description:"N/a", code:"NA001", credits:0},
     majorRequirement = false,
     inPlan = false,
     problematic = false,
@@ -30,14 +25,14 @@ const CourseCard: React.FC<CourseCardProps> = ({
     }
 
     const handleAddToSemester = () => {
-        addToSemester(courseName);
+        addToSemester(course);
       };
 
     return (
     <div className="CourseCard" style={{backgroundColor: majorRequirement?"red" : "inherit"}}>
         <div style={{display: "flex", alignItems: "center", gap: "2%", maxWidth: "80%", overflow: "wrap"}}>
             <h2 className="CourseCard-Title" style={{flex: 4}}> 
-                {courseCode}: {courseName}                  
+                {course.code}: {course.name}                  
             </h2>
             <p className="CourseCard-Requirement">
                 Major Required?
@@ -50,12 +45,12 @@ const CourseCard: React.FC<CourseCardProps> = ({
         <div style={{display: "flex", maxWidth: "80%"}}> 
             <div style={{flex: 7, height: "20%"}}>
                 <p className="CourseCard-Text"> 
-                    {courseDescription}
+                    {course.description}
                 </p>
             </div>
             <div style={{flex: 3, height: "20%", alignContent: "right"}}>
                 <p className="CourseCard-Text" style={{textAlign: "right"}}> 
-                    Credits: {credits}
+                    Credits: {course.credits}
                 </p>
             </div>
         </div>

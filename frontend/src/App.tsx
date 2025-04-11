@@ -8,40 +8,52 @@ import Tooltip from "./Components/ToolTip/ToolTip";
 import CourseList from "./Components/CourseList/CourseList";
 import CourseAdder from "./Components/CourseAdder/CourseAdder"
 import Semester from './Components/Semester/Semester';
+import Course from './Types/Course';
 
 
-const FetchCourses = () => {
+
+
+
+
+
+function App() {
   const[courseData, setCourseData] = useState([]);
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/courses/", {
-      credentials: 'include',
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => {
-      if (response.status == 200) {
-      response.json().then((courses) => {
-          console.log("Set Course Data Working")
-          console.log(courses)
-          setCourseData(courses)
-          return courseData;
+  const[coursesInSemester, setCoursesInSemester] = useState<Course[]>([])
+
+
+  const FetchCourses = () => {
+    useEffect(() => {
+      fetch("http://127.0.0.1:8000/courses/", {
+        credentials: 'include',
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }).then((response) => {
+        if (response.status == 200) {
+        response.json().then((courses) => {
+            console.log("Set Course Data Working")
+            console.log(courses)
+            setCourseData(courses)
+            return courseData;
+        });
+        }
+      
       });
-      }
+    }, [])
     
-    });
-  }, [])
+  }
   
-}
+  const addCourseToSemester = (course: Course) => {
+    alert("Adding Course to Semester")
+    alert(course.name)
+    setCoursesInSemester((prevState) => ([
+      ...prevState,
+      course
+    ]));
+  }
 
-const addCourseToSemester = (courseName: string) => {
-  alert("Adding Course to Semester")
-  alert(courseName)
-}
-
-
-export function App() {
 
   return (
     <>
@@ -51,7 +63,7 @@ export function App() {
         <CourseList addToSemester={addCourseToSemester}></CourseList>
       </div>
       <div style={{width: "70vw", minHeight: "90vh", backgroundColor: "hsl(286, 18.90%, 41.60%)", display: "inline-flex"}}>
-        <Semester></Semester>
+        <Semester courses={coursesInSemester}></Semester>
       </div>
       
 
