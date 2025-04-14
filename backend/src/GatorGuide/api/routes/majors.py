@@ -5,7 +5,7 @@ from GatorGuide.database.models import Major
 router = APIRouter()
 
 
-@router.get("/", response_model=list[Major])
+@router.get("", response_model=list[Major])
 def get_all_majors():
     """Fetch all majors from the database."""
     return db_engine.read_all_majors()
@@ -29,6 +29,7 @@ def delete_major(name: str):
         return {"message": f"Major '{name}' deleted successfully"}
     except Exception:
         raise HTTPException(status_code=404, detail=f"Major '{name}' not found")
+
 
 @router.post("/", response_model=Major)
 def create_major(major: Major):
