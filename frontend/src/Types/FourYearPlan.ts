@@ -2,6 +2,8 @@ import Course from "./Course";
 import Semester from "./Semester";
 
 interface FourYearPlan {
+    name: string,
+    major: string
     semesters: Semester[],
     activeSemester: Semester
   }
@@ -14,3 +16,4 @@ interface FourYearPlan {
 //  I add a method that allows the switching of the active semester
 //  I make it so that switching the active semester changes what values are displayed underneath (which should be simple (hopefully))
 //  I make it so that semesters tally up the sum of all of the credits for courses within them and flag if they go over 18
+// TODO: major should be an interface and not a string
