@@ -10,3 +10,4 @@ config.py
 *.log
 dist/
 *.coverage
+.env
