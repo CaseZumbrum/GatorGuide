@@ -1,13 +1,15 @@
 import Course from "./Course";
+import Major from "./Major";
 import Semester from "./Semester";
 
 interface FourYearPlan {
-    semesters: Semester[],
-    activeSemester: Semester
-  }
-  
-  export default FourYearPlan;
-  
+  semesters: Semester[];
+  activeSemester: Semester;
+  major: Major;
+}
+
+export default FourYearPlan;
+
 //  I have a 4 year plan with a default of 12 semesters
 //  I have an active semester that is the first one out of them
 //  I make all of the functions directly relate to the active semester
