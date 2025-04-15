@@ -5,21 +5,6 @@ import Course from "../Types/Course";
 import Major_Error from "../Types/Major_Error";
 import Required_Group from "../Types/Required_Group";
 
-fetch(import.meta.env.VITE_API_HOST + "/courses", {
-  credentials: "include",
-  method: "GET",
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  },
-}).then((response) => {
-  if (response.status == 200) {
-    response.json().then((courses) => {
-      console.log(courses);
-    });
-  }
-});
-
 // get_majors().then((majors: Major[]) => {use_majors(majors)})
 const get_majors = async (): Promise<Major[]> => {
   const response = await fetch(import.meta.env.VITE_API_HOST + "/majors", {
