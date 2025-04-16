@@ -5,7 +5,7 @@ from GatorGuide.database.models import Major
 router = APIRouter()
 
 
-@router.get("/", response_model=list[Major])
+@router.get("", response_model=list[Major])
 def get_all_majors():
     """Fetch all majors from the database."""
     return db_engine.read_all_majors()

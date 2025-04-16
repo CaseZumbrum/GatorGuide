@@ -16,7 +16,7 @@ const get_majors = async (): Promise<Major[]> => {
     },
   });
   if (response.status != 200) {
-    alert("Could not gather majors");
+    alert("Could not gather majors | code: " + response.status);
     throw new Error("Could not fetch majors");
   }
   return response.json();

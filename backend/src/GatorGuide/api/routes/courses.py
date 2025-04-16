@@ -5,7 +5,7 @@ from GatorGuide.database.models import Course
 router = APIRouter()
 
 
-@router.get("/", response_model=list[Course])
+@router.get("", response_model=list[Course])
 def get_all_courses():
     """Fetch all courses from the database."""
     return db_engine.read_all_courses()

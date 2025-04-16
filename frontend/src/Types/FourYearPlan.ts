@@ -4,7 +4,7 @@ import Semester from "./Semester";
 
 interface FourYearPlan {
   semesters: Semester[];
-  activeSemester: Semester;
+  activeSemester: number;
   major: Major;
 }
 

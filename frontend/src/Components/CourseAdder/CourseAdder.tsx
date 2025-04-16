@@ -15,7 +15,7 @@ const CourseAdder: React.FC<CourseAdderProps> = ({onSubmit }) => {
   const [query, setQuery] = useState<string>("");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/courses/", {
+    fetch(import.meta.env.VITE_API_HOST + "/courses", {
       credentials: 'include',
       method: 'GET',
       headers: {
@@ -37,22 +37,8 @@ const CourseAdder: React.FC<CourseAdderProps> = ({onSubmit }) => {
   const findCourseByName = (name: string) =>  {
     const course = courseData.find((course) => course.name === name);
     return course
-    // if (course) {
-    //   setSelectedCourse(course); // Set the found course in state
-    //   console.log(course.name);
-    //   console.log(selectedCourse ? selectedCourse.description : "");
-    //   return (true);
-    // } else {
-    //   console.log('Course not found');
-    //   return (false);
-    // }
   };
 
-
-
-
-    
-  
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
       let c: Course | undefined = findCourseByName(query)
