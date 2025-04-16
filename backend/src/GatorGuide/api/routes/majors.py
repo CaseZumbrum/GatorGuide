@@ -30,6 +30,7 @@ def delete_major(name: str):
     except Exception:
         raise HTTPException(status_code=404, detail=f"Major '{name}' not found")
 
+
 @router.post("/", response_model=Major)
 def create_major(major: Major):
     """Create a new major in the database."""

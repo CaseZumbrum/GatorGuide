@@ -24,11 +24,12 @@ def get_course(code: str):
 def delete_course(code: str):
     """Delete a course by course code."""
     try:
-        course = db_engine.read_course(code) 
+        course = db_engine.read_course(code)
         db_engine.delete(course)
         return {"message": f"Course '{code}' deleted successfully"}
     except Exception:
         raise HTTPException(status_code=404, detail=f"Course '{code}' not found")
+
 
 @router.post("/", response_model=Course)
 def create_course(course: Course):
