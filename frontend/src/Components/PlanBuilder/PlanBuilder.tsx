@@ -49,7 +49,10 @@ function PlanBuilder() {
     },
   });
 
-  const addCourseToSemester = (newCourse: Course) => {
+  const addCourseToSemester = (
+    newCourse: Course,
+    setErrors: React.Dispatch<React.SetStateAction<Course_Error[]>>
+  ) => {
     let valid: boolean = true;
 
     activeSemester.courses.forEach((e) => {
@@ -65,15 +68,11 @@ function PlanBuilder() {
         credits: prevState.credits + newCourse.credits,
         name: prevState.name,
       }));
-      activeFourYearPlan.semesters[activeSemesterIndex].courses.push(newCourse);
-      activeFourYearPlan.semesters[activeSemesterIndex].credits +=
-        newCourse.credits;
-      validate_plan(activeFourYearPlan);
       let errors: Course_Error[] = validate_course(
         newCourse,
         activeFourYearPlan.semesters
       );
-
+      setErrors(errors);
       if (errors.length > 0) {
         for (const error of errors) {
           alert(error.msg);

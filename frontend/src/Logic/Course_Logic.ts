@@ -19,11 +19,20 @@ const validate_course = (
   semesters: Semester[]
 ): Course_Error[] => {
   let errors: Course_Error[] = [];
-  for (const c of course.prerequisites) {
-    if (!course_in_semesters(semesters, c)) {
+  for (const pg of course.prerequisites) {
+    let check = false;
+    let str = "";
+    for (const c of pg.courses) {
+      if (course_in_semesters(semesters, c)) {
+        check = true;
+      }
+      str += c.code + " or ";
+    }
+    if (!check) {
       errors.push({
         loc: course.code,
-        msg: "Prequisite course " + c.code + " not in plan",
+        msg:
+          "Prequisite courses " + str.slice(0, str.length - 4) + " not in plan",
       });
     }
   }
