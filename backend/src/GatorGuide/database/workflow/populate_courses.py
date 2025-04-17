@@ -1,5 +1,5 @@
 import requests
-from GatorGuide.database.models import Course
+from GatorGuide.database.models import Course, CorequisiteGroup
 
 import GatorGuide.database.models as models
 import pathlib
@@ -56,6 +56,60 @@ def parse(pre: str) -> list[list[str]]:
                 pass
         i += 1
     return prereq_group
+
+def parse_coreqs(pre: str) -> list[list[str]]:
+    """Parse corequisite string from the One.UF API (same structure as parse())
+
+    Args:
+        pre (str): string to be parsed (contains prereqs and coreqs)
+
+    Returns:
+        list[list[str]]: corequisites grouped by 'or' conditions
+    """
+
+    # Normalize punctuation
+    pre = pre.replace("(", "").replace(")", "").replace(".", "").replace("/", " ")
+    pre = pre.replace(":", "").replace(";", "")
+
+    words = pre.split()
+    coreq_group: list[list[str]] = []
+
+    i = 0
+    reading_coreqs = False
+
+    while i < len(words) - 1:
+        # Start parsing after 'Coreq' or 'Corequisite'
+        if words[i].lower() in ["coreq", "corequisite"]:
+            reading_coreqs = True
+            i += 1
+            continue
+
+        if reading_coreqs:
+            if (
+                words[i].isalpha()
+                and len(words[i]) == 3
+                and len(words[i + 1]) == 4
+                and words[i + 1].isnumeric()
+            ):
+                coreq_group.append([])
+                coreq_group[-1].append(words[i] + words[i + 1])
+                try:
+                    while words[i + 2].lower() == "or":
+                        if (
+                            words[i + 3].isalpha()
+                            and len(words[i + 3]) == 3
+                            and len(words[i + 4]) == 4
+                            and words[i + 4].isnumeric()
+                        ):
+                            coreq_group[-1].append(words[i + 3] + words[i + 4])
+                        i += 3
+                except IndexError:
+                    pass
+        i += 1
+
+    return coreq_group
+
+
 
 
 def populate(engine: DB_Engine):
@@ -139,12 +193,31 @@ def populate(engine: DB_Engine):
                     # if the course is found, add it to the PrerequisiteGroup object
                     if course is not None:
                         prereqs[-1].courses.append(course)
-        courses[i].prerequisites = prereqs
+        coreq_groups = parse_coreqs(course_json[i]["prerequisites"])
+        if course_json[i]["code"] == "COT3100":
+            print("RAW:", course_json[i]["prerequisites"])
+            print("PARSED COREQS:", coreq_groups)
+        coreqs: list[models.CorequisiteGroup] = []
 
+        coreqs: list[models.CorequisiteGroup] = []
+        for group in coreq_groups:
+            coreq_group = models.CorequisiteGroup(courses=[])
+            for code in group:
+                course = next((x for x in courses if x.code == code), None)
+                if course:
+                    coreq_group.courses.append(course)
+            if coreq_group.courses:
+                coreqs.append(coreq_group)
+
+        courses[i].prerequisites = prereqs
+        courses[i].corequisites = coreqs
     # add the course + prereqs to the DB
     print("Writing to Database...")
+    from sqlmodel import Session
+    with Session(engine.engine) as s:
+        s.add_all(courses)
+        s.commit()
     for c in courses:
-        engine.write(c)
         count += 1
         # except IntegrityError as e:
         #     if c.code == "EEL4744C":

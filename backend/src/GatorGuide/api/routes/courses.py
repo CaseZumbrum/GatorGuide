@@ -1,9 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from GatorGuide.api.db_dependency import db_engine
-from GatorGuide.database.models import Course
-from fastapi import Query
+from GatorGuide.database.models import Course, CorequisiteGroup
+from fastapi import Query, APIRouter, HTTPException
 from rapidfuzz import fuzz, process
-
 router = APIRouter()
 
 
@@ -123,4 +122,28 @@ def create_course(course: Course):
         return course
     except Exception:
         raise HTTPException(status_code=400, detail="Failed to create course")
+
+@router.get("/{code}/corequisites")
+def get_corequisites(code: str):
+    """
+    Fetch corequisite groups for a given course.
+
+    Args:
+        code (str): The course code.
+
+    Returns:
+        dict: A dictionary with the course code and a list of corequisite groups.
+
+    Raises:
+        HTTPException: If the course is not found.
+    """
+    try:
+        course = db_engine.read_course(code)
+        result = []
+        for group in course.corequisites:
+            result.append([c.code for c in group.courses])
+        return {"course": course.code, "corequisites": result}
+    except Exception:
+        raise HTTPException(status_code=404, detail=f"Course '{code}' not found")
+
 
