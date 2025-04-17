@@ -1,11 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 from GatorGuide.api.db_dependency import db_engine
 from GatorGuide.database.models import Major
+from GatorGuide.database.response_models import MajorResponse
 
 router = APIRouter()
 
 
-@router.get("/", response_model=list[Major])
+@router.get("", response_model=list[Major])
 def get_all_majors():
     """Fetch all majors from the database.
 
@@ -15,7 +16,7 @@ def get_all_majors():
     return db_engine.read_all_majors()
 
 
-@router.get("/{name}", response_model=Major)
+@router.get("/{name}", response_model=MajorResponse)
 def get_major(name: str):
 
     """
@@ -56,6 +57,7 @@ def delete_major(name: str):
         return {"message": f"Major '{name}' deleted successfully"}
     except Exception:
         raise HTTPException(status_code=404, detail=f"Major '{name}' not found")
+
 
 @router.post("/", response_model=Major)
 def create_major(major: Major):

@@ -72,7 +72,7 @@ class PrerequisiteGroupCourseLink(SQLModel, table=True):
     """
 
     prereq_group_id: int | None = Field(
-        default=None, foreign_key="prequisitegroup.id", primary_key=True
+        default=None, foreign_key="prerequisitegroup.id", primary_key=True
     )
     course_id: int | None = Field(
         default=None, foreign_key="course.id", primary_key=True
@@ -89,7 +89,7 @@ class CoursePrerequisiteGroupLink(SQLModel, table=True):
         default=None, foreign_key="course.id", primary_key=True
     )
     prereq_group_id: int | None = Field(
-        default=None, foreign_key="prequisitegroup.id", primary_key=True
+        default=None, foreign_key="prerequisitegroup.id", primary_key=True
     )
 
 class CourseCorequisiteGroupLink(SQLModel, table=True):
@@ -151,8 +151,8 @@ class Course(SQLModel, table=True):
     name: str
     description: str
     credits: int
-    prerequisites: list["PrequisiteGroup"] = Relationship(
-        link_model=CoursePrerequisiteGroupLink
+    prerequisites: list["PrerequisiteGroup"] = Relationship(
+        link_model=CoursePrerequisiteGroupLink,
     )
     corequisites: list["CorequisiteGroup"] = Relationship(link_model=CourseCorequisiteGroupLink)
 
@@ -166,7 +166,7 @@ class Course(SQLModel, table=True):
         )
 
 
-class PrequisiteGroup(SQLModel, table=True):
+class PrerequisiteGroup(SQLModel, table=True):
     """Group used to store prerequisits for courses
 
     Args:
@@ -175,7 +175,9 @@ class PrequisiteGroup(SQLModel, table=True):
     """
 
     id: int | None = Field(default=None, primary_key=True)
-    courses: list[Course] = Relationship(link_model=PrerequisiteGroupCourseLink)
+    courses: list[Course] = Relationship(
+        link_model=PrerequisiteGroupCourseLink,
+    )
 
     def __eq__(self, other):
         return self.courses == other.courses

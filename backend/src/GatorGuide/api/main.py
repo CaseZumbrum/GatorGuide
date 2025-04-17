@@ -38,7 +38,9 @@ def custom_openapi():
 app.openapi_schema = custom_openapi()
 
 # Add CORS handling, allow all origins
-origins = ["*"]
+origins = [
+    "http://localhost:5173",
+]
 
 app.add_middleware(
     CORSMiddleware,

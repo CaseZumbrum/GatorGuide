@@ -1,4 +1,3 @@
-from fastapi import APIRouter, Depends, HTTPException
 from GatorGuide.api.db_dependency import db_engine
 from GatorGuide.database.models import Course, CorequisiteGroup
 from fastapi import Query, APIRouter, HTTPException
@@ -51,18 +50,19 @@ def search_courses(query: str = Query(..., min_length=2), limit: int = 10):
 
     return results
 
-@router.get("/", response_model=list[Course])
+from GatorGuide.database.models import Course
+from GatorGuide.database.response_models import CourseResponse, CourseResponseNoPrereqs
+
+router = APIRouter()
+
+
+@router.get("", response_model=list[Course])
 def get_all_courses():
-    """Fetch all courses from the database.
-
-    Returns:
-        list[Course]: All courses from the database
-    """
-
+    """Fetch all courses from the database. (does not include prereqs)"""
     return db_engine.read_all_courses()
 
 
-@router.get("/{code}", response_model=Course)
+@router.get("/{code}", response_model=CourseResponse)
 def get_course(code: str):
 
     """Fetch a single course by its code.
@@ -76,8 +76,10 @@ def get_course(code: str):
     Raises:
         HTTPException: If the course is not found in the database.
     """
+
     try:
         return db_engine.read_course(code)
+
     except Exception:
         raise HTTPException(status_code=404, detail=f"Course '{code}' not found")
 
@@ -97,11 +99,12 @@ def delete_course(code: str):
         HTTPException: If the course is not found in the database.
     """
     try:
-        course = db_engine.read_course(code) 
+        course = db_engine.read_course(code)
         db_engine.delete(course)
         return {"message": f"Course '{code}' deleted successfully"}
     except Exception:
         raise HTTPException(status_code=404, detail=f"Course '{code}' not found")
+
 
 @router.post("/", response_model=Course)
 def create_course(course: Course):
