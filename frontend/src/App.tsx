@@ -10,8 +10,11 @@ import SignUpPage from "./Components/SignUpPage/SignUpPage";
 import { get_user_data } from "./Logic/login";
 import HomePage from "./Components/HomePage/HomePage";
 import User from "./Types/User";
+import FourYearPlan from "./Types/FourYearPlan";
 function App() {
   const [cookie, setCookie, removeCookie] = useCookies(["GatorGuide_Session"]);
+  const [plan, setPlan] = useState<FourYearPlan>();
+
   const navigate = useNavigate();
   const [user, setUser] = useState<User>({
     name: "default",
@@ -36,8 +39,11 @@ function App() {
         <Link to="/">The GatorGuide</Link> <Link to="/login">Login</Link>
       </div>
       <Routes>
-        <Route path="/" element={<HomePage user={user} />}></Route>
-        <Route path="/plan" element={<PlanBuilder />} />
+        <Route
+          path="/"
+          element={<HomePage user={user} setPlan={setPlan} />}
+        ></Route>
+        {plan && <Route path="/plan" element={<PlanBuilder plan={plan} />} />}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
       </Routes>

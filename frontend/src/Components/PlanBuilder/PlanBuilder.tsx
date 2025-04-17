@@ -10,42 +10,20 @@ import Course_Error from "../../Types/Course_Error";
 import Major_Error from "../../Types/Major_Error";
 import { validate_plan } from "../../Logic/Major_Logic";
 
-function PlanBuilder() {
-  let baseSemesters: Semester[] = [
-    { courses: [], credits: 0, name: "Freshman Fall" },
-    { courses: [], credits: 0, name: "Freshman Spring" },
-    { courses: [], credits: 0, name: "Freshman Summer" },
-    { courses: [], credits: 0, name: "Sophmore Fall" },
-    { courses: [], credits: 0, name: "Sophmore Spring" },
-    { courses: [], credits: 0, name: "Sophmore Summer" },
-    { courses: [], credits: 0, name: "Junior Fall" },
-    { courses: [], credits: 0, name: "Junior Spring" },
-    { courses: [], credits: 0, name: "Junior Summer" },
-    { courses: [], credits: 0, name: "Senior Fall" },
-    { courses: [], credits: 0, name: "Senior Spring" },
-    { courses: [], credits: 0, name: "Senior Summer" },
-  ];
+interface props {
+  plan: FourYearPlan;
+}
 
-  const [activeSemester, setActiveSemester] = useState<Semester>({
-    courses: [],
-    credits: 0,
-    name: baseSemesters[0].name,
-  });
+function PlanBuilder({ plan }: props) {
+  const [activeSemester, setActiveSemester] = useState<Semester>(
+    plan.semesters[0]
+  );
   const [activeSemesterIndex, setActiveSemesterIndex] = useState<number>(0);
-  const [activeFourYearPlan, setActiveFourYearPlan] = useState<FourYearPlan>({
-    name: "default",
-    semesters: baseSemesters,
-    major: {
-      name: "Loading...",
-      critical_tracking: [],
-      required: [],
-      groups: [],
-    },
-  });
+  const [fourYearPlan, setActiveFourYearPlan] = useState<FourYearPlan>(plan);
   const [majorErrors, setMajorErrors] = useState<Major_Error[]>([]);
 
   const validate = (course: Course): Course_Error[] => {
-    return validate_course(course, activeFourYearPlan.semesters);
+    return validate_course(course, fourYearPlan.semesters);
   };
 
   const addCourseToSemester = (newCourse: Course) => {
@@ -74,9 +52,9 @@ function PlanBuilder() {
       credits: prevState.credits - course.credits,
       name: prevState.name,
     }));
-    activeFourYearPlan.semesters[activeSemesterIndex].courses = newCourseList;
+    fourYearPlan.semesters[activeSemesterIndex].courses = newCourseList;
 
-    activeFourYearPlan.semesters[activeSemesterIndex].credits -= course.credits;
+    fourYearPlan.semesters[activeSemesterIndex].credits -= course.credits;
   };
 
   const clearSemester = () => {
@@ -85,41 +63,21 @@ function PlanBuilder() {
       credits: 0,
       name: activeSemester.name,
     }));
-    activeFourYearPlan.semesters[activeSemesterIndex] = {
+    fourYearPlan.semesters[activeSemesterIndex] = {
       courses: [],
       credits: 0,
-      name: activeFourYearPlan.semesters[activeSemesterIndex].name,
+      name: fourYearPlan.semesters[activeSemesterIndex].name,
     };
   };
 
   const switchSemester = (index: number) => {
-    setActiveSemester(activeFourYearPlan.semesters[index]);
+    setActiveSemester(fourYearPlan.semesters[index]);
     setActiveSemesterIndex(index);
   };
 
   useEffect(() => {
-    fetch(import.meta.env.VITE_API_HOST + "/majors/Computer%20Engineering", {
-      credentials: "include",
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    }).then((response) => {
-      if (response.status == 200) {
-        response.json().then((major) => {
-          setActiveFourYearPlan((prevState) => ({
-            ...prevState,
-            major: major,
-          }));
-        });
-      }
-    });
-  }, []);
-
-  useEffect(() => {
     console.log("ACTIVE", activeSemester);
-    const nextSemesters = activeFourYearPlan.semesters.map((c, i) => {
+    const nextSemesters = fourYearPlan.semesters.map((c, i) => {
       if (i === activeSemesterIndex) {
         // Increment the clicked counter
         return activeSemester;
@@ -135,15 +93,15 @@ function PlanBuilder() {
   }, [activeSemester, activeSemesterIndex]);
 
   useEffect(() => {
-    console.log("PLAN", activeFourYearPlan);
-    setMajorErrors(validate_plan(activeFourYearPlan));
-  }, [activeFourYearPlan]);
+    console.log("PLAN", fourYearPlan);
+    setMajorErrors(validate_plan(fourYearPlan));
+  }, [fourYearPlan]);
 
   const save = () => {
     fetch(import.meta.env.VITE_API_HOST + "/users/me/plan", {
       credentials: "include",
       method: "POST",
-      body: JSON.stringify(activeFourYearPlan),
+      body: JSON.stringify(fourYearPlan),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -168,7 +126,7 @@ function PlanBuilder() {
           display: "inline-flex",
         }}
       >
-        <h1>{"Major: " + activeFourYearPlan.major.name}</h1>
+        <h1>{"Major: " + fourYearPlan.major.name}</h1>
         <button onClick={save}>SAVE</button>
       </div>
       <div
@@ -182,7 +140,7 @@ function PlanBuilder() {
         <CourseList
           addToActiveSemester={addCourseToSemester}
           validate={validate}
-          major={activeFourYearPlan.major}
+          major={fourYearPlan.major}
         ></CourseList>
       </div>
       <div
@@ -194,7 +152,7 @@ function PlanBuilder() {
         }}
       >
         <SemesterViewer
-          activeSemester={activeFourYearPlan.semesters[activeSemesterIndex]}
+          activeSemester={fourYearPlan.semesters[activeSemesterIndex]}
           clearSemester={clearSemester}
           switchSemester={switchSemester}
           removeFromSemester={removeFromSemester}

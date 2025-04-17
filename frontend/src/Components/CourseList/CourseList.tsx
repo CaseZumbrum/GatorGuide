@@ -68,6 +68,7 @@ const CourseList: React.FC<CourseListProps> = ({
 
       {major.groups.map((group) => (
         <button
+          key={group.name}
           onClick={(e) => {
             setCourses(group.courses);
           }}
