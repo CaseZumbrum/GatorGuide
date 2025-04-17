@@ -1,6 +1,6 @@
 from GatorGuide.database.workflow.create import create_db_and_tables
 from GatorGuide.database.db_engine import DB_Engine
-from GatorGuide.database.models import Course, PrequisiteGroup
+from GatorGuide.database.models import Course, PrerequisiteGroup
 import os
 from pathlib import Path
 import pytest
@@ -71,8 +71,8 @@ def test_course_prerequisites():
         credits=4,
     )
 
-    c1.prerequisites.append(PrequisiteGroup(courses=[c2]))
-    c2.prerequisites.append(PrequisiteGroup(courses=[c3]))
+    c1.prerequisites.append(PrerequisiteGroup(courses=[c2]))
+    c2.prerequisites.append(PrerequisiteGroup(courses=[c3]))
 
     e.write(c1)
 
@@ -81,7 +81,7 @@ def test_course_prerequisites():
 
     # does not include a prereq one layer down
     c_t2.prerequisites.append(
-        PrequisiteGroup(
+        PrerequisiteGroup(
             courses=[
                 Course(
                     code="COP3503",

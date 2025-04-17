@@ -16,6 +16,8 @@ SERVER_PATH = str(
     .joinpath("./backend/src/GatorGuide/api/main.py")
 )
 
+BACKEND_PATH = str(pathlib.Path(__file__).parent.resolve().joinpath("./backend"))
+
 BUILD_PATH = str(pathlib.Path(__file__).parent.resolve().joinpath("./frontend"))
 
 # create log folder if it does not exist
@@ -46,9 +48,6 @@ def close_logs():
 
 def build_and_host():
     global session
-    print("--------------")
-    print("Killing existing server...")
-    session.kill()
 
     print("--------------")
     print("Pulling most recent files...")
@@ -60,6 +59,24 @@ def build_and_host():
     )
 
     print("--------------")
+    print("Installing node dependencies...")
+    subprocess.call(
+        f"cd {BUILD_PATH}; npm install .",
+        stdout=NPM_BUILD_LOG,
+        stderr=NPM_BUILD_LOG,
+        shell=True,
+    )
+
+    print("--------------")
+    print("Installing python dependencies...")
+    session = subprocess.Popen(
+        f"cd {BACKEND_PATH}; pip install .",
+        stdout=API_LOG,
+        stderr=API_LOG,
+        shell=True,
+    )
+
+    print("--------------")
     print("Building react...")
     subprocess.call(
         f"cd {BUILD_PATH}; npm run build",
@@ -67,6 +84,10 @@ def build_and_host():
         stderr=NPM_BUILD_LOG,
         shell=True,
     )
+
+    print("--------------")
+    print("Killing existing server...")
+    session.kill()
 
     print("--------------")
     print("Starting FastApi server...")

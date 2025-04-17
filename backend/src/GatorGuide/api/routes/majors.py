@@ -1,6 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 from GatorGuide.api.db_dependency import db_engine
 from GatorGuide.database.models import Major
+from GatorGuide.database.response_models import MajorResponse
 
 router = APIRouter()
 
@@ -11,7 +12,7 @@ def get_all_majors():
     return db_engine.read_all_majors()
 
 
-@router.get("/{name}", response_model=Major)
+@router.get("/{name}", response_model=MajorResponse)
 def get_major(name: str):
     """Fetch a specific major by name."""
     try:

@@ -1,21 +1,24 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 from GatorGuide.api.db_dependency import db_engine
 from GatorGuide.database.models import Course
+from GatorGuide.database.response_models import CourseResponse, CourseResponseNoPrereqs
 
 router = APIRouter()
 
 
 @router.get("", response_model=list[Course])
 def get_all_courses():
-    """Fetch all courses from the database."""
+    """Fetch all courses from the database. (does not include prereqs)"""
     return db_engine.read_all_courses()
 
 
-@router.get("/{code}", response_model=Course)
+@router.get("/{code}", response_model=CourseResponse)
 def get_course(code: str):
-    """Fetch a specific course by its course code."""
+    """Fetch a specific course by its course code. (does include prereqs)"""
+
     try:
         return db_engine.read_course(code)
+
     except Exception:
         raise HTTPException(status_code=404, detail=f"Course '{code}' not found")
 
