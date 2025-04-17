@@ -39,6 +39,7 @@ function PlanBuilder() {
   });
   const [activeSemesterIndex, setActiveSemesterIndex] = useState<number>(0);
   const [activeFourYearPlan, setActiveFourYearPlan] = useState<FourYearPlan>({
+    name: "default",
     semesters: baseSemesters,
     major: {
       name: "Loading...",
@@ -46,7 +47,6 @@ function PlanBuilder() {
       required: [],
       groups: [],
     },
-    activeSemester: 0,
   });
 
   const addCourseToSemester = (newCourse: Course) => {
@@ -109,15 +109,8 @@ function PlanBuilder() {
   };
 
   const switchSemester = (index: number) => {
-    setActiveSemester(() => ({
-      courses: [],
-      credits: 0,
-      name: activeSemester.name,
-    }));
-    setActiveSemester(() => activeFourYearPlan.semesters[index]);
+    setActiveSemester(activeFourYearPlan.semesters[index]);
     setActiveSemesterIndex(index);
-    console.log(activeFourYearPlan.semesters[0]);
-    console.log(activeFourYearPlan.semesters[1]);
   };
 
   useEffect(() => {
@@ -127,15 +120,54 @@ function PlanBuilder() {
   }, []);
 
   useEffect(() => {
-    console.log(supportedMajors);
+    console.log("MAJORS", supportedMajors);
     if (supportedMajors.length > 0) {
       setActiveFourYearPlan((prevState) => ({
-        semesters: prevState.semesters,
+        ...prevState,
         major: supportedMajors[0],
-        activeSemester: prevState.activeSemester,
       }));
     }
   }, [supportedMajors]);
+
+  useEffect(() => {
+    console.log("ACTIVE", activeSemester);
+    const nextSemesters = activeFourYearPlan.semesters.map((c, i) => {
+      if (i === activeSemesterIndex) {
+        // Increment the clicked counter
+        return activeSemester;
+      } else {
+        // The rest haven't changed
+        return c;
+      }
+    });
+    setActiveFourYearPlan((prevstate) => ({
+      ...prevstate,
+      semesters: nextSemesters,
+    }));
+  }, [activeSemester, activeSemesterIndex]);
+
+  useEffect(() => {
+    console.log("PLAN", activeFourYearPlan);
+  }, [activeFourYearPlan]);
+
+  const save = () => {
+    fetch(import.meta.env.VITE_API_HOST + "/users/me/plan", {
+      credentials: "include",
+      method: "POST",
+      body: JSON.stringify(activeFourYearPlan),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      if (response.status != 200) {
+        alert("Issue with saving plan");
+        response.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  };
 
   return (
     <>
@@ -148,6 +180,7 @@ function PlanBuilder() {
         }}
       >
         <h1>{"Major: " + activeFourYearPlan.major.name}</h1>
+        <button onClick={save}>SAVE</button>
       </div>
       <div
         style={{

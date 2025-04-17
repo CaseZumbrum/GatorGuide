@@ -38,6 +38,7 @@ const create_user = (user: User, password: string) => {
       "Content-Type": "application/json",
     },
   }).then((response) => {
+    login(user.name, password);
     if (response.status != 200) {
       alert("Issue with user creation");
       response.json().then((data) => {
