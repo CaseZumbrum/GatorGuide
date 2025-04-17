@@ -3,7 +3,7 @@ import FourYearPlan from "../Types/FourYearPlan";
 import Semester from "../Types/Semester";
 import Course from "../Types/Course";
 import Major_Error from "../Types/Major_Error";
-import Required_Group from "../Types/Required_Group";
+import RequiredGroup from "../Types/RequiredGroup";
 
 // get_majors().then((majors: Major[]) => {use_majors(majors)})
 const get_majors = async (): Promise<Major[]> => {
@@ -35,7 +35,7 @@ const course_in_semesters = (semesters: Semester[], c: Course): boolean => {
 
 const count_credits_for_group = (
   semesters: Semester[],
-  group: Required_Group
+  group: RequiredGroup
 ): number => {
   let sum = 0;
   for (const semester of semesters) {

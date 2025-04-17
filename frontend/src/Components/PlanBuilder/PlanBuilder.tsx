@@ -1,18 +1,13 @@
-import React, { act, useEffect } from "react";
-import { useRef, useState } from "react";
-import logo from "./logo.svg";
-import CourseCard from "../CourseCard/CourseCard";
-import Tooltip from "../ToolTip/ToolTip";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import CourseList from "../CourseList/CourseList";
-import CourseAdder from "../CourseAdder/CourseAdder";
 import SemesterViewer from "../Semester/SemesterViewer";
 import Course from "../../Types/Course";
 import Semester from "../../Types/Semester";
 import FourYearPlan from "../../Types/FourYearPlan";
-import { get_majors } from "../../Logic/Major_Logic";
-import Major from "../../Types/Major";
 import { validate_course } from "../../Logic/Course_Logic";
 import Course_Error from "../../Types/Course_Error";
+import Major_Error from "../../Types/Major_Error";
 import { validate_plan } from "../../Logic/Major_Logic";
 
 function PlanBuilder() {
@@ -31,7 +26,6 @@ function PlanBuilder() {
     { courses: [], credits: 0, name: "Senior Summer" },
   ];
 
-  const [supportedMajors, setSupportedMajors] = useState<Major[]>([]);
   const [activeSemester, setActiveSemester] = useState<Semester>({
     courses: [],
     credits: 0,
@@ -48,11 +42,13 @@ function PlanBuilder() {
       groups: [],
     },
   });
+  const [majorErrors, setMajorErrors] = useState<Major_Error[]>([]);
 
-  const addCourseToSemester = (
-    newCourse: Course,
-    setErrors: React.Dispatch<React.SetStateAction<Course_Error[]>>
-  ) => {
+  const validate = (course: Course): Course_Error[] => {
+    return validate_course(course, activeFourYearPlan.semesters);
+  };
+
+  const addCourseToSemester = (newCourse: Course) => {
     let valid: boolean = true;
 
     activeSemester.courses.forEach((e) => {
@@ -68,17 +64,6 @@ function PlanBuilder() {
         credits: prevState.credits + newCourse.credits,
         name: prevState.name,
       }));
-      let errors: Course_Error[] = validate_course(
-        newCourse,
-        activeFourYearPlan.semesters
-      );
-      setErrors(errors);
-      if (errors.length > 0) {
-        for (const error of errors) {
-          alert(error.msg);
-        }
-      }
-    } else {
     }
   };
 
@@ -113,20 +98,24 @@ function PlanBuilder() {
   };
 
   useEffect(() => {
-    get_majors().then((majors: Major[]) => {
-      setSupportedMajors(majors);
+    fetch(import.meta.env.VITE_API_HOST + "/majors/Computer%20Engineering", {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      if (response.status == 200) {
+        response.json().then((major) => {
+          setActiveFourYearPlan((prevState) => ({
+            ...prevState,
+            major: major,
+          }));
+        });
+      }
     });
   }, []);
-
-  useEffect(() => {
-    console.log("MAJORS", supportedMajors);
-    if (supportedMajors.length > 0) {
-      setActiveFourYearPlan((prevState) => ({
-        ...prevState,
-        major: supportedMajors[0],
-      }));
-    }
-  }, [supportedMajors]);
 
   useEffect(() => {
     console.log("ACTIVE", activeSemester);
@@ -147,6 +136,7 @@ function PlanBuilder() {
 
   useEffect(() => {
     console.log("PLAN", activeFourYearPlan);
+    setMajorErrors(validate_plan(activeFourYearPlan));
   }, [activeFourYearPlan]);
 
   const save = () => {
@@ -169,7 +159,7 @@ function PlanBuilder() {
   };
 
   return (
-    <>
+    <div>
       <div
         style={{
           width: "100vw",
@@ -189,7 +179,11 @@ function PlanBuilder() {
           display: "inline-flex",
         }}
       >
-        <CourseList addToActiveSemester={addCourseToSemester}></CourseList>
+        <CourseList
+          addToActiveSemester={addCourseToSemester}
+          validate={validate}
+          major={activeFourYearPlan.major}
+        ></CourseList>
       </div>
       <div
         style={{
@@ -204,9 +198,11 @@ function PlanBuilder() {
           clearSemester={clearSemester}
           switchSemester={switchSemester}
           removeFromSemester={removeFromSemester}
+          validate={validate}
         ></SemesterViewer>
       </div>
-    </>
+      <div>MAJOR ERRORS {JSON.stringify(majorErrors)}</div>
+    </div>
   );
 }
 

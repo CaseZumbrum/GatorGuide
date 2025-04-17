@@ -1,18 +1,20 @@
 import React, { useEffect, useState, useCallback } from "react";
-import CourseAdder from "../CourseAdder/CourseAdder";
 import CourseCard from "../CourseCard/CourseCard";
-import App from "C:/Users/Jack/Documents/GitHub/GatorGuide/frontend/src/App";
 import Course from "../../Types/Course";
 import Course_Error from "../../Types/Course_Error";
+import Major from "../../Types/Major";
 
 interface CourseListProps {
-  addToActiveSemester: (
-    course: Course,
-    setErrors: React.Dispatch<React.SetStateAction<Course_Error[]>>
-  ) => void;
+  addToActiveSemester: (course: Course) => void;
+  validate: (course: Course) => Course_Error[];
+  major: Major;
 }
 
-const CourseList: React.FC<CourseListProps> = ({ addToActiveSemester }) => {
+const CourseList: React.FC<CourseListProps> = ({
+  addToActiveSemester,
+  validate,
+  major,
+}) => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [query, setQuery] = useState<string>("");
   const handleAddCourse = (newCourse: Course) => {
@@ -49,6 +51,31 @@ const CourseList: React.FC<CourseListProps> = ({ addToActiveSemester }) => {
   return (
     <div>
       <h1>Course Tray</h1>
+      <button
+        onClick={(e) => {
+          setCourses(major.critical_tracking);
+        }}
+      >
+        PUSH ALL CRITICAL TRACKING
+      </button>
+      <button
+        onClick={(e) => {
+          setCourses(major.required);
+        }}
+      >
+        PUSH ALL REQUIRED
+      </button>
+
+      {major.groups.map((group) => (
+        <button
+          onClick={(e) => {
+            setCourses(group.courses);
+          }}
+        >
+          PUSH ALL {group.name}
+        </button>
+      ))}
+
       <button onClick={clearList}>Clear</button>
       <input
         type="text"
@@ -65,6 +92,7 @@ const CourseList: React.FC<CourseListProps> = ({ addToActiveSemester }) => {
             key={index}
             course={course}
             addToActiveSemester={addToActiveSemester}
+            validate={validate}
             majorRequirement={false}
             inPlan={false}
             problematic={false}

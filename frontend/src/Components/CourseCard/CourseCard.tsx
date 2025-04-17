@@ -9,11 +9,9 @@ interface CourseCardProps {
   majorRequirement: boolean;
   inPlan: boolean;
   problematic: boolean;
-  addToActiveSemester?: (
-    addCourseName: Course,
-    setErrors: React.Dispatch<React.SetStateAction<Course_Error[]>>
-  ) => void;
+  addToActiveSemester?: (addCourseName: Course) => void;
   removeFromSemester?: (course: Course) => void;
+  validate: (course: Course) => Course_Error[];
 }
 
 const CourseCard: React.FC<CourseCardProps> = ({
@@ -29,6 +27,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
   problematic = false,
   addToActiveSemester,
   removeFromSemester,
+  validate,
 }) => {
   const [buttonName, setButtonName] = useState<string>();
 
@@ -39,6 +38,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
       setButtonName("Add Course");
     } else {
       setButtonName("Remove Course");
+      setErrors(validate(course));
     }
   }, []);
 
@@ -50,7 +50,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
 
   const handleAddToSemester = () => {
     if (!inPlan) {
-      addToActiveSemester!(course, setErrors);
+      addToActiveSemester!(course);
     } else if (inPlan) {
       removeFromSemester!(course);
     }
@@ -60,7 +60,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
     <div
       className="CourseCard"
       style={{
-        backgroundColor: inPlan && errors.length == 0 ? "red" : "inherit",
+        backgroundColor: errors.length != 0 ? "red" : "inherit",
         borderColor: !inPlan ? "green" : "inherit",
       }}
     >
@@ -94,6 +94,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
             Credits: {course.credits}
           </p>
         </div>
+        {errors.length != 0 && <div>Errors: {JSON.stringify(errors)}</div>}
       </div>
     </div>
   );
