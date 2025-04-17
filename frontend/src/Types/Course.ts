@@ -3,6 +3,7 @@ interface Course {
   description: string;
   code: string;
   credits: number;
+  prerequisites: Course[];
 }
 
 export default Course;

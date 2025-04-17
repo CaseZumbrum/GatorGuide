@@ -8,8 +8,9 @@
 
   .CourseCard {
     background-color: var(--coursecard-background-color);
-    border: 3px solid var(--coursecard-border-color);
-    border-radius: 10px;
+    border: 1px solid var(--coursecard-border-color);
+    border-radius: 6px;
+    border-left-width: 6px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.151);
     padding: 5%;
     margin: 5%;

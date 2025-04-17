@@ -6,7 +6,7 @@ from GatorGuide.database.response_models import MajorResponse
 router = APIRouter()
 
 
-@router.get("/", response_model=list[MajorResponse])
+@router.get("", response_model=list[Major])
 def get_all_majors():
     """Fetch all majors from the database."""
     return db_engine.read_all_majors()
@@ -32,7 +32,7 @@ def delete_major(name: str):
         raise HTTPException(status_code=404, detail=f"Major '{name}' not found")
 
 
-@router.post("/", response_model=MajorResponse)
+@router.post("/", response_model=Major)
 def create_major(major: Major):
     """Create a new major in the database."""
     try:

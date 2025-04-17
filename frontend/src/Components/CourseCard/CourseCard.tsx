@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Tooltip from "../ToolTip/ToolTip";
 import Course from "../../Types/Course"
 import './CourseCard.css';
@@ -10,26 +10,39 @@ interface CourseCardProps {
     inPlan: boolean,
     problematic: boolean,
     addToActiveSemester?: (addCourseName: Course) => void;
+    removeFromSemester?: (course: Course) => void;
 }
 
 const CourseCard: React.FC<CourseCardProps> = ({
-    course ={name:"Default Name", description:"N/a", code:"NA001", credits:0},
+    course ={name:"Default Name", description:"N/a", prerequisites: [], code:"NA001", credits:0},
     majorRequirement = false,
     inPlan = false,
     problematic = false,
-    addToActiveSemester}) => {
+    addToActiveSemester,
+    removeFromSemester}) => {
+    const[buttonName, setButtonName] = useState<string>();
 
-    const addCourse = () => {
-        inPlan = !inPlan;
-        console.log(inPlan);
-    }
+    
+    useEffect(()=>{
+        if (!inPlan) {
+            setButtonName("Add Course")
+        }
+        else {
+            setButtonName("Remove Course")
+        }
+    },[])
 
     const handleAddToSemester = () => {
-        addToActiveSemester!(course);
+        if (!inPlan) {
+            addToActiveSemester!(course);
+        }
+        else if (inPlan) {
+            removeFromSemester!(course);
+        }
       };
 
     return (
-    <div className="CourseCard" style={{backgroundColor: majorRequirement?"red" : "inherit"}}>
+    <div className="CourseCard" style={{backgroundColor: majorRequirement?"red" : "inherit", borderColor: !inPlan?"green" : "inherit"}}>
         <div style={{display: "flex", alignItems: "center", gap: "2%", maxWidth: "80%", overflow: "wrap"}}>
             <h2 className="CourseCard-Title" style={{flex: 4}}> 
                 {course.code}: {course.name}                  
@@ -38,7 +51,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
                 Major Required?
             </p>
             <div style={{flex: 1}}>
-                <button onClick={handleAddToSemester} id="addCourse">Add Course</button> 
+                <button onClick={handleAddToSemester} id="addCourse"> {buttonName} </button> 
             </div>
         </div>
         

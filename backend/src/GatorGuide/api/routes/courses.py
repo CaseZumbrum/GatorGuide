@@ -6,7 +6,7 @@ from GatorGuide.database.response_models import CourseResponse, CourseResponseNo
 router = APIRouter()
 
 
-@router.get("/", response_model=list[CourseResponseNoPrereqs])
+@router.get("", response_model=list[Course])
 def get_all_courses():
     """Fetch all courses from the database. (does not include prereqs)"""
     return db_engine.read_all_courses()
