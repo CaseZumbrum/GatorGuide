@@ -89,8 +89,8 @@ class DB_Engine:
             db_plan = self.session.exec(statement).one()
             db_plan.name = plan.name
             db_plan.major = db_major
-            for semester_old in db_plan.semesters:
-                self.delete(semester_old)
+            # for semester_old in db_plan.semesters:
+            #     self.delete(semester_old)
             db_plan.semesters = db_semesters
         else:
             db_plan = FourYearPlan(
