@@ -6,7 +6,10 @@ from GatorGuide.database.models import (
     User,
     UserAuth,
     UserSession,
+    FourYearPlan,
+    Semester,
 )
+from GatorGuide.database.response_models import UserResponse
 from GatorGuide.database.exceptions import SessionExpiredError
 from pathlib import Path
 from sqlmodel import Session, SQLModel, create_engine, select
@@ -56,6 +59,23 @@ class DB_Engine:
         """
         self.session.delete(object)
         self.session.commit()
+
+    def update_user_data(self, user: UserResponse):
+        db_plans: list[FourYearPlan] = []
+        for plan in user.plans:
+            db_major = self.read_major(plan.major.name)
+            db_semesters: list[Semester] = []
+            for semester in plan.semesters:
+                db_semesters.append(Semester())
+                for i, course in enumerate(semester.courses):
+                    db_semesters[-1].courses.append(self.read_course(course.code))
+            db_plans.append(
+                FourYearPlan(name=plan.name, major=db_major, semesters=db_semesters)
+            )
+        statement = select(User).where(User.name == user.name)
+        db_user = self.session.exec(statement).one()
+        db_user.plans = db_plans
+        self.write(db_user)
 
     def add_to_group(self, group: RequiredGroup, regex: str) -> None:
         """Function to add courses to a RequiredGroup object via regex parsing on course codes

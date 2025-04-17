@@ -120,7 +120,7 @@ def populate(engine: DB_Engine):
     print("Adding prerequisites...")
     # add prerequisits to each course
     for i in range(len(course_json)):
-        prereqs: list[models.PrequisiteGroup] = []
+        prereqs: list[models.PrerequisiteGroup] = []
 
         # if a course has prequisits
         if course_json[i]["prerequisites"] != "":
@@ -129,7 +129,7 @@ def populate(engine: DB_Engine):
             # for each group of prereqs
             for group in p:
                 # create a new PrerequisiteGroup object
-                prereqs.append(models.PrequisiteGroup(courses=[]))
+                prereqs.append(models.PrerequisiteGroup(courses=[]))
                 # for each code in the group
                 for code in group:
                     # find the corresponding course
