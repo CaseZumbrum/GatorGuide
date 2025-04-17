@@ -9,6 +9,14 @@ class PrerequisiteGroupResponse(BaseModel):
         from_attributes = True
 
 
+class CorequisiteGroupResponse(BaseModel):
+    id: int | None = None
+    courses: list["CourseResponseNoPrereqs"]
+
+    class Config:
+        from_attributes = True
+
+
 class CourseResponse(BaseModel):
     id: int | None = None
     code: str
@@ -16,6 +24,7 @@ class CourseResponse(BaseModel):
     description: str
     credits: int
     prerequisites: list["PrerequisiteGroupResponse"]
+    corequisites: list[CorequisiteGroupResponse]
 
     class Config:
         from_attributes = True
