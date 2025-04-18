@@ -62,23 +62,25 @@ function HomePage({ user, setPlan }: props) {
         ))}
       </div>
       {displayPopup && (
-        <div className="homepage-popup">
-          <div className="popup-close">
-            <div
-              className="close-x"
-              onClick={(e) => {
-                setActivePlan(undefined);
-                setDisplayPopup(false);
-              }}
-            >
-              &#10006;
+        <div className="homepage-popupwrapper">
+          <div className="homepage-popup">
+            <div className="popup-close">
+              <div
+                className="close-x"
+                onClick={(e) => {
+                  setActivePlan(undefined);
+                  setDisplayPopup(false);
+                }}
+              >
+                &#10006;
+              </div>
             </div>
+            <PlanPopup
+              key={activePlan?.name}
+              plan={activePlan}
+              setPlan={setPlan}
+            ></PlanPopup>
           </div>
-          <PlanPopup
-            key={activePlan?.name}
-            plan={activePlan}
-            setPlan={setPlan}
-          ></PlanPopup>
         </div>
       )}
       <div className="homepage-intro">
