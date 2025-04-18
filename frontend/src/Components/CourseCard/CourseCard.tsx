@@ -70,7 +70,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
   };
 
   return (
-    <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap", alignItems:"center"}}>
+    <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap", alignItems:"flex-start"}}>
       <div className="container">
         <div className="box" id="TitleBox"> {course.code}: {course.name} </div>
         <div className="box" id="CreditsBox">Credits: {course.credits}</div>
@@ -81,7 +81,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
           </div>
         </div>
       </div>
-      <div>{errors.length != 0 && <div className="box" id="ErrorBox"> Errors: 
+      <div style={{marginTop:"1rem"}}>{errors.length != 0 && <div className="box" id="ErrorBox"> Errors: 
         { errors.map( item => <div>{item.msg}</div>)}
         </div>}</div>
     </div>

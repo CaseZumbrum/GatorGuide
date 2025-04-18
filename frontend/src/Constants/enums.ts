@@ -3,9 +3,12 @@ export enum BUTTON_VARIANTS {
     removeCourse = "removeCourse",
     savePlan = "savePlan",
     dropDown = "dropDown",
+    clear = "clear",
+    addGroup = "addGroup"
 }
 
 export enum BUTTON_SIZES {
     Small = "small",
-    Large = "large"
+    Large = "large",
+    Thin = "thin"
 }

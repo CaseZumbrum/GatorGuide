@@ -6,7 +6,8 @@ import Course from "../../Types/Course";
 import Semester from "../../Types/Semester";
 import Course_Error from "../../Types/Course_Error";
 import CourseButton from '../CourseButton/CourseButton';
-import { BUTTON_VARIANTS } from '../../Constants/enums';
+import { BUTTON_SIZES, BUTTON_VARIANTS } from '../../Constants/enums';
+import "./Semester.css";
 
 interface SemesterProps {
   activeSemester: Semester;
@@ -24,63 +25,41 @@ const SemesterViewer: React.FC<SemesterProps> = ({
   validate,
 }) => {
   return (
-    <div>
-      <div className="dropdown">
-        <button>Semester</button>
-        <div className='content'>
-          <button onClick={() => switchSemester(0)}> 0 </button>
+<div className="semesterContainer">
+      <div className="semesterHeader">
+        <h1>
+          Semester: {activeSemester.name} | 
+        </h1>
+        <div className="dropdown">
+          <CourseButton size={BUTTON_SIZES.Large}>Semester</CourseButton>
+          <div className='content'>
+            <button onClick={() => switchSemester(0)}> 1 </button>
+            <button onClick={() => switchSemester(1)}> 2 </button>
+            <button onClick={() => switchSemester(2)}> 3 </button>
+            <button onClick={() => switchSemester(3)}> 4 </button>
+            <button onClick={() => switchSemester(4)}> 5 </button>
+            <button onClick={() => switchSemester(5)}> 6 </button>
+            <button onClick={() => switchSemester(6)}> 7 </button>
+            <button onClick={() => switchSemester(7)}> 8 </button>
+            <button onClick={() => switchSemester(8)}> 9 </button>
+            <button onClick={() => switchSemester(9)}> 10 </button>
+            <button onClick={() => switchSemester(10)}> 11 </button>
+            <button onClick={() => switchSemester(11)}> 12 </button>
+          </div>
+        </div>
+        <div onClick={clearSemester}>
+          <CourseButton variant={BUTTON_VARIANTS.clear} size={BUTTON_SIZES.Large} > Clear </CourseButton>
         </div>
       </div>
-      <button onClick={clearSemester}> Clear </button>
-      <button onClick={() => switchSemester(0)}>
-        {" "}
-        Switch to Freshman Fall{" "}
-      </button>
-      <button onClick={() => switchSemester(1)}>
-        {" "}
-        Switch to Freshman Spring{" "}
-      </button>
-      <button onClick={() => switchSemester(2)}>
-        {" "}
-        Switch to Freshman Summer{" "}
-      </button>
-      <button onClick={() => switchSemester(3)}>
-        {" "}
-        Switch to Sophmore Fall{" "}
-      </button>
-      <button onClick={() => switchSemester(4)}>
-        {" "}
-        Switch to Sophmore Spring{" "}
-      </button>
-      <button onClick={() => switchSemester(5)}>
-        {" "}
-        Switch to Sophmore Summer{" "}
-      </button>
-      <button onClick={() => switchSemester(6)}> Switch to Junior Fall </button>
-      <button onClick={() => switchSemester(7)}>
-        {" "}
-        Switch to Junior Spring{" "}
-      </button>
-      <button onClick={() => switchSemester(8)}>
-        {" "}
-        Switch to Junior Summer{" "}
-      </button>
-      <button onClick={() => switchSemester(9)}> Switch to Senior Fall </button>
-      <button onClick={() => switchSemester(10)}>
-        {" "}
-        Switch to Senior Spring{" "}
-      </button>
-      <button onClick={() => switchSemester(11)}>
-        {" "}
-        Switch to Senior Summer{" "}
-      </button>
 
-      <h1>
-        Semester: {activeSemester.name} | Credits: {activeSemester.credits}
-      </h1>
-      <h2>Course List</h2>
-      <div style={{maxHeight: "60vh", overflowY: "hidden"}}>
-        <div style={{maxHeight: "60vh", overflowY: "scroll"}}>
+      <div style={{width:"55vw", height:"5vh", alignContent:"flex-start", verticalAlign:"top", marginBottom:"15px"}}>
+        <h2 style={{marginBottom:"5px"}}>Course List</h2>
+
+      </div>
+      
+      <div style={{overflowY:"hidden"}}>
+      <div className="semesterList" id="semesterScrollList" style={{maxHeight: "66vh"} }>
+        <div style={{maxHeight: "66vh", width: "55vw"}}>
           {activeSemester.courses.map((course, index) => (
             <CourseCard
               key={index}
@@ -94,8 +73,10 @@ const SemesterViewer: React.FC<SemesterProps> = ({
           ))}
         </div>
       </div>
+      </div>
       
     </div>
+    
   );
 };
 

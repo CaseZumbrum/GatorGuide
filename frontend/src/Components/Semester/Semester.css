@@ -1,21 +1,79 @@
 .dropdown button {
-    background-color: aliceblue;
-    color: black;
-    padding: 10px 10px;
+    background-color: rgb(0, 20, 101);
+    color: rgb(255, 255, 255);
+    padding: 10px 15px;
     border: none;
     cursor: pointer;
+    margin-left: auto;
+    min-width: 100px;
 }
 
-.dropdown a{
-    display: block;
-    color: black;
-    text-decoration: none;
-    padding: 10px 15px;
-}
-
-.dropdown .content {
+.dropdown .content{
+    display: none;
     position: absolute;
-    background-color: hsl(240, 100%, 89%);
+    background-color: hsl(0, 0%, 65%);
     min-width: 100px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.755);
 }
+
+.dropdown .content button{
+    display: block;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 10px 15px;
+    min-width: 100px;
+    background-color: rgb(104, 119, 176);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.755);
+}
+
+.dropdown:hover .content{
+    display: block;
+    background-color: rgb(39, 50, 96);
+}
+
+.dropdown button:hover{
+    background-color: rgb(39, 50, 96);
+}
+
+.clear {
+    max-height: fit-content;
+}
+
+.semesterContainer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80vw;
+    align-content: flex-start;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.semesterContainer:hover {
+    overflow-y: auto;
+}
+
+.semesterList {
+    font-family:Arial, Helvetica, sans-serif
+}
+
+#semesterScrollList {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+#semesterScrollList:hover, #semesterScrollList:active, #semesterScrollList:focus {
+    overflow-y: auto;
+}
+
+.semesterHeader {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 80vw;
+    justify-content: space-evenly left;
+    gap: 3em;
+    align-items: center;
+    height: 10vh;
+
+}   

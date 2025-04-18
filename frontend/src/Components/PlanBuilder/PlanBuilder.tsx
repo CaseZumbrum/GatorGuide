@@ -117,7 +117,7 @@ function PlanBuilder({ plan }: props) {
   };
 
   return (
-    <div style={{backgroundColor: "hsl(237, 100.00%, 98.30%)"}}>
+    <div style={{backgroundColor: "hsl(237, 100.00%, 98.30%)", maxWidth:"100%", overflowX:"hidden"}}>
       <div
         style={{
           width: "100vw",
@@ -134,7 +134,7 @@ function PlanBuilder({ plan }: props) {
       </div>
       <div
         style={{
-          width: "25vw",
+          width: "26vw",
           minHeight: "90vh",
           backgroundColor: "hsl(237, 100.00%, 98.30%)",
           display: "inline-flex",
@@ -162,7 +162,22 @@ function PlanBuilder({ plan }: props) {
           validate={validate}
         ></SemesterViewer>
       </div>
-      <div>MAJOR ERRORS {JSON.stringify(majorErrors)}</div>
+      <div
+        style={{
+          width: "8vw",
+          minHeight: "90vh",
+          backgroundColor: "hsl(237, 100.00%, 98.30%)",
+          display: "inline-flex",
+        }}
+      >
+        <div style={{marginTop:"1rem"}}>{majorErrors.length != 0 && <div className="box" id="MajorErrorBox"> Major Errors: 
+        { majorErrors.map( item => <div style={{fontSize:"1rem", display:"flex", flexWrap:"wrap"}}><p>{item.msg}</p> 
+        </div>)}
+        </div>}</div>
+
+      </div>
+
+      
     </div>
   );
 }
