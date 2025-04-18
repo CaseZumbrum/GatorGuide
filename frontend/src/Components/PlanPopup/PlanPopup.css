@@ -1,0 +1,30 @@
+.planpopup-wrapper{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.wrapper-title{
+    color: #cdcbc9;
+    font-size: 1.4rem;
+}
+
+.wrapper-name{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    color: #cdcbc9;
+    font-size: 1rem;
+    gap: 2px;
+}
+
+
+.wrapper-major{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    color: #cdcbc9;
+    font-size: 1rem;
+    gap: 2px;
+}

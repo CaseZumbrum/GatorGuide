@@ -40,7 +40,7 @@ function PlanPopup({ plan, setPlan }: props) {
     get_majors().then((m) => {
       setMajors(m);
       if (majorName == "") {
-        setMajorName(m[1].name);
+        setMajorName(m[0].name);
       }
     });
   }, []);
@@ -79,7 +79,7 @@ function PlanPopup({ plan, setPlan }: props) {
 
   return (
     <div className="planpopup-wrapper">
-      <div className="wrapper-title">Set Plan</div>
+      <div className="wrapper-title">Load Plan</div>
       <div className="wrapper-name">
         Name:
         <input

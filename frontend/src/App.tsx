@@ -16,18 +16,18 @@ function App() {
   const [plan, setPlan] = useState<FourYearPlan>();
 
   const navigate = useNavigate();
-  const [user, setUser] = useState<User>({
-    name: "default",
-    email: "default",
-    plans: [],
-  });
+  const [user, setUser] = useState<User>();
   useEffect(() => {
     console.log("COOKIE", cookie);
     if (cookie["GatorGuide_Session"]) {
       navigate("/");
       get_user_data().then((user) => {
         console.log(user);
-        setUser(user);
+        if (user) {
+          setUser(user);
+        } else {
+          navigate("/login");
+        }
       });
     } else {
       navigate("/login");
@@ -36,17 +36,32 @@ function App() {
   return (
     <div className="app">
       <div className="app-header">
-        <Link to="/">The GatorGuide</Link> <Link to="/login">Login</Link>
+        <div className="header-logo" onClick={(e) => navigate("/")}>
+          The GatorGuide
+        </div>
+        {user ? (
+          <div className="header-user">
+            <img src="./user.png"></img>
+          </div>
+        ) : (
+          <div className="header-login" onClick={(e) => navigate("login")}>
+            Login
+          </div>
+        )}
       </div>
-      <Routes>
-        <Route
-          path="/"
-          element={<HomePage user={user} setPlan={setPlan} />}
-        ></Route>
-        {plan && <Route path="/plan" element={<PlanBuilder plan={plan} />} />}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-      </Routes>
+      <div className="app-content">
+        <Routes>
+          {user && (
+            <Route
+              path="/"
+              element={<HomePage user={user} setPlan={setPlan} />}
+            ></Route>
+          )}
+          {plan && <Route path="/plan" element={<PlanBuilder plan={plan} />} />}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+        </Routes>
+      </div>
     </div>
   );
 }
