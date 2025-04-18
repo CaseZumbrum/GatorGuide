@@ -7,7 +7,7 @@ margin-top: auto;
 }
 
 .intro-welcome{
-    color: #cdcbc9;
+    color: black;
     font-size: 20px;
     }
 
@@ -17,16 +17,16 @@ margin-top: auto;
     flex-flow: column;
     align-items: left;
     padding-bottom: 1px;
-    border-bottom: 2px solid #cdcbc9;
+    border-bottom: 2px solid black;
     }
     
 .message-create{
-    color: #cdcbc9;
+    color: #000000;
     font-size: 30px;
 }
 
 .welcome-title{
-    border-bottom: 2px solid #cdcbc9;
+    border-bottom: 2px solid #000000;
 }
 
 .welcome-description{
@@ -36,7 +36,7 @@ margin-top: auto;
 }
 
 .homepage{
-    background-color: #181a1b;
+    background-color: #f6f7ff;
     display: flex;
     flex-flow: column;
     padding: 20px;
@@ -64,8 +64,8 @@ margin-top: auto;
     width: 20vw;
     max-width: 250px;
     max-height: 250px;
-    background-color: #1f2122;
-    border: 2px solid #cdcbc9;
+    background-color: #f1f2ff;
+    border: 2px solid #001465;
     border-radius: 5px;
     cursor: pointer;
     transition: transform .2s; /* Animation */
@@ -78,7 +78,7 @@ margin-top: auto;
     width: 100%;
     background-color: #025e96;
     border-radius: 2px;
-    border-bottom: 2px solid #cdcbc9;
+    border-bottom: 2px solid #001465;
 }
 
 .button-bottom{
@@ -87,7 +87,7 @@ margin-top: auto;
     flex-flow: column;
     align-items: center;
     justify-content: center;
-    color: #cdcbc9;
+    color: black;
     font-size: 20px;
 }
 
@@ -102,15 +102,15 @@ margin-top: auto;
     width: 20vw;
     max-width: 250px;
     max-height: 250px;
-    background-color: #1f2122;
-    border: 2px solid #cdcbc9;
+    background-color: #f1f2ff;
+    border: 2px solid #001465;
     border-radius: 10px;
     cursor: pointer;
     display: flex;
     flex-flow: row;
     justify-content: center;
     align-items: center;
-    color: #cdcbc9;
+    color: #001465;
     font-size: 140px;
     transition: transform .2s; /* Animation */
 
@@ -124,11 +124,11 @@ margin-top: auto;
 }
 
 .homepage-popup{
-    background-color: #333435;
+    background-color: #f1f2ff;
     width: 40vw;
     height: 25vw;
     padding: 5px;
-    border: 2px solid #cdcbc9;
+    border: 2px solid #001465;
     border-radius: 10px;
     opacity: 95%;
     position: absolute;
@@ -141,7 +141,7 @@ margin-top: auto;
 
 .popup-close{
     padding: 10px;
-    color:#cdcbc9;
+    color:#001465;
     display: flex;
     flex-flow: row;
     width: 100%;
@@ -151,5 +151,5 @@ margin-top: auto;
     cursor: pointer;
 }
 .close-x:hover{
-    color: #ececeb;
+    color: #425abb;
 }
