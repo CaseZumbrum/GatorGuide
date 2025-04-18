@@ -11,6 +11,7 @@ import { get_user_data } from "./Logic/login";
 import HomePage from "./Components/HomePage/HomePage";
 import User from "./Types/User";
 import FourYearPlan from "./Types/FourYearPlan";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 function App() {
   const [cookie, setCookie, removeCookie] = useCookies(["GatorGuide_Session"]);
   const [plan, setPlan] = useState<FourYearPlan>();
@@ -26,10 +27,12 @@ function App() {
         if (user) {
           setUser(user);
         } else {
+          setUser(undefined);
           navigate("/login");
         }
       });
     } else {
+      setUser(undefined);
       navigate("/login");
     }
   }, [cookie["GatorGuide_Session"]]);
@@ -47,14 +50,20 @@ function App() {
 
               <div className="dropdown-content">
                 <div className="content-element">{user.name}</div>
-                <div className="content-element">Logout</div>
+                <div
+                  className="content-element"
+                  onClick={(e) => removeCookie("GatorGuide_Session")}
+                >
+                  Logout
+                </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className="header-login" onClick={(e) => navigate("login")}>
-            Login
-          </div>
+          <div
+            className="header-login"
+            onClick={(e) => navigate("login")}
+          ></div>
         )}
       </div>
       <div className="app-content">
