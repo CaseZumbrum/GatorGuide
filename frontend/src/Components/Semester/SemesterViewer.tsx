@@ -5,12 +5,13 @@ import CourseList from "../CourseList/CourseList";
 import Course from "../../Types/Course";
 import Semester from "../../Types/Semester";
 import Course_Error from "../../Types/Course_Error";
-import CourseButton from '../CourseButton/CourseButton';
-import { BUTTON_SIZES, BUTTON_VARIANTS } from '../../Constants/enums';
+import CourseButton from "../CourseButton/CourseButton";
+import { BUTTON_SIZES, BUTTON_VARIANTS } from "../../Constants/enums";
 import "./Semester.css";
 
 interface SemesterProps {
   activeSemester: Semester;
+  index: number;
   clearSemester: () => void;
   switchSemester: (index: number) => void;
   removeFromSemester: (course: Course) => void;
@@ -19,20 +20,19 @@ interface SemesterProps {
 
 const SemesterViewer: React.FC<SemesterProps> = ({
   activeSemester,
+  index,
   clearSemester,
   switchSemester,
   removeFromSemester,
   validate,
 }) => {
   return (
-<div className="semesterContainer">
+    <div className="semesterContainer">
       <div className="semesterHeader">
-        <h1>
-          Semester: {activeSemester.name} | 
-        </h1>
+        <h1>Semester: {index + 1} |</h1>
         <div className="dropdown">
           <CourseButton size={BUTTON_SIZES.Large}>Semester</CourseButton>
-          <div className='content'>
+          <div className="content">
             <button onClick={() => switchSemester(0)}> 1 </button>
             <button onClick={() => switchSemester(1)}> 2 </button>
             <button onClick={() => switchSemester(2)}> 3 </button>
@@ -48,35 +48,50 @@ const SemesterViewer: React.FC<SemesterProps> = ({
           </div>
         </div>
         <div onClick={clearSemester}>
-          <CourseButton variant={BUTTON_VARIANTS.clear} size={BUTTON_SIZES.Large} > Clear </CourseButton>
+          <CourseButton
+            variant={BUTTON_VARIANTS.clear}
+            size={BUTTON_SIZES.Large}
+          >
+            {" "}
+            Clear{" "}
+          </CourseButton>
         </div>
       </div>
 
-      <div style={{width:"55vw", height:"5vh", alignContent:"flex-start", verticalAlign:"top", marginBottom:"15px"}}>
-        <h2 style={{marginBottom:"5px"}}>Course List</h2>
-
+      <div
+        style={{
+          width: "55vw",
+          height: "5vh",
+          alignContent: "flex-start",
+          verticalAlign: "top",
+          marginBottom: "15px",
+        }}
+      >
+        <h2 style={{ marginBottom: "5px" }}>Course List</h2>
       </div>
-      
-      <div style={{overflowY:"hidden"}}>
-      <div className="semesterList" id="semesterScrollList" style={{maxHeight: "66vh"} }>
-        <div style={{maxHeight: "66vh", width: "55vw"}}>
-          {activeSemester.courses.map((course, index) => (
-            <CourseCard
-              key={index}
-              course={course}
-              inPlan={true}
-              problematic={false}
-              majorRequirement={false}
-              removeFromSemester={removeFromSemester}
-              validate={validate}
-            />
-          ))}
+
+      <div style={{ overflowY: "hidden" }}>
+        <div
+          className="semesterList"
+          id="semesterScrollList"
+          style={{ maxHeight: "66vh" }}
+        >
+          <div style={{ maxHeight: "66vh", width: "55vw" }}>
+            {activeSemester.courses.map((course, index) => (
+              <CourseCard
+                key={index}
+                course={course}
+                inPlan={true}
+                problematic={false}
+                majorRequirement={false}
+                removeFromSemester={removeFromSemester}
+                validate={validate}
+              />
+            ))}
+          </div>
         </div>
       </div>
-      </div>
-      
     </div>
-    
   );
 };
 

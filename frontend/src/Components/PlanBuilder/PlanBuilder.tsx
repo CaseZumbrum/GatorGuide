@@ -9,8 +9,9 @@ import { validate_course } from "../../Logic/Course_Logic";
 import Course_Error from "../../Types/Course_Error";
 import Major_Error from "../../Types/Major_Error";
 import { course_in_semesters, validate_plan } from "../../Logic/Major_Logic";
-import CourseButton from '../CourseButton/CourseButton';
-import { BUTTON_VARIANTS } from '../../Constants/enums';
+import CourseButton from "../CourseButton/CourseButton";
+import { BUTTON_VARIANTS } from "../../Constants/enums";
+import "./PlanBuilder.css";
 
 interface props {
   plan: FourYearPlan;
@@ -74,7 +75,7 @@ function PlanBuilder({ plan }: props) {
     setActiveSemester(fourYearPlan.semesters[index]);
     setActiveSemesterIndex(index);
     for (let i = 0; i < fourYearPlan.semesters[index].courses.length; i++) {
-      validate(fourYearPlan.semesters[index].courses[i])
+      validate(fourYearPlan.semesters[index].courses[i]);
     }
   };
 
@@ -120,25 +121,21 @@ function PlanBuilder({ plan }: props) {
   };
 
   return (
-    <div style={{backgroundColor: "hsl(237, 100.00%, 98.30%)", maxWidth:"100%", overflowX:"hidden"}}>
-      <div
-        style={{
-          width: "100vw",
-          height: "10vh",
-          backgroundColor: "rgb(0, 20, 101)",
-          display: "inline-flex",
-          alignContent: "center"
-        }}
-      >
-        <h1 style={{color: "#ffffff", flex:"flex", width: "50vw"}}>{"Major: " + fourYearPlan.major.name}</h1>
-        <div onClick={save} style={{alignSelf: "center"}}>
+    <div className="planbuilder-wrapper">
+      <div className="wrapper-header">
+        <h1 style={{ color: "#ffffff", flex: "flex", width: "50vw" }}>
+          {"Major: " + fourYearPlan.major.name}
+        </h1>
+        <div onClick={save} style={{ alignSelf: "center" }}>
           <CourseButton variant={BUTTON_VARIANTS.savePlan}>Save</CourseButton>
         </div>
       </div>
       <div
+        className="wrapper-list"
         style={{
           width: "26vw",
           minHeight: "90vh",
+          maxHeight: "100%",
           backgroundColor: "hsl(237, 100.00%, 98.30%)",
           display: "inline-flex",
         }}
@@ -150,6 +147,7 @@ function PlanBuilder({ plan }: props) {
         ></CourseList>
       </div>
       <div
+        className="wrapper-viewer"
         style={{
           width: "60vw",
           minHeight: "90vh",
@@ -159,6 +157,7 @@ function PlanBuilder({ plan }: props) {
       >
         <SemesterViewer
           activeSemester={fourYearPlan.semesters[activeSemesterIndex]}
+          index={activeSemesterIndex}
           clearSemester={clearSemester}
           switchSemester={switchSemester}
           removeFromSemester={removeFromSemester}
@@ -166,6 +165,7 @@ function PlanBuilder({ plan }: props) {
         ></SemesterViewer>
       </div>
       <div
+        className="wrapper-errors"
         style={{
           width: "8vw",
           minHeight: "90vh",
@@ -173,14 +173,26 @@ function PlanBuilder({ plan }: props) {
           display: "inline-flex",
         }}
       >
-        <div style={{marginTop:"1rem"}}>{majorErrors.length != 0 && <div className="box" id="MajorErrorBox"> Flaws with Plan: 
-        { majorErrors.map( item => <div style={{fontSize:"1rem", display:"flex", flexWrap:"wrap"}}><p>{item.msg}</p> 
-        </div>)}
-        </div>}</div>
-
+        <div style={{ marginTop: "1rem" }}>
+          {majorErrors.length != 0 && (
+            <div className="box" id="MajorErrorBox">
+              {" "}
+              Flaws with Plan:
+              {majorErrors.map((item) => (
+                <div
+                  style={{
+                    fontSize: "1rem",
+                    display: "flex",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <p>{item.msg}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-
-      
     </div>
   );
 }
