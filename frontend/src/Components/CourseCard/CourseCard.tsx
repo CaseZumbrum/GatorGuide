@@ -81,7 +81,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
           </div>
         </div>
       </div>
-      <div style={{marginTop:"1rem"}}>{errors.length != 0 && <div className="box" id="ErrorBox"> Errors: 
+      <div style={{marginTop:"1rem"}}>{errors.length != 0 && <div className="box" id="ErrorBox"> Problems: 
         { errors.map( item => <div>{item.msg}</div>)}
         </div>}</div>
     </div>

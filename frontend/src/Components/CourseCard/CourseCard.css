@@ -74,15 +74,17 @@
   padding: 10px;
   width: 12vw;
   height: 75vh;
-  background-color: rgb(146, 160, 255);
-  border-color: rgb(55, 24, 24);
+  color: white;
   border: 2px solid;
+  border-radius: 8px;
   border-left: 8px solid;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+
+  background-color: #204679;
+  border-color: rgb(0, 20, 101);
   padding-right: 15px;
   overflow-Y: hidden;
   scrollbar-width: thin;
+  font-family: Helvetica;
 }
 
 #MajorErrorBox:hover, #MajorErrorBox:active, #MajorErrorBox:focus{
@@ -91,7 +93,7 @@
 
 :root {
     --coursecard-text-color: white;
-    --coursecard-border-color: rgb(23, 23, 107);
+    --coursecard-border-color: rgb(0, 0, 70);
     --coursecard-background-color: hsl(28, 32%, 92%);
     --coursecard-margin: 30px;
     --coursecard: 6px;

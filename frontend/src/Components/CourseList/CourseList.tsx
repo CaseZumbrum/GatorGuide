@@ -91,18 +91,24 @@ const CourseList: React.FC<CourseListProps> = ({
       
       {/* <CourseButton variant={BUTTON_VARIANTS.clear} size={BUTTON_SIZES.Thin} onClick={clearList}>Clear</CourseButton> */}
       <h2 style={{marginLeft: "1rem"}}>Course List</h2>
-      <input
-        style={{marginLeft: "1rem"}}
-        type="text"
-        defaultValue={"Search by name or code"}
-        onChange={(e) => {
-          setQuery(e.target.value);
+      <div style={{display:"flex"}}>
+        <input
+          style={{marginLeft: "1rem", borderBottomLeftRadius:"6px", borderTopLeftRadius:"6px"}}
+          type="text"
+          defaultValue={"Search by name or code"}
+          onChange={(e) => {
+            setQuery(e.target.value);
+          }
         }
-      }
-      ></input>
-      <button onClick={search}>Search</button>
-      <div style={{maxHeight: "60vh", overflowY: "hidden"}}>
-        <div style={{maxHeight: "60vh", overflowY: "scroll"}} className="list" id="scrollList">
+        ></input>
+        <div onClick={search}>
+        <CourseButton variant={BUTTON_VARIANTS.addGroup} size={BUTTON_SIZES.Small} >Search</CourseButton>
+        </div>
+      </div>
+      
+      <div style={{height:"1vh"}}></div>
+      <div style={{maxHeight: "57.5vh", overflowY: "hidden"}}>
+        <div style={{maxHeight: "57.5vh", overflowY: "scroll"}} className="list" id="scrollList">
           {courses.map((course, index) => (
             <CourseCard
               key={index}

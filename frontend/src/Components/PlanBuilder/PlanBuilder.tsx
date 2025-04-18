@@ -8,7 +8,7 @@ import FourYearPlan from "../../Types/FourYearPlan";
 import { validate_course } from "../../Logic/Course_Logic";
 import Course_Error from "../../Types/Course_Error";
 import Major_Error from "../../Types/Major_Error";
-import { validate_plan } from "../../Logic/Major_Logic";
+import { course_in_semesters, validate_plan } from "../../Logic/Major_Logic";
 import CourseButton from '../CourseButton/CourseButton';
 import { BUTTON_VARIANTS } from '../../Constants/enums';
 
@@ -73,6 +73,9 @@ function PlanBuilder({ plan }: props) {
   const switchSemester = (index: number) => {
     setActiveSemester(fourYearPlan.semesters[index]);
     setActiveSemesterIndex(index);
+    for (let i = 0; i < fourYearPlan.semesters[index].courses.length; i++) {
+      validate(fourYearPlan.semesters[index].courses[i])
+    }
   };
 
   useEffect(() => {
@@ -170,7 +173,7 @@ function PlanBuilder({ plan }: props) {
           display: "inline-flex",
         }}
       >
-        <div style={{marginTop:"1rem"}}>{majorErrors.length != 0 && <div className="box" id="MajorErrorBox"> Major Errors: 
+        <div style={{marginTop:"1rem"}}>{majorErrors.length != 0 && <div className="box" id="MajorErrorBox"> Flaws with Plan: 
         { majorErrors.map( item => <div style={{fontSize:"1rem", display:"flex", flexWrap:"wrap"}}><p>{item.msg}</p> 
         </div>)}
         </div>}</div>
