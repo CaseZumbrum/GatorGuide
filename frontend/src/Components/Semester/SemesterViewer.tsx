@@ -5,6 +5,8 @@ import CourseList from "../CourseList/CourseList";
 import Course from "../../Types/Course";
 import Semester from "../../Types/Semester";
 import Course_Error from "../../Types/Course_Error";
+import CourseButton from '../CourseButton/CourseButton';
+import { BUTTON_VARIANTS } from '../../Constants/enums';
 
 interface SemesterProps {
   activeSemester: Semester;
@@ -23,6 +25,12 @@ const SemesterViewer: React.FC<SemesterProps> = ({
 }) => {
   return (
     <div>
+      <div className="dropdown">
+        <button>Semester</button>
+        <div className='content'>
+          <button onClick={() => switchSemester(0)}> 0 </button>
+        </div>
+      </div>
       <button onClick={clearSemester}> Clear </button>
       <button onClick={() => switchSemester(0)}>
         {" "}

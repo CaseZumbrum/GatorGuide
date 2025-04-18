@@ -127,7 +127,7 @@ function PlanBuilder({ plan }: props) {
           alignContent: "center"
         }}
       >
-        <h1 style={{color: "#ffffff"}}>{"Major: " + fourYearPlan.major.name}</h1>
+        <h1 style={{color: "#ffffff", flex:"flex", width: "50vw"}}>{"Major: " + fourYearPlan.major.name}</h1>
         <div onClick={save} style={{alignSelf: "center"}}>
           <CourseButton variant={BUTTON_VARIANTS.savePlan}>Save</CourseButton>
         </div>

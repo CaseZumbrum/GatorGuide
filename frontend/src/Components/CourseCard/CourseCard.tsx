@@ -34,7 +34,10 @@ const CourseCard: React.FC<CourseCardProps> = ({
   const [buttonName, setButtonName] = useState<string>();
   const [buttonType, setbuttonType] = useState<BUTTON_VARIANTS>();
 
+  const [visibleErrors, setVisibleErrors] = useState<Course_Error[]>();
   const [errors, setErrors] = useState<Course_Error[]>([]);
+  let obj: Course_Error[] = [];
+
 
   useEffect(() => {
     if (!inPlan) {
@@ -50,6 +53,11 @@ const CourseCard: React.FC<CourseCardProps> = ({
   useEffect(() => {
     if (errors.length != 0) {
       console.log(course.name, "ERRORS", errors);
+      obj =JSON.parse(JSON.stringify(errors));
+      console.log(obj[0].msg);
+      if (visibleErrors) {
+        console.log(visibleErrors[0].msg);
+      }
     }
   }, [errors]);
 
@@ -62,17 +70,23 @@ const CourseCard: React.FC<CourseCardProps> = ({
   };
 
   return (
-    <div className="container">
-      <div className="box" id="TitleBox"> {course.code}: {course.name} </div>
-      <div className="box" id="CreditsBox">Credits: {course.credits}</div>
-      <div className="box" id="DescriptionBox">{course.description}</div>
-      <div className="box" id="ButtonBox">
-        <div onClick={handleAddToSemester} id="addCourse">
-           <CourseButton variant={buttonType} size={BUTTON_SIZES.Small}>{buttonName}</CourseButton>
+    <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap", alignItems:"center"}}>
+      <div className="container">
+        <div className="box" id="TitleBox"> {course.code}: {course.name} </div>
+        <div className="box" id="CreditsBox">Credits: {course.credits}</div>
+        <div className="box" id="DescriptionBox">{course.description}</div>
+        <div className="box" id="ButtonBox">
+          <div onClick={handleAddToSemester} id="addCourse">
+            <CourseButton variant={buttonType} size={BUTTON_SIZES.Small}>{buttonName}</CourseButton>
+          </div>
         </div>
       </div>
-      {errors.length != 0 && <div>Errors: {JSON.stringify(errors)}</div>}
+      <div>{errors.length != 0 && <div className="box" id="ErrorBox"> Errors: 
+        { errors.map( item => <div>{item.msg}</div>)}
+        </div>}</div>
     </div>
+    
+    
   );
 
   // return (

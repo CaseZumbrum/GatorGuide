@@ -26,7 +26,7 @@
 
 .savePlan {
     align-self: center;
-    margin-left: 60vw;
+    margin-left: 750%;
     @include base-color(#eeeeff, #00011c)
 }
 
@@ -36,4 +36,8 @@
 
 .large {
     font-size: 1rem;
+}
+
+.dropDown {
+    @include base-color(#ffffff, #000000)
 }
