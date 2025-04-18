@@ -8,32 +8,40 @@ function LoginPage() {
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
   return (
-    <div>
-      LOGIN PAGE
-      <input
-        type="text"
-        onChange={(e) => {
-          setUserName(e.target.value);
-        }}
-        defaultValue={"username"}
-      ></input>
-      <input
-        type="password"
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-        defaultValue={"password"}
-      ></input>
-      <button
-        onClick={(e) => {
-          login(userName, password);
-        }}
-      >
-        login
-      </button>
-      <button>
-        <Link to="/signup"> Sign Up</Link>
-      </button>
+    <div style={{display:"flex", alignContent:"center", justifyContent:"center", alignItems:"center", height:"100%"}}>
+      <div className="loginContainer">
+        <div style={{justifyContent : "left"}}>
+          <h1 className="loginTitle">Username: </h1>
+        </div>
+        <input
+          type="text"
+          onChange={(e) => {
+            setUserName(e.target.value);
+          }}
+          defaultValue={"username"}
+          className="field"
+        ></input>
+        <h1 className="loginTitle">Password: </h1>
+        <input
+          type="password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          defaultValue={"password"}
+          className="field"
+        ></input>
+        <button
+          onClick={(e) => {
+            login(userName, password);
+          }}
+        >
+          login
+        </button>
+        <button>
+          <Link to="/signup"> Sign Up</Link>
+        </button>
+      </div>
+      
     </div>
   );
 }

@@ -116,6 +116,9 @@ function PlanBuilder({ plan }: props) {
           console.log(data);
         });
       }
+      else {
+        alert("Saved Plan")
+      }
     });
   };
 
