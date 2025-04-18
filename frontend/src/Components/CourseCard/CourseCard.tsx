@@ -69,6 +69,10 @@ const CourseCard: React.FC<CourseCardProps> = ({
     }
   };
 
+  const resolveError = () => {
+    setErrors([])
+  }
+
   return (
     <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap", alignItems:"flex-start"}}>
       <div className="container">
@@ -81,54 +85,21 @@ const CourseCard: React.FC<CourseCardProps> = ({
           </div>
         </div>
       </div>
-      <div style={{marginTop:"1rem"}}>{errors.length != 0 && <div className="box" id="ErrorBox"> Problems: 
+      <div style={{marginTop:"1rem"}}>
+        {errors.length != 0 && <div className="box" id="ErrorBox" style={{display:"flex", flex:"row", flexWrap:"wrap"}}>
+         Problems: 
+
+         <div className="close-x-error" onClick={resolveError}>
+          &#10006;
+         </div>
+
         { errors.map( item => <div>{item.msg}</div>)}
-        </div>}</div>
+        </div>
+        }</div>
     </div>
     
     
   );
-
-  // return (
-  //   <div
-  //     className="CourseCard"
-  //     style={{
-  //       backgroundColor: inPlan && errors.length == 0 ? "red" : "inherit",
-  //       borderColor: !inPlan ? "green" : "inherit",
-  //     }}
-  //   >
-  //     <div
-  //       style={{
-  //         display: "flex",
-  //         alignItems: "center",
-  //         gap: "2%",
-  //         maxWidth: "80%",
-  //         overflow: "wrap",
-  //       }}
-  //     >
-  //       <h2 className="CourseCard-Title" style={{ flex: 4 }}>
-  //         {course.code}: {course.name}
-  //       </h2>
-  //       <p className="CourseCard-Requirement">Major Required?</p>
-  //       <div style={{ flex: 1 }}>
-  //         <div onClick={handleAddToSemester} id="addCourse">
-  //           <CourseButton variant={buttonType} size={BUTTON_SIZES.Small}>{buttonName}</CourseButton>
-  //         </div>
-  //       </div>
-  //     </div>
-
-  //     <div style={{ display: "flex", maxWidth: "80%" }}>
-  //       <div style={{ flex: 7, height: "20%" }}>
-  //         <p className="CourseCard-Text">{course.description}</p>
-  //       </div>
-  //       <div style={{ flex: 3, height: "20%", alignContent: "right" }}>
-  //         <p className="CourseCard-Text" style={{ textAlign: "right" }}>
-  //           Credits: {course.credits}
-  //         </p>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default CourseCard;

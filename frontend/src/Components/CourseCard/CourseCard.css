@@ -71,6 +71,7 @@
 
 #MajorErrorBox{
   align-self:flex-start;
+  top:0;
   padding: 10px;
   width: 12vw;
   height: 75vh;
@@ -147,3 +148,13 @@
 
   }
   
+.close-x-error{
+    cursor: pointer;
+    color:rgb(55, 24, 24);
+    display: flex;
+    width: 5%;
+    margin-left: auto;
+}
+.close-x-error:hover{
+    color: #425abb;
+}

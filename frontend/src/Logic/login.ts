@@ -29,6 +29,7 @@ const login = (username: string, password: string) => {
 // creates a user based on User (look into User.ts) and password, no return needed
 // executes rather quickly
 const create_user = (user: User, password: string) => {
+  console.log("Create_user is called")
   fetch(import.meta.env.VITE_API_HOST + "/users/?password=" + password, {
     credentials: "include",
     method: "POST",

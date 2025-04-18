@@ -38,7 +38,7 @@ function App() {
   }, [cookie["GatorGuide_Session"]]);
 
   return (
-    <div className="app" style={{ maxHeight: "100%" }}>
+    <div className="app" style={{ maxHeight: "100%", maxWidth: "100%", overflowX: "hidden" }}>
       <div className="app-header">
         <div className="header-logo" onClick={(e) => navigate("/")}>
           The GatorGuide

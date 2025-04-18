@@ -1,0 +1,54 @@
+.signupContainer {
+    display: flex;
+    align-items:center;
+    border: 3px solid rgb(0, 20, 101);
+    border-radius: 15px;
+    background-color: hsl(237, 100.00%, 98.30%);
+    height:60%;
+    flex-direction: row;    
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: space-evenly;
+    box-shadow: rgba(0, 20, 101, 0.4) 5px 5px, rgba(0, 20, 101, 0.3) 10px 10px, rgba(0, 20, 101, 0.2) 15px 15px, rgba(0, 20, 101, 0.1) 20px 20px, rgba(0, 20, 101, 0.05) 25px 25px;
+    margin: 2%;
+    max-width: 35%;
+    padding: 5px;
+    row-gap: 5px;
+  }
+
+.field {
+    display: flex;
+    align-items:flex-start;
+    border: 2px solid rgb(0, 20, 101);
+    border-left: 2px solid rgb(0, 20, 101);
+    border-radius: 8px;
+    background-color: #ffffff;
+    height: 6vh;
+    font-size: 2vh;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-content: space-evenly;
+    margin: 2%;
+    margin-top: 5px;
+    width: 95%;
+}
+
+.signupSubTitle {
+    justify-self: left;
+    font-size: 20px;
+    color:#959595;
+    align-self: flex-end;
+    margin-left: 15px;
+}
+
+.signupTitle {
+    justify-self: left;
+    font-size: 25px;
+    color:#353535;
+    align-self: flex-start;
+    width: 100%;
+    height: 30px;
+    padding: 0px;
+    font-weight:bolder;
+}

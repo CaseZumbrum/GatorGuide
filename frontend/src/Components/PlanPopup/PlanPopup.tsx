@@ -5,6 +5,8 @@ import Major from "../../Types/Major";
 import { get_majors } from "../../Logic/Major_Logic";
 import { useNavigate } from "react-router-dom";
 import Semester from "../../Types/Semester";
+import CourseButton from '../CourseButton/CourseButton';
+import { BUTTON_VARIANTS } from '../../Constants/enums';
 
 interface props {
   plan?: FourYearPlan;
@@ -103,9 +105,11 @@ function PlanPopup({ plan, setPlan }: props) {
           ))}
         </select>
       </div>
-      <button className="wrapper-next" onClick={(e) => navigate("/plan")}>
-        Next
-      </button>
+      <div className="wrapper-next" onClick={(e) => navigate("/plan")}>
+        <CourseButton variant={BUTTON_VARIANTS.addGroup}>
+          Next
+        </CourseButton>   
+      </div>
     </div>
   );
 }

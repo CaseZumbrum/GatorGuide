@@ -4,11 +4,14 @@ export enum BUTTON_VARIANTS {
     savePlan = "savePlan",
     dropDown = "dropDown",
     clear = "clear",
-    addGroup = "addGroup"
+    addGroup = "addGroup",
+    login = "login",
+    signup = "signup"
 }
 
 export enum BUTTON_SIZES {
     Small = "small",
     Large = "large",
-    Thin = "thin"
+    Thin = "thin",
+    Wide = "wide"
 }

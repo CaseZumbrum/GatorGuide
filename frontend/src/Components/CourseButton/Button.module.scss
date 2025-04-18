@@ -57,3 +57,24 @@
     @include base-color(rgb(0, 20, 101), #ffffff);
     margin: 1px;
 }
+
+.login {
+    @include base-color(rgb(250, 121, 22), #ffffff);
+    font-style: bold;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 25px;
+
+}
+
+.signup {
+    @include base-color(rgb(0, 20, 101), #ffffff);
+    font-style: bold;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 25px;
+}
+
+.wide {
+    width: 30vw;
+}
