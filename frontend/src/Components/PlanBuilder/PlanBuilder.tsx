@@ -9,6 +9,8 @@ import { validate_course } from "../../Logic/Course_Logic";
 import Course_Error from "../../Types/Course_Error";
 import Major_Error from "../../Types/Major_Error";
 import { validate_plan } from "../../Logic/Major_Logic";
+import CourseButton from '../CourseButton/CourseButton';
+import { BUTTON_VARIANTS } from '../../Constants/enums';
 
 interface props {
   plan: FourYearPlan;
@@ -53,8 +55,6 @@ function PlanBuilder({ plan }: props) {
       name: prevState.name,
     }));
     fourYearPlan.semesters[activeSemesterIndex].courses = newCourseList;
-
-    fourYearPlan.semesters[activeSemesterIndex].credits -= course.credits;
   };
 
   const clearSemester = () => {
@@ -117,23 +117,26 @@ function PlanBuilder({ plan }: props) {
   };
 
   return (
-    <div>
+    <div style={{backgroundColor: "hsl(237, 100.00%, 98.30%)"}}>
       <div
         style={{
           width: "100vw",
           height: "10vh",
-          backgroundColor: "hsl(212, 65.70%, 27.50%)",
+          backgroundColor: "rgb(0, 20, 101)",
           display: "inline-flex",
+          alignContent: "center"
         }}
       >
-        <h1>{"Major: " + fourYearPlan.major.name}</h1>
-        <button onClick={save}>SAVE</button>
+        <h1 style={{color: "#ffffff"}}>{"Major: " + fourYearPlan.major.name}</h1>
+        <div onClick={save} style={{alignSelf: "center"}}>
+          <CourseButton variant={BUTTON_VARIANTS.savePlan}>Save</CourseButton>
+        </div>
       </div>
       <div
         style={{
           width: "25vw",
           minHeight: "90vh",
-          backgroundColor: "hsl(212, 32%, 92%)",
+          backgroundColor: "hsl(237, 100.00%, 98.30%)",
           display: "inline-flex",
         }}
       >
@@ -145,9 +148,9 @@ function PlanBuilder({ plan }: props) {
       </div>
       <div
         style={{
-          width: "70vw",
+          width: "60vw",
           minHeight: "90vh",
-          backgroundColor: "hsl(286, 18.90%, 41.60%)",
+          backgroundColor: "hsl(237, 100.00%, 98.30%)",
           display: "inline-flex",
         }}
       >

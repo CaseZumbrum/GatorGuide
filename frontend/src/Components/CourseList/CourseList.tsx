@@ -86,19 +86,21 @@ const CourseList: React.FC<CourseListProps> = ({
         }}
       ></input>
       <button onClick={search}>Search</button>
-      <div>
-        <h2>Course List</h2>
-        {courses.map((course, index) => (
-          <CourseCard
-            key={index}
-            course={course}
-            addToActiveSemester={addToActiveSemester}
-            validate={validate}
-            majorRequirement={false}
-            inPlan={false}
-            problematic={false}
-          />
-        ))}
+      <h2>Course List</h2>
+      <div style={{maxHeight: "60vh", overflowY: "hidden"}}>
+        <div style={{maxHeight: "60vh", overflowY: "scroll"}}>
+          {courses.map((course, index) => (
+            <CourseCard
+              key={index}
+              course={course}
+              addToActiveSemester={addToActiveSemester}
+              validate={validate}
+              majorRequirement={false}
+              inPlan={false}
+              problematic={false}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

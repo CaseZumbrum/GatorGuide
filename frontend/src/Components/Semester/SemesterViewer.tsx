@@ -70,20 +70,23 @@ const SemesterViewer: React.FC<SemesterProps> = ({
       <h1>
         Semester: {activeSemester.name} | Credits: {activeSemester.credits}
       </h1>
-      <div>
-        <h2>Course List</h2>
-        {activeSemester.courses.map((course, index) => (
-          <CourseCard
-            key={index}
-            course={course}
-            inPlan={true}
-            problematic={false}
-            majorRequirement={false}
-            removeFromSemester={removeFromSemester}
-            validate={validate}
-          />
-        ))}
+      <h2>Course List</h2>
+      <div style={{maxHeight: "60vh", overflowY: "hidden"}}>
+        <div style={{maxHeight: "60vh", overflowY: "scroll"}}>
+          {activeSemester.courses.map((course, index) => (
+            <CourseCard
+              key={index}
+              course={course}
+              inPlan={true}
+              problematic={false}
+              majorRequirement={false}
+              removeFromSemester={removeFromSemester}
+              validate={validate}
+            />
+          ))}
+        </div>
       </div>
+      
     </div>
   );
 };
