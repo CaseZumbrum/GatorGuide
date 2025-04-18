@@ -33,15 +33,23 @@ function App() {
       navigate("/login");
     }
   }, [cookie["GatorGuide_Session"]]);
+
   return (
-    <div className="app" style={{maxHeight:"100%",}}>
+    <div className="app" style={{ maxHeight: "100%" }}>
       <div className="app-header">
         <div className="header-logo" onClick={(e) => navigate("/")}>
           The GatorGuide
         </div>
         {user ? (
           <div className="header-user">
-            <img src="./user.png"></img>
+            <div className="user-dropdown">
+              <img src="./user.png"></img>
+
+              <div className="dropdown-content">
+                <div className="content-element">{user.name}</div>
+                <div className="content-element">Logout</div>
+              </div>
+            </div>
           </div>
         ) : (
           <div className="header-login" onClick={(e) => navigate("login")}>
