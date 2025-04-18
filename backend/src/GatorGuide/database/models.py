@@ -169,6 +169,7 @@ class Course(SQLModel, table=True):
     prerequisites: list["PrerequisiteGroup"] = Relationship(
         link_model=CoursePrerequisiteGroupLink,
     )
+    prerequisite_string: str
     corequisites: list["CorequisiteGroup"] = Relationship(
         link_model=CourseCorequisiteGroupLink
     )
