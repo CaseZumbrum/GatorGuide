@@ -5,8 +5,8 @@ import Major from "../../Types/Major";
 import { get_majors } from "../../Logic/Major_Logic";
 import { useNavigate } from "react-router-dom";
 import Semester from "../../Types/Semester";
-import CourseButton from '../CourseButton/CourseButton';
-import { BUTTON_VARIANTS } from '../../Constants/enums';
+import CourseButton from "../CourseButton/CourseButton";
+import { BUTTON_VARIANTS } from "../../Constants/enums";
 
 interface props {
   plan?: FourYearPlan;
@@ -18,11 +18,16 @@ function PlanPopup({ plan, setPlan }: props) {
   const [majorName, setMajorName] = useState<string>(
     plan ? plan.major.name : ""
   );
+
+  // majors to choose from
   const [majors, setMajors] = useState<Major[]>([]);
+
+  // chosen major
   const [activeMajor, setActiveMajor] = useState<Major>();
 
   const navigate = useNavigate();
 
+  // default semesters
   let baseSemesters: Semester[] = [
     { courses: [], credits: 0, name: "Freshman Fall" },
     { courses: [], credits: 0, name: "Freshman Spring" },
@@ -38,6 +43,7 @@ function PlanPopup({ plan, setPlan }: props) {
     { courses: [], credits: 0, name: "Senior Summer" },
   ];
 
+  // get the active majors
   useEffect(() => {
     get_majors().then((m) => {
       setMajors(m);
@@ -47,6 +53,7 @@ function PlanPopup({ plan, setPlan }: props) {
     });
   }, []);
 
+  // get more info about hte selected major
   useEffect(() => {
     fetch(import.meta.env.VITE_API_HOST + "/majors/" + majorName, {
       credentials: "include",
@@ -65,15 +72,19 @@ function PlanPopup({ plan, setPlan }: props) {
     });
   }, [majorName]);
 
+  // load the plan to be edited
   useEffect(() => {
     if (activeMajor) {
+      // an old plan is being edited
       if (plan) {
         setPlan({
           ...plan,
           name: name,
           major: activeMajor,
         });
-      } else {
+      }
+      // a new plan is being created
+      else {
         setPlan({ name: name, major: activeMajor, semesters: baseSemesters });
       }
     }
@@ -106,9 +117,7 @@ function PlanPopup({ plan, setPlan }: props) {
         </select>
       </div>
       <div className="wrapper-next" onClick={(e) => navigate("/plan")}>
-        <CourseButton variant={BUTTON_VARIANTS.addGroup}>
-          Next
-        </CourseButton>   
+        <CourseButton variant={BUTTON_VARIANTS.addGroup}>Next</CourseButton>
       </div>
     </div>
   );

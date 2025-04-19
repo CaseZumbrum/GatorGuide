@@ -38,8 +38,8 @@ const CourseCard: React.FC<CourseCardProps> = ({
   const [errors, setErrors] = useState<Course_Error[]>([]);
   let obj: Course_Error[] = [];
 
-
   useEffect(() => {
+    // on load, set button and validate the course
     if (!inPlan) {
       setButtonName("Add Course");
       setbuttonType(BUTTON_VARIANTS.addCoruse);
@@ -51,9 +51,10 @@ const CourseCard: React.FC<CourseCardProps> = ({
   }, []);
 
   useEffect(() => {
+    // display errors after validation
     if (errors.length != 0) {
       console.log(course.name, "ERRORS", errors);
-      obj =JSON.parse(JSON.stringify(errors));
+      obj = JSON.parse(JSON.stringify(errors));
       console.log(obj[0].msg);
       if (visibleErrors) {
         console.log(visibleErrors[0].msg);
@@ -62,43 +63,67 @@ const CourseCard: React.FC<CourseCardProps> = ({
   }, [errors]);
 
   const handleAddToSemester = () => {
+    // if the course is not in the plan already, add it too it
     if (!inPlan) {
       addToActiveSemester!(course);
-    } else if (inPlan) {
+    }
+    // of the course is in the plan, remove it
+    else if (inPlan) {
       removeFromSemester!(course);
     }
   };
 
   const resolveError = () => {
-    setErrors([])
-  }
+    // hide errors
+    setErrors([]);
+  };
 
   return (
-    <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap", alignItems:"flex-start"}}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        alignItems: "flex-start",
+      }}
+    >
       <div className="container">
-        <div className="box" id="TitleBox"> {course.code}: {course.name} </div>
-        <div className="box" id="CreditsBox">Credits: {course.credits}</div>
-        <div className="box" id="DescriptionBox">{course.description}</div>
+        <div className="box" id="TitleBox">
+          {" "}
+          {course.code}: {course.name}{" "}
+        </div>
+        <div className="box" id="CreditsBox">
+          Credits: {course.credits}
+        </div>
+        <div className="box" id="DescriptionBox">
+          {course.description}
+        </div>
         <div className="box" id="ButtonBox">
           <div onClick={handleAddToSemester} id="addCourse">
-            <CourseButton variant={buttonType} size={BUTTON_SIZES.Small}>{buttonName}</CourseButton>
+            <CourseButton variant={buttonType} size={BUTTON_SIZES.Small}>
+              {buttonName}
+            </CourseButton>
           </div>
         </div>
       </div>
-      <div style={{marginTop:"1rem"}}>
-        {errors.length != 0 && <div className="box" id="ErrorBox" style={{display:"flex", flex:"row", flexWrap:"wrap"}}>
-         Problems: 
-
-         <div className="close-x-error" onClick={resolveError}>
-          &#10006;
-         </div>
-
-        { errors.map( item => <div>{item.msg}</div>)}
-        </div>
-        }</div>
+      <div style={{ marginTop: "1rem" }}>
+        {errors.length != 0 && (
+          <div
+            className="box"
+            id="ErrorBox"
+            style={{ display: "flex", flex: "row", flexWrap: "wrap" }}
+          >
+            Problems:
+            <div className="close-x-error" onClick={resolveError}>
+              &#10006;
+            </div>
+            {errors.map((item) => (
+              <div>{item.msg}</div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
-    
-    
   );
 };
 

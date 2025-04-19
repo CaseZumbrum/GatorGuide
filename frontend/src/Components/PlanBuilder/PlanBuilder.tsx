@@ -32,6 +32,7 @@ function PlanBuilder({ plan }: props) {
   const addCourseToSemester = (newCourse: Course) => {
     let valid: boolean = true;
 
+    // ensure the course is not in the plan
     activeSemester.courses.forEach((e) => {
       if (e == newCourse) {
         valid = false;
@@ -39,6 +40,7 @@ function PlanBuilder({ plan }: props) {
       }
     });
 
+    // update the current semester
     if (valid) {
       setActiveSemester((prevState) => ({
         courses: [...prevState.courses, newCourse],
@@ -49,6 +51,7 @@ function PlanBuilder({ plan }: props) {
   };
 
   const removeFromSemester = (course: Course) => {
+    // remove the course from the semester
     let newCourseList = activeSemester.courses.filter((e) => e !== course);
     setActiveSemester((prevState) => ({
       courses: newCourseList,
@@ -59,6 +62,7 @@ function PlanBuilder({ plan }: props) {
   };
 
   const clearSemester = () => {
+    // delete all courses from the current semester
     setActiveSemester(() => ({
       courses: [],
       credits: 0,
@@ -72,8 +76,10 @@ function PlanBuilder({ plan }: props) {
   };
 
   const switchSemester = (index: number) => {
+    // move the index
     setActiveSemester(fourYearPlan.semesters[index]);
     setActiveSemesterIndex(index);
+    // validate courses
     for (let i = 0; i < fourYearPlan.semesters[index].courses.length; i++) {
       validate(fourYearPlan.semesters[index].courses[i]);
     }
@@ -96,12 +102,14 @@ function PlanBuilder({ plan }: props) {
     }));
   }, [activeSemester, activeSemesterIndex]);
 
+  // validate the major on each change to the plan
   useEffect(() => {
     console.log("PLAN", fourYearPlan);
     setMajorErrors(validate_plan(fourYearPlan));
   }, [fourYearPlan]);
 
   const save = () => {
+    // save the plan, send it off to the database
     fetch(import.meta.env.VITE_API_HOST + "/users/me/plan", {
       credentials: "include",
       method: "POST",
@@ -111,14 +119,16 @@ function PlanBuilder({ plan }: props) {
         "Content-Type": "application/json",
       },
     }).then((response) => {
+      // fail
       if (response.status != 200) {
         alert("Issue with saving plan");
         response.json().then((data) => {
           console.log(data);
         });
       }
+      // success
       else {
-        alert("Saved Plan")
+        alert("Saved Plan");
       }
     });
   };

@@ -29,7 +29,8 @@ const login = (username: string, password: string) => {
 // creates a user based on User (look into User.ts) and password, no return needed
 // executes rather quickly
 const create_user = (user: User, password: string) => {
-  console.log("Create_user is called")
+  // send a request to create a user
+  console.log("Create_user is called");
   fetch(import.meta.env.VITE_API_HOST + "/users/?password=" + password, {
     credentials: "include",
     method: "POST",
@@ -39,7 +40,12 @@ const create_user = (user: User, password: string) => {
       "Content-Type": "application/json",
     },
   }).then((response) => {
-    login(user.name, password);
+    // success
+    if (response.status == 200) {
+      // login with new user
+      login(user.name, password);
+    }
+    // fail
     if (response.status != 200) {
       alert("Issue with user creation");
       response.json().then((data) => {
@@ -52,7 +58,7 @@ const create_user = (user: User, password: string) => {
 // needs to be run after the session cookie is set (user has been logged in)
 // get_user_data.then((user)=>{do_something(user)})
 const get_user_data = async (): Promise<any> => {
-  let found_user: User;
+  // fetch the user data
   const response = await fetch(import.meta.env.VITE_API_HOST + "/users/me", {
     credentials: "include",
     method: "GET",
@@ -62,9 +68,12 @@ const get_user_data = async (): Promise<any> => {
     },
   });
 
+  // success
   if (response.status == 200) {
     return response.json();
-  } else {
+  }
+  // fail
+  else {
     response.json().then((data) => {
       console.error(data);
       throw new Error("User not found!");

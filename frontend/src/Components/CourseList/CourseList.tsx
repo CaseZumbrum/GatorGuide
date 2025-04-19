@@ -3,8 +3,8 @@ import CourseCard from "../CourseCard/CourseCard";
 import Course from "../../Types/Course";
 import Course_Error from "../../Types/Course_Error";
 import Major from "../../Types/Major";
-import CourseButton from '../CourseButton/CourseButton';
-import { BUTTON_SIZES, BUTTON_VARIANTS } from '../../Constants/enums';
+import CourseButton from "../CourseButton/CourseButton";
+import { BUTTON_SIZES, BUTTON_VARIANTS } from "../../Constants/enums";
 
 interface CourseListProps {
   addToActiveSemester: (course: Course) => void;
@@ -28,6 +28,7 @@ const CourseList: React.FC<CourseListProps> = ({
   };
 
   const search = () => {
+    // search the database for courses
     fetch(
       import.meta.env.VITE_API_HOST +
         "/courses/search?query=" +
@@ -42,6 +43,7 @@ const CourseList: React.FC<CourseListProps> = ({
         },
       }
     ).then((response) => {
+      // success
       if (response.status == 200) {
         response.json().then((courses) => {
           setCourses(courses);
@@ -51,64 +53,83 @@ const CourseList: React.FC<CourseListProps> = ({
   };
 
   return (
-    <div style={{width: "30vw", alignContent:"space-between"}}>
-      <div style={{width: "30vw", alignContent:"space-between", display:"flex", flexWrap:"wrap"}}>
-        <div onClick={(e) => {
+    <div style={{ width: "30vw", alignContent: "space-between" }}>
+      <div
+        style={{
+          width: "30vw",
+          alignContent: "space-between",
+          display: "flex",
+          flexWrap: "wrap",
+        }}
+      >
+        <div
+          onClick={(e) => {
             setCourses(major.critical_tracking);
-          }} style={{margin:"0px", padding:"0px", width:"fit-content"}}>
-          <CourseButton
-          variant={BUTTON_VARIANTS.addGroup}
+          }}
+          style={{ margin: "0px", padding: "0px", width: "fit-content" }}
         >
-          Add Critical Tracking
-        </CourseButton></div>
-        
-        <div onClick={(e) => {
-            setCourses(major.required);
-          }} style={{margin:"0px", padding:"0px", width:"fit-content"}}>
-            <CourseButton
-          variant={BUTTON_VARIANTS.addGroup}
-          
-        >
-          Add Required Courses
-        </CourseButton>
+          <CourseButton variant={BUTTON_VARIANTS.addGroup}>
+            Add Critical Tracking
+          </CourseButton>
         </div>
-        
+
+        <div
+          onClick={(e) => {
+            setCourses(major.required);
+          }}
+          style={{ margin: "0px", padding: "0px", width: "fit-content" }}
+        >
+          <CourseButton variant={BUTTON_VARIANTS.addGroup}>
+            Add Required Courses
+          </CourseButton>
+        </div>
 
         {major.groups.map((group) => (
-          <div onClick={(e) => {
-            setCourses(group.courses);
-          }} style={{margin:"0px", padding:"0px", width:"fit-content"}}>
-            <CourseButton
-              variant={BUTTON_VARIANTS.addGroup}
-              key={group.name}
-            >
+          <div
+            onClick={(e) => {
+              setCourses(group.courses);
+            }}
+            style={{ margin: "0px", padding: "0px", width: "fit-content" }}
+          >
+            <CourseButton variant={BUTTON_VARIANTS.addGroup} key={group.name}>
               Add: {group.name}
             </CourseButton>
           </div>
-          
         ))}
       </div>
-      
+
       {/* <CourseButton variant={BUTTON_VARIANTS.clear} size={BUTTON_SIZES.Thin} onClick={clearList}>Clear</CourseButton> */}
-      <h2 style={{marginLeft: "1rem"}}>Course List</h2>
-      <div style={{display:"flex"}}>
+      <h2 style={{ marginLeft: "1rem" }}>Course List</h2>
+      <div style={{ display: "flex" }}>
         <input
-          style={{marginLeft: "1rem", borderBottomLeftRadius:"6px", borderTopLeftRadius:"6px"}}
+          style={{
+            marginLeft: "1rem",
+            borderBottomLeftRadius: "6px",
+            borderTopLeftRadius: "6px",
+          }}
           type="text"
           defaultValue={"Search by name or code"}
           onChange={(e) => {
             setQuery(e.target.value);
-          }
-        }
+          }}
         ></input>
         <div onClick={search}>
-        <CourseButton variant={BUTTON_VARIANTS.addGroup} size={BUTTON_SIZES.Small} >Search</CourseButton>
+          <CourseButton
+            variant={BUTTON_VARIANTS.addGroup}
+            size={BUTTON_SIZES.Small}
+          >
+            Search
+          </CourseButton>
         </div>
       </div>
-      
-      <div style={{height:"1vh"}}></div>
-      <div style={{maxHeight: "57.5vh", overflowY: "hidden"}}>
-        <div style={{maxHeight: "57.5vh", overflowY: "scroll"}} className="list" id="scrollList">
+
+      <div style={{ height: "1vh" }}></div>
+      <div style={{ maxHeight: "57.5vh", overflowY: "hidden" }}>
+        <div
+          style={{ maxHeight: "57.5vh", overflowY: "scroll" }}
+          className="list"
+          id="scrollList"
+        >
           {courses.map((course, index) => (
             <CourseCard
               key={index}

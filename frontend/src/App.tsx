@@ -11,34 +11,48 @@ import { get_user_data } from "./Logic/login";
 import HomePage from "./Components/HomePage/HomePage";
 import User from "./Types/User";
 import FourYearPlan from "./Types/FourYearPlan";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
 function App() {
+  // session cookie
   const [cookie, setCookie, removeCookie] = useCookies(["GatorGuide_Session"]);
+  // plan being edited
   const [plan, setPlan] = useState<FourYearPlan>();
 
+  // used to move between pages
   const navigate = useNavigate();
+
+  // active user
   const [user, setUser] = useState<User>();
+
+  // try to login on load
   useEffect(() => {
-    console.log("COOKIE", cookie);
+    // user has an active session
     if (cookie["GatorGuide_Session"]) {
       navigate("/");
+      // login
       get_user_data().then((user) => {
         console.log(user);
         if (user) {
           setUser(user);
-        } else {
+        }
+        // login failed
+        else {
           setUser(undefined);
           navigate("/login");
         }
       });
-    } else {
+    }
+    // no active session
+    else {
       setUser(undefined);
       navigate("/login");
     }
   }, [cookie["GatorGuide_Session"]]);
 
   return (
-    <div className="app" style={{ maxHeight: "100%", maxWidth: "100%", overflowX: "hidden" }}>
+    <div
+      className="app"
+      style={{ maxHeight: "100%", maxWidth: "100%", overflowX: "hidden" }}
+    >
       <div className="app-header">
         <div className="header-logo" onClick={(e) => navigate("/")}>
           The GatorGuide
