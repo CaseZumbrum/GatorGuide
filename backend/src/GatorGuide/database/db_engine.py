@@ -38,6 +38,8 @@ class DB_Engine:
         self.session = Session(self.engine)
 
     def __del__(self):
+        """ Destructor, closes the DB session and deletes the engine
+        """
         self.session.close()
         self.engine.dispose()
 
@@ -61,11 +63,19 @@ class DB_Engine:
         self.session.commit()
 
     def update_user_data(self, user: UserResponse):
+        """updates a users data in the database
+
+        Args:
+            user (User): user to be written (either in the database or not) 
+        """
         db_plans: list[FourYearPlan] = []
+        # for each plan
         for plan in user.plans:
+            # ensure the major is the same as the one already in the database
             db_major = self.read_major(plan.major.name)
             db_semesters: list[Semester] = []
             for semester in plan.semesters:
+                # ensure that each course is the same as the one already in the database
                 db_semesters.append(Semester())
                 for i, course in enumerate(semester.courses):
                     db_semesters[-1].courses.append(self.read_course(course.code))
@@ -90,6 +100,7 @@ class DB_Engine:
         pattern = re.compile(regex)
         statement = select(Course)
         x = self.session.exec(statement)
+        # check if each course code matches the regex, if so add it to the group
         for c in x:
             if pattern.match(c.code):
                 group.courses.append(c)
@@ -161,7 +172,7 @@ class DB_Engine:
         """
         statement = select(UserAuth).where(UserAuth.user_id == user.id)
         a = self.session.exec(statement).one()
-        print(password, a.salt, sha256((a.salt + password).encode("utf-8")).hexdigest())
+        # salt and hash the password, make sure it matches
         return sha256((a.salt + password).encode("utf-8")).hexdigest() == a.hashed
 
     def create_user_authentication(self, user: User, password: str) -> None:
@@ -172,8 +183,10 @@ class DB_Engine:
             password (str): un-hashed password
         """
         alphabet = string.ascii_letters + string.digits
+        # generate a random salt of 8 characters
         salt = "".join(secrets.choice(alphabet) for i in range(8))
 
+        # salt and hash password
         a = UserAuth(
             user_id=user.id,
             salt=salt,
@@ -190,6 +203,7 @@ class DB_Engine:
         Returns:
             str: session_id for the session
         """
+        # generate a uuid
         uuid = str(uuid4())
         s = UserSession(user_id=user.id, session_id=uuid, time=int(time()))
         self.write(s)
@@ -207,6 +221,7 @@ class DB_Engine:
         Returns:
             User: User object associated with the session
         """
+        # find the session
         statement = select(UserSession).where(UserSession.session_id == session_id)
         s = self.session.exec(statement).one()
         # one day timeout
@@ -214,6 +229,7 @@ class DB_Engine:
             self.delete(s)
             raise SessionExpiredError
         else:
+            # update the session
             s.time = int(time())
             user_statement = select(User).where(User.id == s.user_id)
             self.write(s)

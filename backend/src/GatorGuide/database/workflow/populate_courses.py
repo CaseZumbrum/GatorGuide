@@ -8,7 +8,7 @@ from GatorGuide.database.db_engine import DB_Engine
 from sqlalchemy.exc import IntegrityError
 
 
-def parse(pre: str) -> list[list[str]]:
+def parse_prereqs(pre: str) -> list[list[str]]:
     """parse a prerequisite string from the One.UF API
 
     Args:
@@ -179,11 +179,11 @@ def populate(engine: DB_Engine):
         # if a course has prequisits
         if course_json[i]["prerequisites"] != "":
             # get the codes for each prereq
-            p = parse(course_json[i]["prerequisites"])
+            p = parse_prereqs(course_json[i]["prerequisites"])
             # for each group of prereqs
             for group in p:
                 # create a new PrerequisiteGroup object
-                prereqs.append(models.PrerequisiteGroup(courses=[]))
+                prereq_group: models.PrerequisiteGroup = models.PrerequisiteGroup(courses=[])
                 # for each code in the group
                 for code in group:
                     # find the corresponding course
@@ -192,20 +192,23 @@ def populate(engine: DB_Engine):
                     )
                     # if the course is found, add it to the PrerequisiteGroup object
                     if course is not None:
-                        prereqs[-1].courses.append(course)
+                        prereq_group.courses.append(course)
+                if len(prereq_group.courses) > 0:
+                    prereqs.append(prereq_group)
         coreq_groups = parse_coreqs(course_json[i]["prerequisites"])
         if course_json[i]["code"] == "COT3100":
             print("RAW:", course_json[i]["prerequisites"])
             print("PARSED COREQS:", coreq_groups)
         coreqs: list[models.CorequisiteGroup] = []
-
-        coreqs: list[models.CorequisiteGroup] = []
         for group in coreq_groups:
             coreq_group = models.CorequisiteGroup(courses=[])
             for code in group:
+                # find the course
                 course = next((x for x in courses if x.code == code), None)
+                # if the course is found, add it to the CorequisiteGroup object
                 if course:
                     coreq_group.courses.append(course)
+            #append coreqs
             if coreq_group.courses:
                 coreqs.append(coreq_group)
 
@@ -214,14 +217,12 @@ def populate(engine: DB_Engine):
     # add the course + prereqs to the DB
     print("Writing to Database...")
     from sqlmodel import Session
+    # write courses
     with Session(engine.engine) as s:
         s.add_all(courses)
         s.commit()
     for c in courses:
         count += 1
-        # except IntegrityError as e:
-        #     if c.code == "EEL4744C":
-        #         print(e)
     print(f"Courses added: {count}")
     print("Done!")
 

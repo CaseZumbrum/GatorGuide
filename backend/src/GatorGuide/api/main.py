@@ -7,17 +7,15 @@ from fastapi.middleware.cors import CORSMiddleware
 import logging
 
 
-# # do not log user password data
-# class EndpointFilter(logging.Filter):
-#     def filter(self, record: logging.LogRecord) -> bool:
-#         return record.getMessage().find("/users/") == -1
+# do not log user password data
+class EndpointFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        return record.getMessage().find("/users/") == -1
 
-
-# # Filter out /endpoint
-# logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
 
 app = FastAPI(title="GatorGuide API", version="1.0")
 
+# mount sub-routes
 app.include_router(courses.router, prefix="/courses", tags=["Courses"])
 app.include_router(majors.router, prefix="/majors", tags=["Majors"])
 app.include_router(users.router, prefix="/users", tags=["Users"])
@@ -37,7 +35,7 @@ def custom_openapi():
 
 app.openapi_schema = custom_openapi()
 
-# Add CORS handling, allow all origins
+# Add CORS handling
 origins = [
     "http://localhost:5173",
 ]
