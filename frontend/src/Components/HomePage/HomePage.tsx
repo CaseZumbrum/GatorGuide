@@ -15,16 +15,16 @@ function HomePage({ user, setPlan }: props) {
   const [randomNumber, setRandomNumber] = useState<number>();
   
   const images: string[] = [
-    "../../../dist/CenturyTower.jpg",
-    "../../../dist/Football.jpg",
-    "../../../dist/Marston.jpg",
-    "../../../dist/Albert&Alberta.jpg",
-    "../../../dist/WorldGator.jpg",
-    "../../../dist/Potato.jpg",
-    "../../../dist/BatHouse.jpg",
-    "../../../dist/OldGuy.jpg",
-    "../../../dist/FireWorks.jpg",
-    "../../../dist/FinanceArch.jpg",
+    "./CenturyTower.jpg",
+    "./Football.jpg",
+    "./Marston.jpg",
+    "./Albert&Alberta.jpg",
+    "./WorldGator.jpg",
+    "./Potato.jpg",
+    "./BatHouse.jpg",
+    "./OldGuy.jpg",
+    "./FireWorks.jpg",
+    "./FinanceArch.jpg",
   ];
 
   useEffect(() => {
