@@ -6,7 +6,6 @@ interface Course {
   code: string;
   credits: number;
   prerequisites: PrequisiteGroup[];
-  prequisite_string: string;
 }
 
 export default Course;

@@ -85,7 +85,16 @@ function App() {
           {user && (
             <Route
               path="/"
-              element={<HomePage user={user} setPlan={setPlan} />}
+              element={
+                <HomePage
+                  user={user}
+                  setPlan={
+                    setPlan as React.Dispatch<
+                      React.SetStateAction<FourYearPlan>
+                    >
+                  }
+                />
+              }
             ></Route>
           )}
           {plan && <Route path="/plan" element={<PlanBuilder plan={plan} />} />}
