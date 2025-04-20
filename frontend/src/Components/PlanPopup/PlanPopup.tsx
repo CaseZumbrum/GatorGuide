@@ -25,6 +25,9 @@ function PlanPopup({ plan, setPlan }: props) {
   // chosen major
   const [activeMajor, setActiveMajor] = useState<Major>();
 
+  // fully loaded
+  const [displayReady, setDisplayReady] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   // default semesters
@@ -87,6 +90,9 @@ function PlanPopup({ plan, setPlan }: props) {
       else {
         setPlan({ name: name, major: activeMajor, semesters: baseSemesters });
       }
+      setDisplayReady(true);
+    } else {
+      setDisplayReady(false);
     }
   }, [activeMajor, name]);
 
@@ -116,9 +122,11 @@ function PlanPopup({ plan, setPlan }: props) {
           ))}
         </select>
       </div>
-      <div className="wrapper-next" onClick={(e) => navigate("/plan")}>
-        <CourseButton variant={BUTTON_VARIANTS.addGroup}>Next</CourseButton>
-      </div>
+      {displayReady && (
+        <div className="wrapper-next" onClick={(e) => navigate("/plan")}>
+          <CourseButton variant={BUTTON_VARIANTS.addGroup}>Next</CourseButton>
+        </div>
+      )}
     </div>
   );
 }
