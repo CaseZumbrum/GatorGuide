@@ -1,0 +1,195 @@
+.homepage-intro{
+width: 100%;
+height: 22%;
+display: flex;
+flex-flow: column;
+align-items: left;
+margin-top: auto;
+color: white;
+background-color:#172842;
+border-top: 0.5vh solid #000a32;
+bottom:0;
+position:absolute;
+}
+
+.intro-welcome{
+    color: white;
+    font-size: 20px;
+    }
+
+.homepage-message{
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: left;
+    padding-bottom: 1px;
+    border-bottom: 2px solid rgb(0, 0, 0);
+    }
+    
+.message-create{
+    color: #000000;
+    font-size: 30px;
+}
+
+.welcome-title{
+    width: 90%;
+    border-bottom: 2px solid #ffffff;
+    margin: 10px;
+    margin-left: 1vw;
+    font-size: 15px;
+    background-color: #00000000;
+}
+
+.welcome-description{
+    margin: 5px;
+    font-size: 10px;
+}
+
+.homepage{
+    background-color: #f6f7ff;
+    display: flex;
+    flex-flow: column;
+    height: 90%;
+    width: 100%;
+    gap: 20px;
+}
+
+.homepage-plans{
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    justify-content: left;
+    align-content: top;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 0;
+    row-gap: 5vh;
+    justify-content: space-evenly;
+}
+
+.plans-button{
+    height: 20vw;
+    width: 20vw;
+    max-width: 250px;
+    max-height: 250px;
+    background-color: #f1f2ff;
+    border: 2px solid #001465;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform .2s; /* Animation */
+
+}
+
+
+.button-top{
+    height: 60%;
+    width: 100%;
+    background-color: #025e96;
+    background-image: url(../../../dist/Marston.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    border-radius: 2px;
+    border-bottom: 2px solid #001465;
+}
+
+.button-top-default {
+    height: 60%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #f1f2ff;
+    background-size: 100%;
+    border-radius: 10px;
+    border-bottom: 2px solid #001465;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    color: #001465;
+    font-size: 140px;
+    text-align: center;
+    transition: transform .2s; /* Animation */
+}
+
+.button-bottom{
+    display: flex;
+    height:40%;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 20px;
+}
+
+.bottom-major{
+    font-size: 15px;
+
+}
+
+
+.plans-button-default{
+    height: 20vw;
+    width: 20vw;
+    max-width: 250px;
+    max-height: 250px;
+    background-color: #f1f2ff;
+    border: 2px solid #001465;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+    color: #001465;
+    font-size: 140px;
+    transition: transform .2s; /* Animation */
+
+}
+.plans-button-default:hover{
+    transform: scale(1.05)
+
+}
+.plans-button:hover{
+    transform: scale(1.05)
+}
+
+.homepage-popup{
+    background-color: #f1f2ff;
+    width: 40vw;
+    height: 25vw;
+    max-width: 500px;
+    max-height: 200px;
+    padding: 5px;
+    border: 2px solid #001465;
+    border-radius: 10px;
+    opacity: 95%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    pointer-events: auto;    
+}
+.homepage-popupwrapper{
+    position: absolute;
+    height: 60%;
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; 
+}
+
+.popup-close{
+    padding: 10px;
+    color:#001465;
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    justify-content: right;
+}
+.close-x{
+    cursor: pointer;
+}
+.close-x:hover{
+    color: #425abb;
+}

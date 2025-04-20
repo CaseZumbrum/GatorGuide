@@ -1,9 +1,11 @@
+import PrequisiteGroup from "./PrequisiteGroup";
+
 interface Course {
   name: string;
   description: string;
   code: string;
   credits: number;
-  prerequisites: Course[];
+  prerequisites: PrequisiteGroup[];
 }
 
 export default Course;

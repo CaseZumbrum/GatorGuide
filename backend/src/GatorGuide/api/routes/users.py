@@ -7,7 +7,7 @@ from GatorGuide.database.db_engine import DB_Engine
 from sqlalchemy.exc import NoResultFound, IntegrityError
 from typing import Annotated
 from GatorGuide.database.exceptions import SessionExpiredError
-from GatorGuide.database.response_models import UserResponse
+from GatorGuide.database.response_models import UserResponse, FourYearPlanResponse
 
 router = APIRouter()
 
@@ -74,6 +74,27 @@ def post_me(
         response.status_code = status.HTTP_401_UNAUTHORIZED
 
 
+@router.post("/me/plan")
+def post_plan(
+    plan: FourYearPlanResponse,
+    response: Response,
+    db: DB_Engine = Depends(get_db),
+    GatorGuide_Session: Annotated[str | None, Cookie()] = None,
+):
+    if GatorGuide_Session:
+        try:
+            u = db.load_user_session(GatorGuide_Session)
+            db.update_user_plan(u, plan)
+        except NoResultFound:
+            response.status_code = status.HTTP_404_NOT_FOUND
+            response.delete_cookie("GatorGuide_Session")
+        except SessionExpiredError:
+            response.status_code = status.HTTP_401_UNAUTHORIZED
+            response.delete_cookie("GatorGuide_Session")
+    else:
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+
+
 @router.get("/{user_name}/login")
 def login(
     user_name: str, password: str, response: Response, db: DB_Engine = Depends(get_db)
@@ -94,13 +115,12 @@ def login(
         u = db.read_user(user_name)
     except NoResultFound:
         raise HTTPException(status_code=404, detail="User not found")
-    
+
     if db.authenticate_user(u, password):
         uuid = db.create_user_session(u)
         response.set_cookie("GatorGuide_Session", uuid)
     else:
         raise HTTPException(status_code=401, detail="Incorrect password")
-
 
 
 @router.get("/{user_name}", response_model=UserResponse)
@@ -131,7 +151,6 @@ def get_user(
         raise HTTPException(status_code=401, detail="Incorrect password")
 
 
-
 @router.post("/", response_model=UserResponse)
 def create_user(
     user: User, password: str, response: Response, db: DB_Engine = Depends(get_db)
@@ -157,14 +176,12 @@ def create_user(
         db.create_user_authentication(user, password)
     except IntegrityError:
         raise HTTPException(status_code=409, detail="Username or email already exists")
-    
-    return user
 
+    return user
 
 
 @router.delete("/{user_name}")
 def delete_user(user_name: str, db: DB_Engine = Depends(get_db)):
-    
     """
     Delete a user by username.
 
@@ -183,6 +200,5 @@ def delete_user(user_name: str, db: DB_Engine = Depends(get_db)):
     if user:
         db.delete(user)
         return {"message": f"User {user_name} deleted successfully"}
-    
-    raise HTTPException(status_code=404, detail="User not found")
 
+    raise HTTPException(status_code=404, detail="User not found")

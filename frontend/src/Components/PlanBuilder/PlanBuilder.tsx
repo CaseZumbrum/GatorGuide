@@ -1,125 +1,214 @@
-import React, { act, useEffect } from 'react';
-import { useRef, useState } from 'react'
-import logo from './logo.svg';
-import CourseCard from '../CourseCard/CourseCard';
-import Tooltip from "../ToolTip/ToolTip";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import CourseList from "../CourseList/CourseList";
-import CourseAdder from "../CourseAdder/CourseAdder"
-import SemesterViewer from '../Semester/SemesterViewer';
-import Course from '../../Types/Course';
-import Semester from '../../Types/Semester';
-import FourYearPlan from '../../Types/FourYearPlan';
-import { get_majors } from '../../Logic/Major_Logic';
-import Major from '../../Types/Major';
-import { validate_course } from '../../Logic/Course_Logic';
-import Course_Error from '../../Types/Course_Error';
-import { validate_plan } from '../../Logic/Major_Logic';
+import SemesterViewer from "../Semester/SemesterViewer";
+import Course from "../../Types/Course";
+import Semester from "../../Types/Semester";
+import FourYearPlan from "../../Types/FourYearPlan";
+import { validate_course } from "../../Logic/Course_Logic";
+import Course_Error from "../../Types/Course_Error";
+import Major_Error from "../../Types/Major_Error";
+import { course_in_semesters, validate_plan } from "../../Logic/Major_Logic";
+import CourseButton from "../CourseButton/CourseButton";
+import { BUTTON_VARIANTS } from "../../Constants/enums";
+import "./PlanBuilder.css";
 
-function PlanBuilder() {
-  let baseSemesters: Semester[] = [
-    {courses: [], credits: 0, name: "Freshman Fall"},
-    {courses: [], credits: 0, name: "Freshman Spring"},
-    {courses: [], credits: 0, name: "Freshman Summer"},
-    {courses: [], credits: 0, name: "Sophmore Fall"},
-    {courses: [], credits: 0, name: "Sophmore Spring"},
-    {courses: [], credits: 0, name: "Sophmore Summer"},
-    {courses: [], credits: 0, name: "Junior Fall"},
-    {courses: [], credits: 0, name: "Junior Spring"},
-    {courses: [], credits: 0, name: "Junior Summer"},
-    {courses: [], credits: 0, name: "Senior Fall"},
-    {courses: [], credits: 0, name: "Senior Spring"},
-    {courses: [], credits: 0, name: "Senior Summer"},
-  ]
+interface props {
+  plan: FourYearPlan;
+}
 
-  const[supportedMajors, setSupportedMajors] = useState<Major[]>([]);
-  const[activeSemester, setActiveSemester] = useState<Semester>({courses: [], credits: 0, name: baseSemesters[0].name});
-  const[activeSemesterIndex, setActiveSemesterIndex] = useState<number>(0);
-  const[activeFourYearPlan, setActiveFourYearPlan] = useState<FourYearPlan>({semesters: baseSemesters, 
-  major: {name: "Loading...", critical_tracking: [], required: [], groups: []}, activeSemester: 0});
-  
+function PlanBuilder({ plan }: props) {
+  const [activeSemester, setActiveSemester] = useState<Semester>(
+    plan.semesters[0]
+  );
+  const [activeSemesterIndex, setActiveSemesterIndex] = useState<number>(0);
+  const [fourYearPlan, setActiveFourYearPlan] = useState<FourYearPlan>(plan);
+  const [majorErrors, setMajorErrors] = useState<Major_Error[]>([]);
+
+  const validate = (course: Course): Course_Error[] => {
+    return validate_course(course, fourYearPlan.semesters);
+  };
+
   const addCourseToSemester = (newCourse: Course) => {
     let valid: boolean = true;
 
-    activeSemester.courses.forEach(e => {
-        if (e == newCourse) {
-            valid = false
-            alert("Already in Plan")
-        }
+    // ensure the course is not in the plan
+    activeSemester.courses.forEach((e) => {
+      if (e == newCourse) {
+        valid = false;
+        alert("Already in Plan");
+      }
     });
 
+    // update the current semester
     if (valid) {
-        setActiveSemester((prevState) => ({courses: [...prevState.courses, newCourse], 
-            credits: (prevState.credits + newCourse.credits), name: prevState.name}))
-          activeFourYearPlan.semesters[activeSemesterIndex].courses.push(newCourse)
-          activeFourYearPlan.semesters[activeSemesterIndex].credits += newCourse.credits
-          validate_plan(activeFourYearPlan)
-          let errors: Course_Error[] = validate_course(newCourse, activeFourYearPlan.semesters)
-      
-          if (errors.length > 0) {
-              for (const error of errors) {
-                  alert(error.msg)      
-              }
-          }
+      setActiveSemester((prevState) => ({
+        courses: [...prevState.courses, newCourse],
+        credits: prevState.credits + newCourse.credits,
+        name: prevState.name,
+      }));
     }
-    else {
-
-    }
-    
-  }
+  };
 
   const removeFromSemester = (course: Course) => {
-    let newCourseList = activeSemester.courses.filter(e => e !== course);
-    setActiveSemester((prevState) => ({courses: newCourseList, 
-        credits: (prevState.credits - course.credits), name: prevState.name}));
-    activeFourYearPlan.semesters[activeSemesterIndex].courses = newCourseList
-
-    activeFourYearPlan.semesters[activeSemesterIndex].credits -= course.credits
-  }
+    // remove the course from the semester
+    let newCourseList = activeSemester.courses.filter((e) => e !== course);
+    setActiveSemester((prevState) => ({
+      courses: newCourseList,
+      credits: prevState.credits - course.credits,
+      name: prevState.name,
+    }));
+    // updates current semester list to changed value
+    fourYearPlan.semesters[activeSemesterIndex].courses = newCourseList;
+  };
 
   const clearSemester = () => {
-    setActiveSemester(() => ({courses: [], credits: 0, name: activeSemester.name}))
-    activeFourYearPlan.semesters[activeSemesterIndex] = {courses: [], credits: 0, 
-      name: activeFourYearPlan.semesters[activeSemesterIndex].name}
-  }
+    // delete all courses from the current semester
+    setActiveSemester(() => ({
+      courses: [],
+      credits: 0,
+      name: activeSemester.name,
+    }));
+    fourYearPlan.semesters[activeSemesterIndex] = {
+      courses: [],
+      credits: 0,
+      name: fourYearPlan.semesters[activeSemesterIndex].name,
+    };
+  };
 
   const switchSemester = (index: number) => {
-    setActiveSemester(() => ({courses: [], credits: 0, name: activeSemester.name}))
-    setActiveSemester(() => (activeFourYearPlan.semesters[index]))
-    setActiveSemesterIndex(index)
-    console.log(activeFourYearPlan.semesters[0])
-    console.log(activeFourYearPlan.semesters[1])
-  }
-
-  useEffect(()=>{
-    get_majors().then((majors: Major[]) => {setSupportedMajors(majors)});
-  },[])
-
-  useEffect(()=>{
-    console.log(supportedMajors)
-    if (supportedMajors.length > 0) {
-        setActiveFourYearPlan((prevState) => ({semesters: prevState.semesters, major: supportedMajors[0], activeSemester: prevState.activeSemester}))
+    // move the index
+    setActiveSemester(fourYearPlan.semesters[index]);
+    setActiveSemesterIndex(index);
+    // validate courses
+    for (let i = 0; i < fourYearPlan.semesters[index].courses.length; i++) {
+      validate(fourYearPlan.semesters[index].courses[i]);
     }
-  }, [supportedMajors])
+  };
+
+  useEffect(() => {
+    console.log("ACTIVE", activeSemester);
+    const nextSemesters = fourYearPlan.semesters.map((c, i) => {
+      if (i === activeSemesterIndex) {
+        // Increment the clicked counter
+        return activeSemester;
+      } else {
+        // The rest haven't changed
+        return c;
+      }
+    });
+    setActiveFourYearPlan((prevstate) => ({
+      ...prevstate,
+      semesters: nextSemesters,
+    }));
+  }, [activeSemester, activeSemesterIndex]);
+
+  // validate the major on each change to the plan
+  useEffect(() => {
+    console.log("PLAN", fourYearPlan);
+    setMajorErrors(validate_plan(fourYearPlan));
+  }, [fourYearPlan]);
+
+  const save = () => {
+    // save the plan, send it off to the database
+    fetch(import.meta.env.VITE_API_HOST + "/users/me/plan", {
+      credentials: "include",
+      method: "POST",
+      body: JSON.stringify(fourYearPlan),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      // fail
+      if (response.status != 200) {
+        alert("Issue with saving plan");
+        response.json().then((data) => {
+          console.log(data);
+        });
+      }
+      // success
+      else {
+        alert("Saved Plan");
+      }
+    });
+  };
 
   return (
-    <>
-      
-      <div style={{width: "100vw", height: "10vh", backgroundColor: "hsl(212, 65.70%, 27.50%)", display: "inline-flex"}}>
-        <h1>{"Major: " + activeFourYearPlan.major.name}</h1>
+    <div className="planbuilder-wrapper">
+      <div className="wrapper-header">
+        <h1 style={{ color: "#ffffff", flex: "flex", width: "50vw" }}>
+          {"Major: " + fourYearPlan.major.name}
+        </h1>
+        <div onClick={save} style={{ alignSelf: "center" }}>
+          <CourseButton variant={BUTTON_VARIANTS.savePlan}>Save</CourseButton>
+        </div>
       </div>
-      <div style={{width: "25vw", minHeight: "90vh", backgroundColor: "hsl(212, 32%, 92%)", display: "inline-flex"}}>
-        <CourseList addToActiveSemester={addCourseToSemester}></CourseList>
+      <div
+        className="wrapper-list"
+        style={{
+          width: "26vw",
+          minHeight: "90vh",
+          maxHeight: "100%",
+          backgroundColor: "hsl(237, 100.00%, 98.30%)",
+          display: "inline-flex",
+        }}
+      >
+        <CourseList
+          addToActiveSemester={addCourseToSemester}
+          validate={validate}
+          major={fourYearPlan.major}
+        ></CourseList>
       </div>
-      <div style={{width: "70vw", minHeight: "90vh", backgroundColor: "hsl(286, 18.90%, 41.60%)", display: "inline-flex"}}>
-        <SemesterViewer activeSemester={activeFourYearPlan.semesters[activeSemesterIndex]} 
-        clearSemester={clearSemester} switchSemester={switchSemester} removeFromSemester={removeFromSemester}></SemesterViewer>
+      <div
+        className="wrapper-viewer"
+        style={{
+          width: "60vw",
+          minHeight: "90vh",
+          backgroundColor: "hsl(237, 100.00%, 98.30%)",
+          display: "inline-flex",
+        }}
+      >
+        <SemesterViewer
+          activeSemester={fourYearPlan.semesters[activeSemesterIndex]}
+          index={activeSemesterIndex}
+          clearSemester={clearSemester}
+          switchSemester={switchSemester}
+          removeFromSemester={removeFromSemester}
+          validate={validate}
+        ></SemesterViewer>
       </div>
-      
-
-    </>
-
+      <div
+        className="wrapper-errors"
+        style={{
+          width: "8vw",
+          minHeight: "90vh",
+          backgroundColor: "hsl(237, 100.00%, 98.30%)",
+          display: "inline-flex",
+        }}
+      >
+        <div style={{ marginTop: "1rem" }}>
+          {majorErrors.length != 0 && (
+            <div className="box" id="MajorErrorBox">
+              {" "}
+              Flaws with Plan:
+              {majorErrors.map((item) => (
+                <div
+                  style={{
+                    fontSize: "1rem",
+                    display: "flex",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <p>{item.msg}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
-  
 }
 
 export default PlanBuilder;

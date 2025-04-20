@@ -9,6 +9,14 @@ class PrerequisiteGroupResponse(BaseModel):
         from_attributes = True
 
 
+class CorequisiteGroupResponse(BaseModel):
+    id: int | None = None
+    courses: list["CourseResponseNoPrereqs"]
+
+    class Config:
+        from_attributes = True
+
+
 class CourseResponse(BaseModel):
     id: int | None = None
     code: str
@@ -16,6 +24,7 @@ class CourseResponse(BaseModel):
     description: str
     credits: int
     prerequisites: list["PrerequisiteGroupResponse"]
+    corequisites: list[CorequisiteGroupResponse]
 
     class Config:
         from_attributes = True
@@ -36,7 +45,7 @@ class RequiredGroupResponse(BaseModel):
     id: int | None = None
     name: str
     credits: int
-    courses: list[CourseResponseNoPrereqs]
+    courses: list[CourseResponse]
 
     class Config:
         from_attributes = True
@@ -53,8 +62,8 @@ class MajorResponseNoRequired(BaseModel):
 class MajorResponse(BaseModel):
     id: int | None = None
     name: str
-    critical_tracking: list[CourseResponseNoPrereqs]
-    required: list[CourseResponseNoPrereqs]
+    critical_tracking: list[CourseResponse]
+    required: list[CourseResponse]
     groups: list[RequiredGroupResponse]
 
     class Config:
@@ -63,7 +72,7 @@ class MajorResponse(BaseModel):
 
 class SemesterResponse(BaseModel):
     id: int | None = None
-    courses: list[CourseResponseNoPrereqs]
+    courses: list[CourseResponse]
 
     class Config:
         from_attributes = True

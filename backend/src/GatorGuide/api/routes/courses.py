@@ -2,12 +2,13 @@ from GatorGuide.api.db_dependency import db_engine
 from GatorGuide.database.models import Course, CorequisiteGroup
 from fastapi import Query, APIRouter, HTTPException
 from rapidfuzz import fuzz, process
+from GatorGuide.database.response_models import CourseResponse, CourseResponseNoPrereqs
+
 router = APIRouter()
 
 
-@router.get("/search", response_model=list[Course])
+@router.get("/search", response_model=list[CourseResponse])
 def search_courses(query: str = Query(..., min_length=2), limit: int = 10):
-
     """
     Search for courses by code or name.
 
@@ -20,14 +21,14 @@ def search_courses(query: str = Query(..., min_length=2), limit: int = 10):
     """
     all_courses = db_engine.read_all_courses()
     course_map = {}
-    
+
     # standardize course codes
     for course in all_courses:
         keys = {
             course.code.strip().lower(),
             course.name.strip().lower(),
             f"{course.code} {course.name}".strip().lower(),
-            f"{course.name} {course.code}".strip().lower()
+            f"{course.name} {course.code}".strip().lower(),
         }
         for key in keys:
             course_map[key] = course
@@ -36,10 +37,7 @@ def search_courses(query: str = Query(..., min_length=2), limit: int = 10):
 
     # fuzzy search courses with the query
     matches = process.extract(
-        normalized_query,
-        course_map.keys(),
-        scorer=fuzz.token_set_ratio,
-        limit=limit
+        normalized_query, course_map.keys(), scorer=fuzz.token_set_ratio, limit=limit
     )
 
     seen = set()
@@ -52,11 +50,6 @@ def search_courses(query: str = Query(..., min_length=2), limit: int = 10):
 
     return results
 
-from GatorGuide.database.models import Course
-from GatorGuide.database.response_models import CourseResponse, CourseResponseNoPrereqs
-
-router = APIRouter()
-
 
 @router.get("", response_model=list[Course])
 def get_all_courses():
@@ -66,7 +59,6 @@ def get_all_courses():
 
 @router.get("/{code}", response_model=CourseResponse)
 def get_course(code: str):
-
     """Fetch a single course by its code.
 
     Args:
@@ -88,7 +80,6 @@ def get_course(code: str):
 
 @router.delete("/{code}")
 def delete_course(code: str):
-
     """Delete a single course by its code.
 
     Args:
@@ -110,7 +101,6 @@ def delete_course(code: str):
 
 @router.post("/", response_model=Course)
 def create_course(course: Course):
-
     """Create a new course in the database.
 
     Args:
@@ -127,6 +117,7 @@ def create_course(course: Course):
         return course
     except Exception:
         raise HTTPException(status_code=400, detail="Failed to create course")
+
 
 @router.get("/{code}/corequisites")
 def get_corequisites(code: str):
@@ -150,5 +141,3 @@ def get_corequisites(code: str):
         return {"course": course.code, "corequisites": result}
     except Exception:
         raise HTTPException(status_code=404, detail=f"Course '{code}' not found")
-
-
