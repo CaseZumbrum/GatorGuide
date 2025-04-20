@@ -22,6 +22,7 @@ def search_courses(query: str = Query(..., min_length=2), limit: int = 10):
     all_courses = db_engine.read_all_courses()
     course_map = {}
 
+    # standardize course codes
     for course in all_courses:
         keys = {
             course.code.strip().lower(),
@@ -34,6 +35,7 @@ def search_courses(query: str = Query(..., min_length=2), limit: int = 10):
 
     normalized_query = query.strip().lower()
 
+    # fuzzy search courses with the query
     matches = process.extract(
         normalized_query, course_map.keys(), scorer=fuzz.token_set_ratio, limit=limit
     )

@@ -103,13 +103,11 @@ class CoursePrerequisiteGroupLink(SQLModel, table=True):
 
 
 class CourseCorequisiteGroupLink(SQLModel, table=True):
-    course_id: int | None = Field(
-        default=None, foreign_key="course.id", primary_key=True
-    )
-    coreq_group_id: int | None = Field(
-        default=None, foreign_key="corequisitegroup.id", primary_key=True
-    )
-
+    """
+    :meta private:
+    """
+    course_id: int | None = Field(default=None, foreign_key="course.id", primary_key=True)
+    coreq_group_id: int | None = Field(default=None, foreign_key="corequisitegroup.id", primary_key=True)
 
 class MajorRequiredLink(SQLModel, table=True):
     """Link table between Majors and their Required Courses
@@ -159,6 +157,7 @@ class Course(SQLModel, table=True):
         description (str): Course description
         credits (int): number of credits the course is worth, if a course can be worth different amounts of credits, create several courses for it
         prerequisits (list[PrerequisitGroup]): prerequisits for the course
+        corequisits (list[CorequisiteGroup]): corequisits for the course
     """
 
     id: int | None = Field(default=None, primary_key=True)
@@ -201,6 +200,12 @@ class PrerequisiteGroup(SQLModel, table=True):
 
 
 class CorequisiteGroup(SQLModel, table=True):
+    """Group used to store prerequisits for courses
+
+    Args:
+        id (int, optional): Primary key of the table, do NOT pass this parameter in unless you are aware of the affect it will have. Defaults to None.
+        Courses (list[Course]): courses within the corequisite group
+    """
     id: int | None = Field(default=None, primary_key=True)
     courses: list[Course] = Relationship(link_model=CorequisiteGroupCourseLink)
 
