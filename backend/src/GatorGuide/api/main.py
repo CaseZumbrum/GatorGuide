@@ -5,6 +5,7 @@ from GatorGuide.api.routes import courses, majors, users
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
 import logging
+from GatorGuide.config import ORIGINS
 
 
 # do not log user password data
@@ -36,13 +37,9 @@ def custom_openapi():
 app.openapi_schema = custom_openapi()
 
 # Add CORS handling
-origins = [
-    "http://localhost:5173",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
