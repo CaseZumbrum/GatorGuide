@@ -2,6 +2,7 @@ import React from "react";
 import { BUTTON_SIZES, BUTTON_VARIANTS } from "../../Constants/enums";
 import styles from "./Button.module.scss"
 
+// CourseButton takes in variant and size tags to define the actual function of itself
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: BUTTON_VARIANTS,
     size?: BUTTON_SIZES,

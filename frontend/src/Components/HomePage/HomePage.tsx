@@ -14,7 +14,7 @@ function HomePage({ user, setPlan }: props) {
   const [image, setImage] = useState<string>("../../../dist/CenturyTower.jpg");
   const [randomNumber, setRandomNumber] = useState<number>();
 
-  // images for backgrounds of the cards
+  // images for backgrounds of the cards (UF Themed)
   const images: string[] = [
     "./CenturyTower.jpg",
     "./Football.jpg",
@@ -38,7 +38,8 @@ function HomePage({ user, setPlan }: props) {
       <div
         className="homepage-plans"
         style={{ overflowY: "scroll", width: "100%", height: "100%" }}
-      >
+      > 
+      {/* The container that holds the Plan-Card objects that people interact with: default and custom */}
         <div
           className="plans-button-default"
           style={{ display: "flex", flexWrap: "wrap" }}
@@ -77,6 +78,7 @@ function HomePage({ user, setPlan }: props) {
         ))}
       </div>
 
+      {/* Footer that goes over a description of the project and basic instructions on how to use it */}
       <div className="homepage-intro">
         <div style={{ height: "2vh" }}></div>
         <div className="intro-welcome">
@@ -119,6 +121,7 @@ function HomePage({ user, setPlan }: props) {
           </div>
         </div>
       </div>
+      {/* Popup that is used when creating or accessing a Plan Card in order to view the plan itself */}
       {displayPopup && (
         <div className="homepage-popupwrapper">
           <div className="homepage-popup">

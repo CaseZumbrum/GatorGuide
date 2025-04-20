@@ -30,6 +30,7 @@ const SemesterViewer: React.FC<SemesterProps> = ({
     <div className="semesterContainer">
       <div className="semesterHeader">
         <h1>Semester: {index + 1} |</h1>
+        {/* Semester dropdown to select the active semester */}
         <div className="dropdown">
           <CourseButton size={BUTTON_SIZES.Large}>Semester</CourseButton>
           <div className="content">
@@ -47,6 +48,7 @@ const SemesterViewer: React.FC<SemesterProps> = ({
             <button onClick={() => switchSemester(11)}> 12 </button>
           </div>
         </div>
+        {/* Remove all courses from the semester */}
         <div onClick={clearSemester}>
           <CourseButton
             variant={BUTTON_VARIANTS.clear}

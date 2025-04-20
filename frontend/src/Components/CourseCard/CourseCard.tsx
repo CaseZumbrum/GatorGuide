@@ -16,6 +16,7 @@ interface CourseCardProps {
   validate: (course: Course) => Course_Error[];
 }
 
+// establishes what variables are used in a course card
 const CourseCard: React.FC<CourseCardProps> = ({
   course = {
     name: "Default Name",
@@ -87,6 +88,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
         alignItems: "flex-start",
       }}
     >
+      {/* Course Name, description and title/code are displayed here */}
       <div className="container">
         <div className="box" id="TitleBox">
           {" "}
@@ -98,6 +100,8 @@ const CourseCard: React.FC<CourseCardProps> = ({
         <div className="box" id="DescriptionBox">
           {course.description}
         </div>
+
+        {/* Button to add courses to semester */}
         <div className="box" id="ButtonBox">
           <div onClick={handleAddToSemester} id="addCourse">
             <CourseButton variant={buttonType} size={BUTTON_SIZES.Small}>
@@ -106,6 +110,8 @@ const CourseCard: React.FC<CourseCardProps> = ({
           </div>
         </div>
       </div>
+
+      {/* When courses are displayed in semesters an error box may appear next to it if they have problems */}
       <div style={{ marginTop: "1rem" }}>
         {errors.length != 0 && (
           <div
@@ -114,6 +120,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
             style={{ display: "flex", flex: "row", flexWrap: "wrap" }}
           >
             Problems:
+            {/* Allows user to ignore an error box temporarily */}
             <div className="close-x-error" onClick={resolveError}>
               &#10006;
             </div>

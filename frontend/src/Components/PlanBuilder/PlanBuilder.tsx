@@ -58,6 +58,7 @@ function PlanBuilder({ plan }: props) {
       credits: prevState.credits - course.credits,
       name: prevState.name,
     }));
+    // updates current semester list to changed value
     fourYearPlan.semesters[activeSemesterIndex].courses = newCourseList;
   };
 

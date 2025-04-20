@@ -62,6 +62,7 @@ const CourseList: React.FC<CourseListProps> = ({
           flexWrap: "wrap",
         }}
       >
+        {/* Buttons that populate the list with a category of courses */}
         <div
           onClick={(e) => {
             setCourses(major.critical_tracking);
@@ -98,9 +99,10 @@ const CourseList: React.FC<CourseListProps> = ({
         ))}
       </div>
 
-      {/* <CourseButton variant={BUTTON_VARIANTS.clear} size={BUTTON_SIZES.Thin} onClick={clearList}>Clear</CourseButton> */}
+      {/* List containing search bar and Courses */}
       <h2 style={{ marginLeft: "1rem" }}>Course List</h2>
       <div style={{ display: "flex" }}>
+        {/* Search bar to populate course list */}
         <input
           style={{
             marginLeft: "1rem",
@@ -123,6 +125,7 @@ const CourseList: React.FC<CourseListProps> = ({
         </div>
       </div>
 
+      {/* This is where courses are displayed prior to being added to the plan */}
       <div style={{ height: "1vh" }}></div>
       <div style={{ maxHeight: "57.5vh", overflowY: "hidden" }}>
         <div
