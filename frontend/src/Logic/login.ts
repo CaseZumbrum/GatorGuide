@@ -18,8 +18,8 @@ const login = (username: string, password: string) => {
     }
   ).then((response) => {
     if (response.status != 200) {
-      alert("Issue with user login");
       response.json().then((data) => {
+        alert(data);
         console.log(data);
       });
     }
@@ -47,8 +47,8 @@ const create_user = (user: User, password: string) => {
     }
     // fail
     if (response.status != 200) {
-      alert("Issue with user creation");
       response.json().then((data) => {
+        alert(data);
         console.log(data);
       });
     }
