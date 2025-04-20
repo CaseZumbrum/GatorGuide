@@ -9,7 +9,7 @@ from GatorGuide.database.models import (
     FourYearPlan,
     Semester,
 )
-from GatorGuide.database.response_models import UserResponse
+from GatorGuide.database.response_models import UserResponse, FourYearPlanResponse
 from GatorGuide.database.exceptions import SessionExpiredError
 from pathlib import Path
 from sqlmodel import Session, SQLModel, create_engine, select
@@ -20,6 +20,7 @@ import string
 import secrets
 from time import time
 from uuid import uuid4
+from sqlalchemy.engine import URL
 
 
 class DB_Engine:
@@ -76,6 +77,29 @@ class DB_Engine:
         db_user = self.session.exec(statement).one()
         db_user.plans = db_plans
         self.write(db_user)
+
+    def update_user_plan(self, user: User, plan: FourYearPlanResponse):
+        db_major = self.read_major(plan.major.name)
+        db_semesters: list[Semester] = []
+        for semester in plan.semesters:
+            db_semesters.append(Semester())
+            for i, course in enumerate(semester.courses):
+                db_semesters[-1].courses.append(self.read_course(course.code))
+        if plan.id:
+            statement = select(FourYearPlan).where(FourYearPlan.id == plan.id)
+            db_plan = self.session.exec(statement).one()
+            db_plan.name = plan.name
+            db_plan.major = db_major
+            # for semester_old in db_plan.semesters:
+            #     self.delete(semester_old)
+            db_plan.semesters = db_semesters
+        else:
+            db_plan = FourYearPlan(
+                name=plan.name, major=db_major, semesters=db_semesters
+            )
+            user.plans.append(db_plan)
+        self.write(db_plan)
+        self.write(user)
 
     def add_to_group(self, group: RequiredGroup, regex: str) -> None:
         """Function to add courses to a RequiredGroup object via regex parsing on course codes

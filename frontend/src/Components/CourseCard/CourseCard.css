@@ -1,6 +1,100 @@
+.container {
+  display: flex;
+  align-items:flex-start;
+  border: 2px solid rgb(0, 20, 101);
+  border-left: 8px solid rgb(0, 20, 101);
+  border-radius: 8px;
+  background-color: #f1f2ff;
+  height: 25vh;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-content: space-evenly;
+  margin: 2%;
+  max-width: 25vw;
+}
+
+.box{
+  width: 5vw;
+  height: 9.5vh;
+  font-size: 1em;
+  text-align: left;
+  font-family: Helvetica
+}
+
+#TitleBox{
+  width: 17vw;
+  height: 3em;
+  font-style:italic;
+  font-size: larger;
+  /* background-color: hsl(0, 100%, 79%); */
+}
+
+#CodeBox{
+  width: 6vw;
+  /* background-color: hsl(58, 100%, 79%); */
+}
+
+#CreditsBox{
+  width: 5vw;
+  height: 3em;
+  text-align: left;
+  /* background-color: hsl(233, 100%, 79%); */
+}
+
+#DescriptionBox{
+  text-align: start;
+  width: 15vw;
+  height: 15vh;
+  font-size: 0.75rem;
+  overflow: hidden;
+}
+
+#ButtonBox{
+  margin-left: 1em;
+  /* background-color: hsl(137, 100%, 79%); */
+}
+
+#ErrorBox{
+  align-self:flex-start;
+  padding: 10px;
+  width: 25vw;
+  max-height: 22vh;
+  height: fit-content;
+  background-color: rgb(190, 85, 85);
+  border-color: rgb(55, 24, 24);
+  border: 2px solid;
+  border-left: 8px solid;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+#MajorErrorBox{
+  align-self:flex-start;
+  top:0;
+  padding: 10px;
+  width: 12vw;
+  height: 75vh;
+  color: white;
+  border: 2px solid;
+  border-radius: 8px;
+  border-left: 8px solid;
+
+  background-color: #204679;
+  border-color: rgb(0, 20, 101);
+  padding-right: 15px;
+  overflow-Y: hidden;
+  scrollbar-width: thin;
+  font-family: Helvetica;
+}
+
+#MajorErrorBox:hover, #MajorErrorBox:active, #MajorErrorBox:focus{
+  overflow-Y: auto;
+}
+
 :root {
     --coursecard-text-color: white;
-    --coursecard-border-color: rgb(23, 23, 107);
+    --coursecard-border-color: rgb(0, 0, 70);
     --coursecard-background-color: hsl(28, 32%, 92%);
     --coursecard-margin: 30px;
     --coursecard: 6px;
@@ -19,7 +113,7 @@
     min-height: 5%;
     justify-self: center;
     flex: flex;
-    flex-direction: column;
+    flex-direction: Row;
   }
   
   .CourseCard .CourseCard-Title {
@@ -54,3 +148,13 @@
 
   }
   
+.close-x-error{
+    cursor: pointer;
+    color:rgb(55, 24, 24);
+    display: flex;
+    width: 5%;
+    margin-left: auto;
+}
+.close-x-error:hover{
+    color: #425abb;
+}

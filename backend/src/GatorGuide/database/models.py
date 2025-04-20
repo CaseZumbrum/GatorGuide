@@ -79,6 +79,15 @@ class PrerequisiteGroupCourseLink(SQLModel, table=True):
     )
 
 
+class CorequisiteGroupCourseLink(SQLModel, table=True):
+    course_id: int | None = Field(
+        default=None, foreign_key="course.id", primary_key=True
+    )
+    coreq_group_id: int | None = Field(
+        default=None, foreign_key="corequisitegroup.id", primary_key=True
+    )
+
+
 class CoursePrerequisiteGroupLink(SQLModel, table=True):
     """Link table between Courses and their PrerequisiteGroups
 
@@ -92,9 +101,15 @@ class CoursePrerequisiteGroupLink(SQLModel, table=True):
         default=None, foreign_key="prerequisitegroup.id", primary_key=True
     )
 
+
 class CourseCorequisiteGroupLink(SQLModel, table=True):
-    course_id: int | None = Field(default=None, foreign_key="course.id", primary_key=True)
-    coreq_group_id: int | None = Field(default=None, foreign_key="corequisitegroup.id", primary_key=True)
+    course_id: int | None = Field(
+        default=None, foreign_key="course.id", primary_key=True
+    )
+    coreq_group_id: int | None = Field(
+        default=None, foreign_key="corequisitegroup.id", primary_key=True
+    )
+
 
 class MajorRequiredLink(SQLModel, table=True):
     """Link table between Majors and their Required Courses
@@ -154,7 +169,9 @@ class Course(SQLModel, table=True):
     prerequisites: list["PrerequisiteGroup"] = Relationship(
         link_model=CoursePrerequisiteGroupLink,
     )
-    corequisites: list["CorequisiteGroup"] = Relationship(link_model=CourseCorequisiteGroupLink)
+    corequisites: list["CorequisiteGroup"] = Relationship(
+        link_model=CourseCorequisiteGroupLink
+    )
 
     def __eq__(self, other):
         return (
@@ -182,9 +199,11 @@ class PrerequisiteGroup(SQLModel, table=True):
     def __eq__(self, other):
         return self.courses == other.courses
 
+
 class CorequisiteGroup(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    courses: list[Course] = Relationship(link_model=CourseCorequisiteGroupLink)
+    courses: list[Course] = Relationship(link_model=CorequisiteGroupCourseLink)
+
     def __eq__(self, other):
         return self.courses == other.courses
 

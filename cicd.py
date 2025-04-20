@@ -21,7 +21,6 @@ BACKEND_PATH = str(pathlib.Path(__file__).parent.resolve().joinpath("./backend")
 BUILD_PATH = str(pathlib.Path(__file__).parent.resolve().joinpath("./frontend"))
 
 # create log folder if it does not exist
-
 if not os.path.isdir(pathlib.Path(__file__).parent.resolve().joinpath("./logs")):
     os.mkdir(pathlib.Path(__file__).parent.resolve().joinpath("./logs"))
 
@@ -105,6 +104,7 @@ atexit.register(close_logs)
 
 @app.get("/")
 async def get_build(passkey: str, response: Response):
+    # correct password passed in
     if passkey == config.CICD_PASSKEY:
         build_and_host()
         response.status_code = status.HTTP_200_OK

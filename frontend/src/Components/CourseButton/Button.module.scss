@@ -1,0 +1,80 @@
+.btn {
+    outline-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.8em 1.5em;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+@mixin base-color($bg-color, $text-color) {
+    background-color: $bg-color;
+    color: $text-color;
+
+    &:hover {
+        background-color: darken($color: $bg-color, $amount: 10%);
+    }
+}
+
+.addCourse {
+    @include base-color(#35cc51, #ffffff)
+}
+
+.removeCourse {
+    @include base-color(#cc3535, #ffffff)
+}
+
+.savePlan {
+    align-self: center;
+    margin-left: 900%;
+    @include base-color(#eeeeff, #00011c)
+}
+
+.small {
+    font-size: 0.8rem;
+}
+
+.large {
+    font-size: 1rem;
+}
+
+.thin {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.7rem;
+}
+
+.dropDown {
+    @include base-color(rgb(0, 20, 101), #ffffff);
+    font-style: bold; 
+}
+
+.clear {
+    @include base-color(rgb(0, 20, 101), #ffffff);
+    margin-left: 5px;
+}
+
+.addGroup {
+    @include base-color(rgb(0, 20, 101), #ffffff);
+    margin: 1px;
+}
+
+.login {
+    @include base-color(rgb(250, 121, 22), #ffffff);
+    font-style: bold;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 25px;
+
+}
+
+.signup {
+    @include base-color(rgb(0, 20, 101), #ffffff);
+    font-style: bold;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 25px;
+}
+
+.wide {
+    width: 30vw;
+}

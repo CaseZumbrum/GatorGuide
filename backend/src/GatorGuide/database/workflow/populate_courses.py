@@ -57,6 +57,7 @@ def parse(pre: str) -> list[list[str]]:
         i += 1
     return prereq_group
 
+
 def parse_coreqs(pre: str) -> list[list[str]]:
     """Parse corequisite string from the One.UF API (same structure as parse())
 
@@ -108,8 +109,6 @@ def parse_coreqs(pre: str) -> list[list[str]]:
         i += 1
 
     return coreq_group
-
-
 
 
 def populate(engine: DB_Engine):
@@ -208,12 +207,12 @@ def populate(engine: DB_Engine):
                     coreq_group.courses.append(course)
             if coreq_group.courses:
                 coreqs.append(coreq_group)
-
         courses[i].prerequisites = prereqs
         courses[i].corequisites = coreqs
     # add the course + prereqs to the DB
     print("Writing to Database...")
     from sqlmodel import Session
+
     with Session(engine.engine) as s:
         s.add_all(courses)
         s.commit()
