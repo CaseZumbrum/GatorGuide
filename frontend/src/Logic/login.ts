@@ -18,8 +18,14 @@ const login = (username: string, password: string) => {
     }
   ).then((response) => {
     if (response.status != 200) {
+      if (response.status == 404) {
+        alert("User not found!");
+      } else if (response.status == 401) {
+        alert("Incorrect password!");
+      } else {
+        alert("Unknown error occured, sorry!");
+      }
       response.json().then((data) => {
-        alert(JSON.stringify(data));
         console.log(data);
       });
     }
@@ -47,8 +53,12 @@ const create_user = (user: User, password: string) => {
     }
     // fail
     if (response.status != 200) {
+      if (response.status == 409) {
+        alert("Username or email already exists!");
+      } else {
+        alert("Unknown error occured, sorry!");
+      }
       response.json().then((data) => {
-        alert(JSON.stringify(data));
         console.log(data);
       });
     }
