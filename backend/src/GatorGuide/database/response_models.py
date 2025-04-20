@@ -24,7 +24,6 @@ class CourseResponse(BaseModel):
     description: str
     credits: int
     prerequisites: list["PrerequisiteGroupResponse"]
-    prerequisite_string: str
     corequisites: list[CorequisiteGroupResponse]
 
     class Config:
@@ -37,7 +36,6 @@ class CourseResponseNoPrereqs(BaseModel):
     name: str
     description: str
     credits: int
-    prerequisite_string: str
 
     class Config:
         from_attributes = True

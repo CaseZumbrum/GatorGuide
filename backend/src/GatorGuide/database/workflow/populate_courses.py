@@ -207,7 +207,6 @@ def populate(engine: DB_Engine):
                     coreq_group.courses.append(course)
             if coreq_group.courses:
                 coreqs.append(coreq_group)
-        courses[i].prerequisite_string = course_json[i]["prerequisites"]
         courses[i].prerequisites = prereqs
         courses[i].corequisites = coreqs
     # add the course + prereqs to the DB
