@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GatorGuide documentation &mdash; GatorGuide 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="api_usage" href="api_usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            GatorGuide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_usage.html">api_usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="db_engine.html">DB_Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">To-Do List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Endpoints</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_endpoints.html">User Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="major_endpoints.html">Major Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="course_endpoints.html">Course Endpoints</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://sqlmodel.tiangolo.com/">SQLModel</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">GatorGuide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">GatorGuide documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gatorguide-documentation">
+<h1>GatorGuide documentation<a class="headerlink" href="#gatorguide-documentation" title="Link to this heading"></a></h1>
+<p>An app for building your UF Schedule!</p>
+</section>
+<section id="intro">
+<h1>Intro<a class="headerlink" href="#intro" title="Link to this heading"></a></h1>
+<p>This project heavily utilizes SQLModel and SQL in general, but ideally (through the <a class="reference internal" href="db_engine.html#GatorGuide.database.db_engine.DB_Engine" title="GatorGuide.database.db_engine.DB_Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">DB_Engine</span></code></a> class) you should have all of that fully obfuscated!!</p>
+<p>Users of this (which should primarily be the backend of the project) should instantiate one (1) object of the class <a class="reference internal" href="db_engine.html#GatorGuide.database.db_engine.DB_Engine" title="GatorGuide.database.db_engine.DB_Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">DB_Engine</span></code></a> class (having several within one program may lead to concurrency issues).</p>
+<p>If there are things you would like from this object that do not yet exist, add a git issue (or solve it yourself if you want to join as a maintainer).</p>
+<p>This project is very much open source, and we support, appreciate, and ask for anyone to provide their skills on this project!!!</p>
+</section>
+<section id="environment">
+<h1>Environment<a class="headerlink" href="#environment" title="Link to this heading"></a></h1>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Must have Python and Node/NPM installed!!!</p>
+</div>
+<p>Install python dependencies</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+./.venv/Scipts/Activate
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>./backend
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If you are building the docs, don’t forget to <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.dev.txt</span></code>!!!!</p>
+</div>
+<p>Install Node dependencies</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>frontend
+npm<span class="w"> </span>install<span class="w"> </span>.
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Environment files</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Create a .env file in <code class="docutils literal notranslate"><span class="pre">/frontend</span></code></dt><dd><ul>
+<li><p>VITE_API_HOST={full_url_to_backend}</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="building">
+<h1>Building<a class="headerlink" href="#building" title="Link to this heading"></a></h1>
+<p>Build the DB</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>backend/src/GatorGuide/database
+python<span class="w"> </span>build_db.py
+</pre></div>
+</div>
+<p>Build the frontend</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>frontend
+npm<span class="w"> </span>run<span class="w"> </span>build
+</pre></div>
+</div>
+<p>Build the docs</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>backend/docs
+./make.bat<span class="w"> </span>html
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This will create an <code class="docutils literal notranslate"><span class="pre">index.html</span></code> file in the <code class="docutils literal notranslate"><span class="pre">docs/build</span></code> directory, serve this!!</p>
+</div>
+</section>
+<section id="running">
+<h1>Running<a class="headerlink" href="#running" title="Link to this heading"></a></h1>
+<section id="dev-mode">
+<h2>Dev Mode<a class="headerlink" href="#dev-mode" title="Link to this heading"></a></h2>
+<p>Start frontend server</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>frontend
+npm<span class="w"> </span>run<span class="w"> </span>start
+</pre></div>
+</div>
+<p>Start backend server</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./.venv/scripts/Activate
+<span class="nb">cd</span><span class="w"> </span>backend/src/GatorGuide/api
+fastapi<span class="w"> </span>dev<span class="w"> </span>--port<span class="w"> </span><span class="o">{</span>port<span class="o">}</span><span class="w"> </span>main.py
+</pre></div>
+</div>
+</section>
+<section id="production-mode">
+<h2>Production Mode<a class="headerlink" href="#production-mode" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./.venv/scripts/Activate
+<span class="nb">cd</span><span class="w"> </span>backend/src/GatorGuide/api
+fastapi<span class="w"> </span>run<span class="w"> </span>--port<span class="w"> </span><span class="o">{</span>port<span class="o">}</span><span class="w"> </span>main.py
+</pre></div>
+</div>
+</section>
+</section>
+<section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h1>
+<p>The items in this database are pydantic models, this provides a lot of functionality but most will not be needed.</p>
+<ul>
+<li><p>Use the <a class="reference internal" href="db_engine.html#GatorGuide.database.db_engine.DB_Engine" title="GatorGuide.database.db_engine.DB_Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">DB_Engine</span></code></a> to read the Courses/Major</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Or create your own the same way you would a normal object</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Use these objects as you would normally</p></li>
+<li><p>When done working with them, save them with <a class="reference internal" href="db_engine.html#GatorGuide.database.db_engine.DB_Engine.write" title="GatorGuide.database.db_engine.DB_Engine.write"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DB_Engine.write()</span></code></a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Or delete them with <a class="reference internal" href="db_engine.html#GatorGuide.database.db_engine.DB_Engine.delete" title="GatorGuide.database.db_engine.DB_Engine.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DB_Engine.delete()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">.model_dump()</span></code> method provided by pydantic to convert any of these DB objects to JSON</p>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_usage.html">api_usage</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models.html#GatorGuide.database.models.Course"><code class="docutils literal notranslate"><span class="pre">Course</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#GatorGuide.database.models.CorequisiteGroup"><code class="docutils literal notranslate"><span class="pre">CorequisiteGroup</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#GatorGuide.database.models.CorequisiteGroupCourseLink"><code class="docutils literal notranslate"><span class="pre">CorequisiteGroupCourseLink</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#GatorGuide.database.models.FourYearPlan"><code class="docutils literal notranslate"><span class="pre">FourYearPlan</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#GatorGuide.database.models.Major"><code class="docutils literal notranslate"><span class="pre">Major</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#GatorGuide.database.models.PrerequisiteGroup"><code class="docutils literal notranslate"><span class="pre">PrerequisiteGroup</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#GatorGuide.database.models.RequiredGroup"><code class="docutils literal notranslate"><span class="pre">RequiredGroup</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#GatorGuide.database.models.Semester"><code class="docutils literal notranslate"><span class="pre">Semester</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#GatorGuide.database.models.User"><code class="docutils literal notranslate"><span class="pre">User</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#GatorGuide.database.models.UserAuth"><code class="docutils literal notranslate"><span class="pre">UserAuth</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#GatorGuide.database.models.UserSession"><code class="docutils literal notranslate"><span class="pre">UserSession</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="db_engine.html">DB_Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="db_engine.html#GatorGuide.database.db_engine.DB_Engine"><code class="docutils literal notranslate"><span class="pre">DB_Engine</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#GatorGuide.database.exceptions.SessionExpiredError"><code class="docutils literal notranslate"><span class="pre">SessionExpiredError</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">To-Do List</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#missing-courses">Missing Courses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todo.html#stretch-goals">Stretch Goals</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Endpoints</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_endpoints.html">User Endpoints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_endpoints.html#GatorGuide.api.routes.users.create_user"><code class="docutils literal notranslate"><span class="pre">create_user()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_endpoints.html#GatorGuide.api.routes.users.delete_user"><code class="docutils literal notranslate"><span class="pre">delete_user()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_endpoints.html#GatorGuide.api.routes.users.get_me"><code class="docutils literal notranslate"><span class="pre">get_me()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_endpoints.html#GatorGuide.api.routes.users.get_user"><code class="docutils literal notranslate"><span class="pre">get_user()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_endpoints.html#GatorGuide.api.routes.users.login"><code class="docutils literal notranslate"><span class="pre">login()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="major_endpoints.html">Major Endpoints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="major_endpoints.html#GatorGuide.api.routes.majors.create_major"><code class="docutils literal notranslate"><span class="pre">create_major()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="major_endpoints.html#GatorGuide.api.routes.majors.delete_major"><code class="docutils literal notranslate"><span class="pre">delete_major()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="major_endpoints.html#GatorGuide.api.routes.majors.get_all_majors"><code class="docutils literal notranslate"><span class="pre">get_all_majors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="major_endpoints.html#GatorGuide.api.routes.majors.get_major"><code class="docutils literal notranslate"><span class="pre">get_major()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="course_endpoints.html">Course Endpoints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="course_endpoints.html#GatorGuide.api.routes.courses.create_course"><code class="docutils literal notranslate"><span class="pre">create_course()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="course_endpoints.html#GatorGuide.api.routes.courses.delete_course"><code class="docutils literal notranslate"><span class="pre">delete_course()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="course_endpoints.html#GatorGuide.api.routes.courses.get_all_courses"><code class="docutils literal notranslate"><span class="pre">get_all_courses()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="course_endpoints.html#GatorGuide.api.routes.courses.get_corequisites"><code class="docutils literal notranslate"><span class="pre">get_corequisites()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="course_endpoints.html#GatorGuide.api.routes.courses.get_course"><code class="docutils literal notranslate"><span class="pre">get_course()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="course_endpoints.html#GatorGuide.api.routes.courses.search_courses"><code class="docutils literal notranslate"><span class="pre">search_courses()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://sqlmodel.tiangolo.com/">SQLModel</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api_usage.html" class="btn btn-neutral float-right" title="api_usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Case Zumbrum, Louis Li, Jack Kellen.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

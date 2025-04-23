@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DB_Engine &mdash; GatorGuide 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Exceptions" href="exceptions.html" />
+    <link rel="prev" title="Models" href="models.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GatorGuide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_usage.html">api_usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Classes</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">DB_Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine"><code class="docutils literal notranslate"><span class="pre">DB_Engine</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.add_to_group"><code class="docutils literal notranslate"><span class="pre">DB_Engine.add_to_group()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.authenticate_user"><code class="docutils literal notranslate"><span class="pre">DB_Engine.authenticate_user()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.create_user_authentication"><code class="docutils literal notranslate"><span class="pre">DB_Engine.create_user_authentication()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.create_user_session"><code class="docutils literal notranslate"><span class="pre">DB_Engine.create_user_session()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.delete"><code class="docutils literal notranslate"><span class="pre">DB_Engine.delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.load_user_session"><code class="docutils literal notranslate"><span class="pre">DB_Engine.load_user_session()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.read_all_courses"><code class="docutils literal notranslate"><span class="pre">DB_Engine.read_all_courses()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.read_all_majors"><code class="docutils literal notranslate"><span class="pre">DB_Engine.read_all_majors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.read_course"><code class="docutils literal notranslate"><span class="pre">DB_Engine.read_course()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.read_major"><code class="docutils literal notranslate"><span class="pre">DB_Engine.read_major()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.read_user"><code class="docutils literal notranslate"><span class="pre">DB_Engine.read_user()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.update_user_data"><code class="docutils literal notranslate"><span class="pre">DB_Engine.update_user_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.write"><code class="docutils literal notranslate"><span class="pre">DB_Engine.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">To-Do List</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Endpoints</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_endpoints.html">User Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="major_endpoints.html">Major Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="course_endpoints.html">Course Endpoints</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://sqlmodel.tiangolo.com/">SQLModel</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GatorGuide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">DB_Engine</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/db_engine.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="db-engine">
+<h1>DB_Engine<a class="headerlink" href="#db-engine" title="Link to this heading"></a></h1>
+<p>Use the DB_Engine to perform CRUD operations on the database</p>
+<p>Create a DB_Engine with something like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sqlite_file_name</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;./testing_database.db&quot;</span><span class="p">)</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">DB_Engine</span><span class="p">(</span><span class="n">sqlite_file_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This object shold be a singleton (you should not have several instances of it to avoid concurrency issues)</p>
+<p>You will mainly use the <a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.read_course" title="GatorGuide.database.db_engine.DB_Engine.read_course"><code class="xref py py-meth docutils literal notranslate"><span class="pre">read_course()</span></code></a> and <a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.read_major" title="GatorGuide.database.db_engine.DB_Engine.read_major"><code class="xref py py-meth docutils literal notranslate"><span class="pre">read_major()</span></code></a> to get data from the DB (your Read operations).</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>These functions return Objects that represent the items, changes to these objects will not be represented in the Database until you use the <a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.write" title="GatorGuide.database.db_engine.DB_Engine.write"><code class="xref py py-meth docutils literal notranslate"><span class="pre">write()</span></code></a> method</p>
+</div>
+<p>To handle Deletion, use the <a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.delete" title="GatorGuide.database.db_engine.DB_Engine.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">delete()</span></code></a> method, which takes in any of the objects the DB contains and removes them!</p>
+<p>To handle Create or Update operations, use the <a class="reference internal" href="#GatorGuide.database.db_engine.DB_Engine.write" title="GatorGuide.database.db_engine.DB_Engine.write"><code class="xref py py-meth docutils literal notranslate"><span class="pre">write()</span></code></a> method, which takes in an Object and will write it to the DB.</p>
+<p>Example run for writing!!!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a format I use to guarentee relative paths!!!</span>
+<span class="n">sqlite_file_name</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;./testing_database.db&quot;</span><span class="p">)</span>
+
+<span class="n">e</span> <span class="o">=</span> <span class="n">DB_Engine</span><span class="p">(</span><span class="n">sqlite_file_name</span><span class="p">)</span>
+
+<span class="c1"># Create a Major object</span>
+ <span class="n">cpe</span> <span class="o">=</span> <span class="n">Major</span><span class="p">(</span>
+     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Computer Engineering&quot;</span><span class="p">,</span>
+ <span class="p">)</span>
+ <span class="c1"># Create a RequiredGroup, this will be for technical electives</span>
+ <span class="n">g</span> <span class="o">=</span> <span class="n">RequiredGroup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;tech electives&quot;</span><span class="p">,</span> <span class="n">credits</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># Regex matching for all COP 3000 level (not including COP3520) and MHF 4000 level</span>
+ <span class="n">e</span><span class="o">.</span><span class="n">add_to_group</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s2">&quot;^(?!.*(COP3520)).*^(COP3|MHF4)&quot;</span><span class="p">)</span>
+
+ <span class="c1"># add tech electives to the CPE major</span>
+ <span class="n">cpe</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+<span class="c1"># Write CPE to the database (this will automatically write the Tech Electives group)</span>
+ <span class="n">e</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cpe</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example run for reading/updating</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a format I use to guarentee relative paths!!!</span>
+<span class="n">sqlite_file_name</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;./testing_database.db&quot;</span><span class="p">)</span>
+
+<span class="n">e</span> <span class="o">=</span> <span class="n">DB_Engine</span><span class="p">(</span><span class="n">sqlite_file_name</span><span class="p">)</span>
+
+<span class="c1"># Read the CPE major from the DB</span>
+<span class="n">cpe</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">read_major</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Computer Engineering&quot;</span><span class="p">)</span>
+
+ <span class="c1"># Read the DSA course from the DB</span>
+<span class="n">DSA</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">read_course</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s2">&quot;COP3530&quot;</span><span class="p">)</span>
+
+<span class="n">cpe</span><span class="o">.</span><span class="n">critical_tracking</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DSA</span><span class="p">)</span>
+
+<span class="c1"># Write CPE to the database (this will update it to have DSA as a critical tracking course)</span>
+ <span class="n">e</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cpe</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py class" id="module-GatorGuide.database.db_engine">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DB_Engine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine" title="Link to this definition"></a></dt>
+<dd><p>API for using the GatorGuide Course Database</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine.add_to_group">
+<span class="sig-name descname"><span class="pre">add_to_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#GatorGuide.database.models.RequiredGroup" title="GatorGuide.database.models.RequiredGroup"><span class="pre">RequiredGroup</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">regex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine.add_to_group" title="Link to this definition"></a></dt>
+<dd><p>Function to add courses to a RequiredGroup object via regex parsing on course codes</p>
+<p>ex: ^(?!.*(COP3520)).*^(COP3|MHF4) will add all 3000 level COP courses
+(not including COP3502) and all 4000 level MHF courses to the RequiredGroup.courses list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<a class="reference internal" href="models.html#GatorGuide.database.models.RequiredGroup" title="GatorGuide.database.models.RequiredGroup"><em>RequiredGroup</em></a>) – Required group to add to</p></li>
+<li><p><strong>regex</strong> (<em>str</em>) – compleable regex that matches to course codes</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine.authenticate_user">
+<span class="sig-name descname"><span class="pre">authenticate_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#GatorGuide.database.models.User" title="GatorGuide.database.models.User"><span class="pre">User</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine.authenticate_user" title="Link to this definition"></a></dt>
+<dd><p>Authenticates a user by password</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<a class="reference internal" href="models.html#GatorGuide.database.models.User" title="GatorGuide.database.models.User"><em>User</em></a>) – User object</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – un-hashed password</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>whether authenication was successful</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine.create_user_authentication">
+<span class="sig-name descname"><span class="pre">create_user_authentication</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#GatorGuide.database.models.User" title="GatorGuide.database.models.User"><span class="pre">User</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine.create_user_authentication" title="Link to this definition"></a></dt>
+<dd><p>Initialize the user authentication for a user, needs to be used when creating new user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<a class="reference internal" href="models.html#GatorGuide.database.models.User" title="GatorGuide.database.models.User"><em>User</em></a>) – User object</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – un-hashed password</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine.create_user_session">
+<span class="sig-name descname"><span class="pre">create_user_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#GatorGuide.database.models.User" title="GatorGuide.database.models.User"><span class="pre">User</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine.create_user_session" title="Link to this definition"></a></dt>
+<dd><p>Create a user session in the database, return the session_id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user</strong> (<a class="reference internal" href="models.html#GatorGuide.database.models.User" title="GatorGuide.database.models.User"><em>User</em></a>) – User object</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>session_id for the session</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SQLModel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete a SQLModel object from the database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>object</strong> (<em>SQLModel</em>) – Object to be deleted, should exist in the database</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine.load_user_session">
+<span class="sig-name descname"><span class="pre">load_user_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#GatorGuide.database.models.User" title="GatorGuide.database.models.User"><span class="pre">User</span></a></span></span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine.load_user_session" title="Link to this definition"></a></dt>
+<dd><p>Load the User associated with a session_id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session_id</strong> (<em>str</em>) – session_id, likely from the browser cookie</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="exceptions.html#GatorGuide.database.exceptions.SessionExpiredError" title="GatorGuide.database.exceptions.SessionExpiredError"><strong>SessionExpiredError</strong></a> – Session has expired, cookie should be deleted</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>User object associated with the session</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="models.html#GatorGuide.database.models.User" title="GatorGuide.database.models.User">User</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine.read_all_courses">
+<span class="sig-name descname"><span class="pre">read_all_courses</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="models.html#GatorGuide.database.models.Course" title="GatorGuide.database.models.Course"><span class="pre">Course</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine.read_all_courses" title="Link to this definition"></a></dt>
+<dd><p>Retrieve all courses from the database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>All courses from the database</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[<a class="reference internal" href="models.html#GatorGuide.database.models.Course" title="GatorGuide.database.models.Course">Course</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine.read_all_majors">
+<span class="sig-name descname"><span class="pre">read_all_majors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="models.html#GatorGuide.database.models.Major" title="GatorGuide.database.models.Major"><span class="pre">Major</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine.read_all_majors" title="Link to this definition"></a></dt>
+<dd><p>Read all majors from the database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>All majors from the database</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[<a class="reference internal" href="models.html#GatorGuide.database.models.Major" title="GatorGuide.database.models.Major">Major</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine.read_course">
+<span class="sig-name descname"><span class="pre">read_course</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#GatorGuide.database.models.Course" title="GatorGuide.database.models.Course"><span class="pre">Course</span></a></span></span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine.read_course" title="Link to this definition"></a></dt>
+<dd><p>Read a single course from the database by code</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>code</strong> (<em>str</em>) – course code</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Course with matching code</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#GatorGuide.database.models.Course" title="GatorGuide.database.models.Course">Course</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine.read_major">
+<span class="sig-name descname"><span class="pre">read_major</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#GatorGuide.database.models.Major" title="GatorGuide.database.models.Major"><span class="pre">Major</span></a></span></span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine.read_major" title="Link to this definition"></a></dt>
+<dd><p>read a major from the DB by name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – name of the major</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Major object matching the name</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#GatorGuide.database.models.Major" title="GatorGuide.database.models.Major">Major</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine.read_user">
+<span class="sig-name descname"><span class="pre">read_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#GatorGuide.database.models.User" title="GatorGuide.database.models.User"><span class="pre">User</span></a></span></span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine.read_user" title="Link to this definition"></a></dt>
+<dd><p>read a single user from the database by username</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – user name of the user</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>User object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#GatorGuide.database.models.User" title="GatorGuide.database.models.User">User</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine.update_user_data">
+<span class="sig-name descname"><span class="pre">update_user_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">UserResponse</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine.update_user_data" title="Link to this definition"></a></dt>
+<dd><p>updates a users data in the database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user</strong> (<a class="reference internal" href="models.html#GatorGuide.database.models.User" title="GatorGuide.database.models.User"><em>User</em></a>) – user to be written (either in the database or not)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GatorGuide.database.db_engine.DB_Engine.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SQLModel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GatorGuide.database.db_engine.DB_Engine.write" title="Link to this definition"></a></dt>
+<dd><p>Write a SQLModel object to the database. Updates existing objects and adds new ones</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>object</strong> (<em>SQLModel</em>) – Object to be written</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="models.html" class="btn btn-neutral float-left" title="Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="exceptions.html" class="btn btn-neutral float-right" title="Exceptions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Case Zumbrum, Louis Li, Jack Kellen.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
